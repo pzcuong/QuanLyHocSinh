@@ -1,0 +1,43 @@
+{
+  "name": "website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js ",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pzcuong/IE104.git"
+  },
+  "author": "phuclh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pzcuong/IE104/issues"
+  },
+  "homepage": "https://github.com/pzcuong/IE104#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.1",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
+    "fs": "^0.0.1-security",
+    "http-errors": "^2.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "lowdb": "^5.0.5",
+    "msnodesqlv8": "^2.7.0",
+    "mssql": "^9.0.1",
+    "node-cache": "^5.1.2",
+    "pug": "^3.0.2",
+    "rand-token": "^1.0.1",
+    "string-comparison": "^1.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
