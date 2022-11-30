@@ -1,0 +1,60 @@
+doctype html
+head
+    title Bootstrap Example
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    link(rel='stylesheet' href='/public/source/styleNav.css')
+    link(rel="preconnect" href="https://fonts.googleapis.com")
+    link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
+    link(href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet")
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js')
+    script(src="/public/source/script.js") 
+    link(rel='stylesheet' href='/public/source/style.css')
+
+    nav
+        div
+            i(class='fa fa-bars')
+        ul
+            li
+                a(href="#") Trang chủ
+            li
+                a(href="/user/TestSQL") Luyện tập
+            li 
+                a(href="/user/BaiTap") Bài tập
+            li
+                a(href="/user/lichsu") Lịch sử truy vấn
+            li
+                a(href="/user/profile") Trang cá nhân
+
+body
+    .container(style='color:green; font-weight: 500')
+        h1 Lịch sử truy vấn đã thực hiện
+
+    .container
+        each question in questionList
+            if question
+                label(style="font-size: 20px") 
+                    | Thông Tin Câu Hỏi #{question.MaCH} (#{question.MucDo})
+                a(href="/user/TestSQL/" + question.MaCH) 
+                    | #{question.TieuDe} <br/>
+                .content
+                    table
+                        tr(id="first")
+                            th Câu hỏi
+                            th Độ khó
+                            th Tiêu đề
+                            th Kết quả
+                            th Câu lệnh SQL
+                        each ketqua in question
+                            tr 
+                                th #{ketqua.MaCH}
+                                th #{question.MucDo}
+                                th #{question.TieuDe}
+                                th #{ketqua.KetQua}
+                                th #{ketqua.SQLQuery}
+
+script(src='/public/source/script.js')
+
+
+            

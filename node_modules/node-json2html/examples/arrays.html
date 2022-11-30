@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+ <head>
+	<title>json2html - Data Mapping &amp; Array Example</title>
+	
+	<!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	
+    <!-- Json2html -->
+    <script src="../json2html.js"></script>
+    
+    <!-- Utility Styles -->
+    <style>
+        .blue {color:blue;}
+        .bold {font-weight:bold;}
+    </style>
+	
+ </head>
+ <body>
+     
+     <h1>Working with Data Mapping &amp; Arrays</h1>
+    
+    <hr>
+    
+    <ul></ul>
+    
+    <hr>
+     
+ </body>
+ 
+ <script>
+    //In this example we'll show you how you can map data directly to a template
+    // plus show you how to work with arrays of literals (like strings) instead of objects
+
+	//Data that we want to render
+    const employees = [
+    	{"name":"Jenny Brown","role":"CEO","management":true,"access":["hr","finance","technical"]},
+    	{"name":"Ashley White","role":"CFO","management":true,"access":["hr","finance"]},
+    	{"name":"Brandon Green","role":"Graphic Designer","access":["technical"]},
+    	{"name":"Sasha Black","role":"Front End Developer","access":["technical"]}
+	];
+    
+    //Templates that we want to use
+	const template = {"<>":"li","html": [
+				
+				{"<>":"div","class":function(){
+				    
+				    //If the user is part of managemnt then put them in blue
+				    if(this.management) return("blue bold");
+				    else return("bold");
+				    
+				},"text":"${name} - ${role}"},
+				
+				//List the access that each employee has
+				{"<>":"ul","html":[
+				    
+				    //We can list all the access by simply mapping the access array (using the reserved {} attribute) to the li element
+				    // this will repeat an li element for every value in the array
+				    // NOTE the {} reserved attribute needs to be a function that returns the data you wish to map
+				    //  this also works for components! But we'll get to this later
+				    {"<>":"li","{}":function(){
+				        return(this.access);
+				    },"text":"${value}"}
+				]}
+			]};
+	
+    //Render the list of employees using jquery 
+    // note we can also do this using json2html.render as we don't have any events
+	$("ul").json2html(employees,template);
+	
+</script>
+</html>
+  
