@@ -3,7 +3,7 @@ var pug = require('pug');
 const router = express.Router();
 const authController = require('./auth.controller');
 const middleware = require('./auth.middlewares');
-
+var path = require("path");
 router.route('/register', )
     .post(authController.register)
     .get(middleware.isLogined, (req, res) => {

@@ -1,6 +1,6 @@
 const express = require('express');
 var pug = require('pug');
-
+var path = require("path");
 const router = express.Router();
 
 const authMiddleware = require('../auth/auth.middlewares');
