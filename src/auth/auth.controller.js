@@ -23,7 +23,7 @@ async function createToken(username, refreshToken) {
     if (!accessToken) {
         return ({ 
             statusCode: 401, 
-            message: 'Tạo access token không thành công, vui lòng thử lại.' 
+            message: 'Tạo access token không thành công, vui lòng thử lại!' 
         });
     }
 
