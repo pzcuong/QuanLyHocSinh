@@ -82,14 +82,11 @@ async function register(req, res, next) {
         let refreshToken = randToken.generate(24); 
 
         let role;
-        if(role == NULL)
-            role = 'HocSinh';
-        else 
-            role = req.body.role;
+        role = req.body.role;
         
         const data = {
             username: username,
-            HoTen: req.body.fullname,
+            HoVaTen: req.body.fullname,
             password: hashPassword,
             refreshToken: refreshToken,
             role: role
@@ -155,7 +152,7 @@ async function login(req, res, next) {
 
     if(user.statusCode == 200){
         if(user.result.refreshToken == null) {
-            const hashPassword = await bcrypt.hashSync(user.result.rawpassword, SALT_ROUNDS);
+            const hashPassword = await bcrypt.hashSync(user.result.HashPassword, SALT_ROUNDS);
             let refreshToken = await randToken.generate(24); 
             let SQLQueryInsert = `UPDATE XACTHUC 
                 SET password = '${hashPassword}',refreshToken = '${refreshToken}' 
@@ -164,7 +161,7 @@ async function login(req, res, next) {
             user = await userModel.getUser(username);
         }
 
-        const isValid = await bcrypt.compareSync(password, user.result.password);
+        const isValid = await bcrypt.compareSync(password, user.result.HashPassword);
 
         if(!isValid)
             return res
@@ -279,7 +276,7 @@ async function DoiMatKhau (req, res){
                 });
             const user = await userModel.getUser(username);
             if(user.statusCode == 200){
-                const isValid = bcrypt.compareSync(password, user.result.password);
+                const isValid = bcrypt.compareSync(password, user.result.HashPassword);
     
             if(!isValid)
                 return res
@@ -298,7 +295,7 @@ async function DoiMatKhau (req, res){
                         alert: "Mật khẩu mới không khớp",
                     });
             const hashPassword = bcrypt.hashSync(newPassword, 10);
-            const updatePassword = await userModel.updatePassword(username, hashPassword, password);
+            const updatePassword = await userModel.updatePassword(username, hashPassword);
             if(updatePassword.statusCode == 200)
                 return res
                     .status(200)

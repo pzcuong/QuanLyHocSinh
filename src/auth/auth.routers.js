@@ -18,6 +18,7 @@ router.route('/login')
         res.send(html);
     });
 
+
     router.get('/abc', (req,res) => {
         let html = pug.renderFile('public/auth/changePassword.pug');
         res.send(html);
