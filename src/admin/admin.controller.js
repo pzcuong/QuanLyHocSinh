@@ -12,25 +12,15 @@ const SALT_ROUNDS = 10;
 
 async function ThemTaiKhoan(req, res, next) {
     const username = req.body.username;
-    const password = req.body.password;
+    const role = req.body.role;
 
-    if(!req.body.username || !req.body.password) 
+    if(!req.body.username || !req.body.role) 
         return res
             .status(400)
             .send({
                 statusCode: 400,
                 message: 'Vui lòng nhập đầy đủ thông tin.',
                 alert: 'Vui lòng nhập đầy đủ thông tin.',
-            });
-
-    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-    if (!regex.test(password))
-        return res
-            .status(400)
-            .send({
-                statusCode: 400,
-                message: 'Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường và số.',
-                alert: 'Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường và số.',
             });
 
     const user = await userModel.getUser(username);
@@ -45,18 +35,9 @@ async function ThemTaiKhoan(req, res, next) {
             });
 
     else if(user.statusCode == 404) {
-        const hashPassword = bcrypt.hashSync(req.body.password, SALT_ROUNDS);
-        let refreshToken = randToken.generate(24); 
-
-        let role;
-        role = "HocSinh";   
-        
         const data = {
             username: username,
-            HoVaTen: req.body.fullname,
-            password: hashPassword,
-            refreshToken: refreshToken,
-            role: role
+            role:   role
         };
 
         const newUser = await userModel.createUser(data);
@@ -92,5 +73,73 @@ async function ThemTaiKhoan(req, res, next) {
             });
 }
 
+async function ThemLopHoc(req, res, next) {
+    
+    const malop = req.body.malop;
+    const tenlop = req.body.tenlop;
+    const makhoilop = req.body.makhoilop;
+    const mahocky = req.body.mahocky;
+    const siso = req.body.siso;
+    if( !malop || !tenlop || !makhoilop || !mahocky || !siso )   
+        return res
+            .status(400)
+            .send({
+                statusCode: 400,
+                message: 'Vui lòng nhập đầy đủ thông tin.',
+                alert: 'Vui lòng nhập đầy đủ thông tin.',
+            });
 
+    const Class = await adminModel.getClass(malop);
+    console.log(malop);
+    if(Class.statusCode == 400 || Class.statusCode == 500)
+        return res
+                .status(Class.statusCode)
+                .send({
+                        statusCode: Class.statusCode,
+                        message: Class.message,
+                        alert: Class.alert
+                });
+        
+    else if(Class.statusCode == 404) {
+    const data = {
+                    malop: malop,
+                    tenlop: tenlop,
+                    makhoilop: makhoilop,
+                    mahocky: mahocky,
+                    siso: siso
+    };
+        
+    const newClass = await adminModel.createClass(data);
+        
+        if(newClass.statusCode === 200 ) 
+            return res
+                .status(200)
+                .send({
+                    statusCode: 200,
+                    message: 'Tạo lớp thành công',
+                    malop: malop,
+                    redirect: '/admin/ThemLopHoc'
+                });
+        else
+            return res
+                    .status(400)
+                    .send({
+                            statusCode: 400,
+                            message: "Tạo lớp không thành công",
+                            alert: "Tạo lớp không thành công",
+                            redirect: '/admin/ThemLopHoc'
+                    });
+                }
+    else
+        return res
+            .status(400)
+            .send({
+                    statusCode: 400,
+                    message: "Lớp học đã tồn tại",
+                    alert: "Lớp học đã tồn tại",
+                    redirect: '/admin/ThemLopHoc'
+            });
+}
+
+exports.ThemLopHoc = ThemLopHoc;
 exports.ThemTaiKhoan = ThemTaiKhoan;

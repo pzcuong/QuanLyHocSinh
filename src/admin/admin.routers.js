@@ -11,9 +11,16 @@ const adminController = require('../admin/admin.controller');
 
 router.route('/ThemTaiKhoan' )
 .get(isAuthAdmin, (req, res) => {
-    let html = pug.renderFile('public/auth/changePassword.pug');
+    let html = pug.renderFile('public/admin/ThemTaiKhoan.pug');
     res.send(html);
 })
 .post(isAuthAdmin,adminController.ThemTaiKhoan)
+
+router.route('/ThemLopHoc' )
+.get(isAuthAdmin, (req, res) => {
+    let html = pug.renderFile('public/admin/ThemLopHoc.pug');
+    res.send(html);
+})
+.post(isAuthAdmin,adminController.ThemLopHoc)
 
 module.exports = router;
