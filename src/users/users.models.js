@@ -44,7 +44,7 @@ async function getUser (username) {
                 alert: 'Username không hợp lệ!'
             });
         else {
-            let result = await TruyVan("HocSinh", `select * from XACTHUC where MaND = '${username}'`);
+            let result = await TruyVan("Admin", `select * from XACTHUC where MaND = '${username}'`);
             if(result.statusCode == 200 && result.result.recordset.length > 0) 
                 return ({ 
                     statusCode: 200,
@@ -188,7 +188,18 @@ async function TruyVan(TypeUser, SQLQuery) {
                 message: "Thành công",
                 result: queryResult
             };
-        } else {
+        } else if (TypeUser == 'GiaoVien') {
+            let pool = await new sql.ConnectionPool(configAdmin);
+            let result = await pool.connect();
+            let queryResult = await result.query(SQLQuery);
+            await pool.close();
+            return {
+                statusCode: 200,
+                user: 'Admin',
+                message: "Thành công",
+                result: queryResult
+            };
+        }else {
             let pool = await new sql.ConnectionPool(configUser);
             let result = await pool.connect();
             let queryResult = await result.query(SQLQuery);
@@ -211,4 +222,55 @@ async function TruyVan(TypeUser, SQLQuery) {
         };
     }
 }
+
+async function DanhSachHocSinh() {
+    try {
+        let SQLQuery = `SELECT HS.MaHS, HS.HoTen, HS.GioiTinh,HS.NgSinh,L.TenLop
+        FROM HOCSINH HS, LOP L, HOCSINH_LOP HS_L
+         WHERE HS.MaH = HS_L.MaHS AND HS_L.MaLop = L.MaLop`;
+
+        let result = await TruyVan("Admin", SQLQuery);
+
+        if(result.statusCode == 200 && result.result.recordset.length > 0) { // Có học sinh
+            return { 
+                statusCode: 200,
+                message: result.result.recordsets
+            };
+        }
+        else
+            return { 
+                statusCode: 404,
+                message: 'Không có học sinh nào!'
+            };
+    } catch(err) {
+        console.log("Lỗi DanhSachHocSinh (users.models)", err);
+        
+        return { 
+            statusCode: 500,
+            message: 'Lỗi truy vấn SQL!',
+            alert: 'Lỗi truy vấn SQL'
+        };
+    }
+}
+
+async function DanhSachLop() {
+    try {
+        let SQLQuery = `SELECT MaLop,TenLop
+        FROM LOP`;
+        let result = await TruyVan("Admin",SQLQuery);
+        console.log("Danh sách các lớp học", result);
+        return result;
+    } catch(err) {
+        console.log(err);
+        return ({ 
+            statusCode: 400,
+            message: 'Lỗi truy vấn SQL!',
+            alert: 'Kiểm tra lại câu lệnh SQL!'
+        });
+    }
+}
+
+
 exports.TruyVan = TruyVan;
+exports.DanhSachHocSinh = DanhSachHocSinh;
+exports.DanhSachLop = DanhSachLop;

@@ -150,6 +150,33 @@ async function changePassword() {
 }
 
 
+async function ThemTaiKhoan() {
+  var form = document.querySelector("#formElem");
+
+  data = {
+    username: form.querySelector("input[name=username]").value,
+    password: form.querySelector("input[name=password]").value,
+ 
+  }
+
+  let response = await fetch('/admin/ThemTaiKhoan', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+          json: true
+  })
+
+  let text = await response.json(); 
+  console.log(text)
+  alert(text.message);
+  if(text.redirect)
+      window.location.href = text.redirect;
+  //document.querySelector("#encoded").innerHTML = text.message;
+  //window.open(text.captcha_url, "mywindow","menubar=1,resizable=1,width=350,height=250").focus();
+}
+
 //insert source code js
 // Language: javascript
 // Path: "https://www.gstatic.com/charts/loader.js"
