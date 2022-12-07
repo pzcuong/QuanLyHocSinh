@@ -16,10 +16,20 @@ router.get('/profile', isAuth, async (req, res) => {
 	res.send(html);
 });
 
+router.post('/LuuDiem', async(req, res) => {
+	console.log('router LuuDiem');
+	console.log(req);
+});
+
+router.get('/LuuDiem', async(req, res) => {
+	return res.sendFile(path.join(__dirname, '../public/BangDiemMonHoc/index.html'));
+})
+
 router.get('/LuuDiem', async(req, res) => {
 	let html = pug.renderFile('public/BangDiemMonHoc/index.pug');
     res.send(html);
 })
+
 
 router.post('/LuuDiem', async(req, res,next) => {
 	console.log(req.body)
