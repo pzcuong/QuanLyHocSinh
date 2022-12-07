@@ -61,7 +61,8 @@ async function ThemTaiKhoan(req, res, next) {
 
         const newUser = await userModel.createUser(data);
 
-        if(newUser.statusCode === 200) 
+        if(newUser.statusCode === 200 /*&& accessToken.statusCode === 200*/) 
+
             return res
                 .status(200)
                 .send({
