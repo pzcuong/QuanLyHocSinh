@@ -20,11 +20,13 @@ router.route('/login')
     });
 
 
-    router.get('/abc', (req,res) => {
-        let html = pug.renderFile('public/auth/changePassword.pug');
+router.route('/forgot-password')
+    .get((req,res) => {
+        let html = pug.renderFile('public/auth/forgotPassword.pug');
         res.send(html);
     })
-    
+    .post(authController.QuenMatKhau);
+
 router.post('/refresh', authController.refreshToken);
 
 module.exports = router;

@@ -182,5 +182,25 @@ async function ThemTaiKhoan() {
 // Path: "https://www.gstatic.com/charts/loader.js"
 
 
+async function ResetPassword() {
+  var form = document.querySelector("#formElem");
 
+  data = {
+    username: form.querySelector("input[name=username]").value, 
+  }
 
+  let response = await fetch('/auth/forgot-password', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+          json: true
+  })
+
+  let text = await response.json(); 
+  console.log(text)
+  alert(text.message);
+  if(text.redirect)
+      window.location.href = text.redirect;
+}

@@ -151,13 +151,15 @@ async function getInfoUser (username) {
 
 async function updatePassword(username, hashPassword) {
     try {
-        let SQLQuery = `update XACTHUC set HashPassword = N'${hashPassword}', where MaND = N'${username}'`;
+        let SQLQuery = `update XACTHUC set HashPassword = N'${hashPassword}' where MaND = N'${username}'`;
         let result = await TruyVan("Admin", SQLQuery);
-        return ({
-            statusCode: 200,
-            message: 'Thành công',
-            alert: 'Thành công',
-        });
+        console.log(result)
+        if(result.statusCode == 200)
+            return ({
+                statusCode: 200,
+                message: 'Thành công',
+                alert: 'Thành công',
+            });
     } catch(err) {
         console.log("Lỗi updatePassword (users.models)", err);
         // GhiLog(`Lỗi updatePassword - ${err}`);
