@@ -10,22 +10,32 @@
 </head>
 <body>
    <!-- Tên app,logo app+  -->
-   <!-- <div class="header" style="z-index: -1;">
-    
-   </div> -->
-   <div class="actions_user_hd" >
-      <div class="profile_hd" id="profile" onclick="menuhdToggle()">
-         <img src="./user_none1.png"  alt="image user"  >
+    <div class="header">
+      <div class="actions_user_hd" >
+         <div class="profile_hd" id="profile" onclick="menuhdToggle()">
+            <img src="./user_none1.png"  alt="image user"  >
+         </div>
+         <div class="menu_user_hd">
+            <div class="profile_name">Quốc Cường <br><span>Administator</span></div>
+            <ul>
+               <li><a href="#">My profile</a></li>
+               <li><a href="#">Log out</a></li>
+            </ul>
+         </div>
       </div>
-      <div class="menu_user_hd">
-         <div class="profile_name">Quốc Cường</div>
-         <div class="job span">Administator</div>
-         <ul>
-            <li><a href="#">My profile</a></li>
-            <li><a href="#">Log out</a></li>
-         </ul>
-      </div>
+      <!-- <div class="dropdown1">
+         <div onclick="myFunction()" class="dropbtn">
+            Dropdown
+
+         </div>
+         <div id="myDropdown" class="dropdown-content">
+           <a href="#">Link 1</a>
+           <a href="#">Link 2</a>
+           <a href="#">Link 3</a>
+         </div>
+       </div> -->
    </div>
+  
    <!--  -->
    <div class="sidebar" >
    
@@ -90,7 +100,7 @@
          </ul>
       </li>
       <li>
-      <!--  -->   
+      <!-- profile user -->   
         <div class="profile-details">
         <div class="profile-content">
             <img src="user1.jpg" alt="profile">
