@@ -155,8 +155,8 @@ async function login(req, res, next) {
             const hashPassword = await bcrypt.hashSync(user.result.HashPassword, SALT_ROUNDS);
             let refreshToken = await randToken.generate(24); 
             let SQLQueryInsert = `UPDATE XACTHUC 
-                SET password = '${hashPassword}',refreshToken = '${refreshToken}' 
-                WHERE username = '${username}'`;
+                SET Hashpassword = '${hashPassword}',RefreshToken = '${refreshToken}' 
+                WHERE MaND = '${username}'`;
             await userModel.TruyVan("Admin", SQLQueryInsert);
             user = await userModel.getUser(username);
         }

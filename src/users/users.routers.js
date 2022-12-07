@@ -54,4 +54,3 @@ router.get('/DanhSachHocSinh', isAuth, async (req, res) => {
 });
 
 module.exports = router;
-

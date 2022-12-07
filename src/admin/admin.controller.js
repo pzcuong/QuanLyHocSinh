@@ -60,16 +60,15 @@ async function ThemTaiKhoan(req, res, next) {
         };
 
         const newUser = await userModel.createUser(data);
-        // const accessToken = await authController.createToken(username, refreshToken);
 
         if(newUser.statusCode === 200 /*&& accessToken.statusCode === 200*/) 
+
             return res
                 .status(200)
                 .send({
                     statusCode: 200,
                     message: 'Tạo tài khoản thành công',
                     username: username,
-                    accessToken: accessToken.accessToken,
                     redirect: '/admin/ThemTaiKhoan'
                 });
         else
