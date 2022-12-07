@@ -1,8 +1,8 @@
 const userModel = require('../users/users.models');
 const authMethod = require('../auth/auth.methods');
 var randToken = require('rand-token');
-
 const bcrypt = require('bcryptjs'); 
+
 const { config } = require('dotenv');
 require('dotenv').config();
 
@@ -13,12 +13,12 @@ async function createToken(username, refreshToken) {
     const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
 
     const dataForAccessToken = {
-        username: username,
+        username: username
     };
     const accessToken = await authMethod.generateToken(
         dataForAccessToken,
         accessTokenSecret,
-        accessTokenLife,
+        accessTokenLife
     );
     if (!accessToken) {
         return ({ 
@@ -43,89 +43,86 @@ async function createToken(username, refreshToken) {
     });
 }
 
-async function register(req, res, next) {
-    const username = req.body.username;
-    const password = req.body.password;
+// async function register(req, res, next) {
+//     const username = req.body.username;
+//     const password = req.body.password;
 
-    if(!req.body.username || !req.body.password) 
-        return res
-            .status(400)
-            .send({
-                statusCode: 400,
-                message: 'Vui lòng nhập đầy đủ thông tin.',
-                alert: 'Vui lòng nhập đầy đủ thông tin.',
-            });
+//     if(!req.body.username || !req.body.password) 
+//         return res
+//             .status(400)
+//             .send({
+//                 statusCode: 400,
+//                 message: 'Vui lòng nhập đầy đủ thông tin.',
+//                 alert: 'Vui lòng nhập đầy đủ thông tin.',
+//             });
 
-    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-    if (!regex.test(password))
-        return res
-            .status(400)
-            .send({
-                statusCode: 400,
-                message: 'Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường và số.',
-                alert: 'Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường và số.',
-            });
+//     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+//     if (!regex.test(password))
+//         return res
+//             .status(400)
+//             .send({
+//                 statusCode: 400,
+//                 message: 'Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường và số.',
+//                 alert: 'Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường và số.',
+//             });
 
-    const user = await userModel.getUser(username);
-    console.log(username);
-    if(user.statusCode == 400 || user.statusCode == 500)
-        return res
-            .status(user.statusCode)
-            .send({
-                statusCode: user.statusCode,
-                message: user.message,
-                alert: user.alert
-            });
+//     const user = await userModel.getUser(username);
+//     console.log(username);
+//     if(user.statusCode == 400 || user.statusCode == 500)
+//         return res
+//             .status(user.statusCode)
+//             .send({
+//                 statusCode: user.statusCode,
+//                 message: user.message,
+//                 alert: user.alert
+//             });
 
-    else if(user.statusCode == 404) {
-        const hashPassword = bcrypt.hashSync(req.body.password, SALT_ROUNDS);
-        let refreshToken = randToken.generate(24); 
+//     else if(user.statusCode == 404) {
+//         const hashPassword = bcrypt.hashSync(req.body.password, SALT_ROUNDS);
+//         let refreshToken = randToken.generate(24); 
 
-        let role;
-        if(role == NULL)
-            role = 'HocSinh';
-        else 
-            role = req.body.role;
+//         let role;
+//         role = req.body.role;
         
-        const data = {
-            username: username,
-            HoTen: req.body.fullname,
-            password: hashPassword,
-            refreshToken: refreshToken,
-            role: role
-        };
+//         const data = {
+//             username: username,
+//             HoVaTen: req.body.fullname,
+//             password: hashPassword,
+//             refreshToken: refreshToken,
+//             role: role
+//         };
 
-        const newUser = await userModel.createUser(data);
-        const accessToken = await createToken(username, refreshToken);
+//         const newUser = await userModel.createUser(data);
+//         const accessToken = await createToken(username, refreshToken);
 
-        if(newUser.statusCode === 200 && accessToken.statusCode === 200) 
-            return res
-                .status(200)
-                .send({
-                    statusCode: 200,
-                    message: 'Tạo tài khoản thành công',
-                    username: username,
-                    accessToken: accessToken.accessToken,
-                    redirect: '/user/login'
-                });
-        else
-            return res
-                .status(400)
-                .send({
-                    statusCode: 400,
-                    message: "Tạo tài khoản không thành công",
-                    alert: "Tạo tài khoản không thành công",
-                });
-    }
-    else
-        return res
-            .status(400)
-            .send({
-                statusCode: 400,
-                message: "Username đã tồn tại",
-                alert: "Username đã tồn tại",
-            });
-}
+//         if(newUser.statusCode === 200 && accessToken.statusCode === 200) 
+//             return res
+//                 .status(200)
+//                 .send({
+//                     statusCode: 200,
+//                     message: 'Tạo tài khoản thành công',
+//                     username: username,
+//                     accessToken: accessToken.accessToken,
+//                     redirect: '/user/register'
+//                 });
+//         else
+//             return res
+//                 .status(400)
+//                 .send({
+//                     statusCode: 400,
+//                     message: "Tạo tài khoản không thành công",
+//                     alert: "Tạo tài khoản không thành công",
+//                 });
+//     }
+//     else
+//         return res
+//             .status(400)
+//             .send({
+//                 statusCode: 400,
+//                 message: "Username đã tồn tại",
+//                 alert: "Username đã tồn tại",
+//             });
+// }
 
 async function login(req, res, next) {
     const username = req.body.username;
@@ -155,16 +152,16 @@ async function login(req, res, next) {
 
     if(user.statusCode == 200){
         if(user.result.refreshToken == null) {
-            const hashPassword = await bcrypt.hashSync(user.result.rawpassword, SALT_ROUNDS);
+            const hashPassword = await bcrypt.hashSync(user.result.HashPassword, SALT_ROUNDS);
             let refreshToken = await randToken.generate(24); 
             let SQLQueryInsert = `UPDATE XACTHUC 
-                SET password = '${hashPassword}',refreshToken = '${refreshToken}' 
-                WHERE username = '${username}'`;
+                SET Hashpassword = '${hashPassword}',RefreshToken = '${refreshToken}' 
+                WHERE MaND = '${username}'`;
             await userModel.TruyVan("Admin", SQLQueryInsert);
             user = await userModel.getUser(username);
         }
 
-        const isValid = await bcrypt.compareSync(password, user.result.password);
+        const isValid = await bcrypt.compareSync(password, user.result.HashPassword);
 
         if(!isValid)
             return res
@@ -279,7 +276,7 @@ async function DoiMatKhau (req, res){
                 });
             const user = await userModel.getUser(username);
             if(user.statusCode == 200){
-                const isValid = bcrypt.compareSync(password, user.result.password);
+                const isValid = bcrypt.compareSync(password, user.result.HashPassword);
     
             if(!isValid)
                 return res
@@ -298,7 +295,7 @@ async function DoiMatKhau (req, res){
                         alert: "Mật khẩu mới không khớp",
                     });
             const hashPassword = bcrypt.hashSync(newPassword, 10);
-            const updatePassword = await userModel.updatePassword(username, hashPassword, password);
+            const updatePassword = await userModel.updatePassword(username, hashPassword);
             if(updatePassword.statusCode == 200)
                 return res
                     .status(200)
@@ -306,6 +303,7 @@ async function DoiMatKhau (req, res){
                         statusCode: 200,
                         message: 'Đổi mật khẩu thành công', 
                         alert: "Đổi mật khẩu thành công",
+                        redirect: '/user/profile'
                     });
             else
                 return res
@@ -328,7 +326,8 @@ async function DoiMatKhau (req, res){
     }
 }
 
-exports.register = register;
+exports.createToken = createToken;
+// exports.register = register;
 exports.login = login;
 exports.refreshToken = refreshToken;
 exports.DoiMatKhau = DoiMatKhau;
