@@ -3,18 +3,17 @@ html(style='font-size: 16px;' lang='en')
   head
     meta(name='viewport' content='width=device-width, initial-scale=1.0')
     meta(charset='utf-8')
-    meta(name='keywords' content='')
+    meta(name='keywords' content='​Library Education, ​Meet our Principal, ​Helping each child find and follow their best learning path.')
     meta(name='description' content='')
-    title Câu hỏi
+    title Trang chủ
     link(rel='stylesheet' href='/public/source/css/Nicepage.css' media='screen')
-    link(rel='stylesheet' href='/public/source/css/DanhSachBaiTap.css' media='screen')
-    script.u-script(type='text/javascript' src='jquery.js' "='' defer='')
-    script.u-script(type='text/javascript' src='nicepage.js' "='' defer='')
-    meta(name='generator' content='Nicepage 4.16.0, nicepage.com')
+    link(rel='stylesheet' href='/public/source/css/QuanLyBaiTap.css' media='screen')
+    script.u-script(type='text/javascript' src='/public/source/js/jquery.js')
+    script.u-script(type='text/javascript' src='/public/source/js/nicepage.js')
     link#u-theme-google-font(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i')
-
+    link#u-page-google-font(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i')
     meta(name='theme-color' content='#478ac9')
-    meta(property='og:title' content='Câu hỏi')
+    meta(property='og:title' content='Trang chủ')
     meta(property='og:type' content='website')
   body.u-body.u-xl-mode(data-lang='en')
     header#sec-8082.u-align-center-sm.u-align-center-xs.u-clearfix.u-header.u-header
@@ -80,35 +79,80 @@ html(style='font-size: 16px;' lang='en')
                     li.u-nav-item
                       a.u-button-style.u-nav-link.u-white(href='/user/DoiMatKhau') Đổi mật khẩu
                     li.u-nav-item
-                      a.u-button-style.u-nav-link.u-white(href='/' onclick="eraseCookie('x_authorization')") Đăng xuất
-                      
-    section#sec-6943.u-align-center.u-clearfix.u-section-1
-      .u-clearfix.u-sheet.u-sheet-1
-        if status == 200
-          h3.u-text.u-text-default.u-text-1 Bài tập
-          .u-expanded-width.u-table.u-table-responsive.u-table-1
-            table.u-table-entity.u-table-entity-1
-              colgroup
-                col(width='10%')
-                col(width='40%')
-                col(width='25%')
-                col(width='25%')
-              thead.u-align-center.u-custom-color-1.u-table-header.u-table-header-1
-                tr(style='height: 29px;')
-                  th.u-border-3.u-border-custom-color-1.u-table-cell.u-table-cell-1 ID Bài tập
-                  th.u-border-3.u-border-custom-color-1.u-table-cell.u-table-cell-3 Tên
-                  th.u-border-3.u-border-custom-color-1.u-table-cell.u-table-cell-4 Thời gian bắt đầu
-                  th.u-border-3.u-border-custom-color-1.u-table-cell.u-table-cell-5 Thời gian kết thúc
-              tbody.u-table-body
-                  - const options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZone: "Asia/Jakarta"};
+                      a.u-button-style.u-nav-link.u-white(onclick="eraseCookie('x_authorization')") Đăng xuất
+              li.u-nav-item
+                a.u-button-style.u-nav-link() Admin
+                .u-nav-popup
+                  ul.u-h-spacing-20.u-nav.u-unstyled.u-v-spacing-10.u-nav-2
+                    li.u-nav-item
+                      a.u-button-style.u-nav-link.u-white(href='/admin/QuanLyBaiTap') Quản lý bài tập
+                    li.u-nav-item
+                      a.u-button-style.u-nav-link.u-white(href='/admin/QuanLyCauHoi') Quản lý câu hỏi
 
-                  each question in questionList
-                      tr(style='height: 75px;')
-                          td.u-border-1.u-border-grey-30.u-first-column.u-grey-5.u-table-cell.u-table-cell-7 #{question.MaBT}
-                          td.u-border-1.u-border-grey-30.u-table-cell 
-                              a.u-active-none.u-border-none.u-btn.u-button-link.u-button-style.u-hover-none.u-none.u-text-palette-1-base.u-btn-1(href='/user/BaiTap/'+question.MaBT+'/1') #{question.TieuDe}
-                          td.u-border-1.u-border-grey-30.u-table-cell #{question.TgianBD.toLocaleString('vi-VN',  options)}
-                          td.u-border-1.u-border-grey-30.u-table-cell #{question.TgianKT.toLocaleString('vi-VN',  options)}
-        else
-          h3.u-text.u-text-default.u-text-1 Bạn hiện chưa có bài tập nào
-script(src="/public/source/js/script.js") 
+    section#sec-c3e1.u-align-center.u-clearfix.u-section-1
+      .u-clearfix.u-sheet.u-valign-top.u-sheet-1
+        a.u-border-none.u-btn.u-button-style.u-custom-color-1.u-btn-1(href='/admin/ThemCauHoi') Thêm câu hỏi mới
+        .u-expanded-width.u-table.u-table-responsive.u-table-1
+          table.u-table-entity.u-table-entity-1
+            colgroup
+              col(width='10%')
+              col(width='50%')
+              col(width='10%')
+              col(width='20%')
+              col(width='10%')
+            tbody.u-table-alt-palette-1-light-3.u-table-body
+              tr(style='height: 65px;')
+                td.u-table-cell Mã CH
+                td.u-table-cell Tiêu đề
+                td.u-table-cell Mức độ
+                td.u-table-cell Lược đồ
+                td.u-table-cell Tình trạng
+                
+              each question in questionList
+                tr(style='height: 65px;')
+                  td.u-table-cell #{question.MaCH}
+                  td.u-table-cell
+                      a.u-active-none.u-border-none.u-button-link.u-button-style.u-hover-none.u-none.u-text-palette-1-base.u-btn-1(href='/admin/ChinhSua/'+question.MaCH+'/') #{question.TieuDe}
+                  td.u-table-cell #{question.MucDo}
+                  td.u-table-cell #{question.LuocDo}
+                  td.u-table-cell #{question.TinhTrang}
+
+script. 
+    async function TaoBaiTap() {
+        var form = document.querySelector("#formElem");
+
+        let TgianBD = form.querySelector('input[name="TgianBD"]').value;
+        let TgianKT = form.querySelector('input[name="TgianKT"]').value;
+        TgianBD = new Date(TgianBD);
+        TgianKT = new Date(TgianKT);
+        TgianBD.setSeconds(0);
+        TgianBD.setMilliseconds(000);
+        TgianKT.setSeconds(0);
+        TgianKT.setMilliseconds(000);
+
+        data = {
+            TieuDe: form.querySelector('input[name="TieuDe"]').value,
+            MaNhom: form.querySelector('select[name="MaNhom"]').value,
+            TgianBD: TgianBD,
+            TgianKT: TgianKT,
+            TrangThai: form.querySelector('input[name="TrangThai"]').checked,
+        }
+
+        let url = window.location.href;
+
+        let response = await fetch(url, {
+                method: 'POST', 
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+                json: true
+        })
+
+        //selector button class btn btn-success from document
+        //document.querySelector('')
+        let text = await response.json(); 
+        console.log(text)
+
+        document.querySelector("#encoded").innerHTML = text.message;
+    }

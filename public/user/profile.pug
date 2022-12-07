@@ -77,7 +77,7 @@ html(style='font-size: 16px;' lang='en')
                       a.u-button-style.u-nav-link.u-white(href='/user/DoiMatKhau') Đổi mật khẩu
                     li.u-nav-item
                       a.u-button-style.u-nav-link.u-white(href='/' onclick="eraseCookie('x_authorization')") Đăng xuất
-              if(user.role == "Admin")
+              if(1 == 1)
                 li.u-nav-item
                   a.u-button-style.u-nav-link() Admin
                   .u-nav-popup
@@ -89,7 +89,7 @@ html(style='font-size: 16px;' lang='en')
 
     section#sec-6943.u-align-center.u-clearfix.u-section-1
       .u-clearfix.u-sheet.u-sheet-1
-        h3.u-text.u-text-default.u-text-1 Thông tin người dùng - #{user.username}
+        h3.u-text.u-text-default.u-text-1 Thông tin người dùng - 
         .u-expanded-width.u-table.u-table-responsive.u-table-1
           table.u-table-entity.u-table-entity-1
             colgroup
@@ -107,11 +107,6 @@ html(style='font-size: 16px;' lang='en')
                 th.u-border-3.u-border-custom-color-1.u-table-cell.u-table-cell-5 Đội / Nhóm
             tbody.u-table-body
               tr(style='height: 75px;')
-                td.u-border-1.u-border-grey-30.u-first-column.u-grey-5.u-table-cell.u-table-cell-6 #{user.fullname}
-                td.u-border-1.u-border-grey-30.u-table-cell #{user.birthday}
-                td.u-border-1.u-border-grey-30.u-table-cell #{user.email}
-                td.u-border-1.u-border-grey-30.u-table-cell #{user.phoneNumber}
-                td.u-border-1.u-border-grey-30.u-table-cell #{user.team}
-
+                
   script(src="https://www.gstatic.com/charts/loader.js") 
   script(src="/public/source/js/script.js")

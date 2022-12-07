@@ -1,0 +1,269 @@
+body {
+  margin: 0px;
+  padding: 0px;
+  font-family: Helvetica;
+  overflow-x: hidden;
+}
+nav{
+  background: #5cb85c;
+}
+ul {
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+  text-align: right;
+
+}
+
+ul li {
+  display: inline-block;
+  cursor: pointer;
+   padding: 6px;
+}
+
+ul li a {
+  text-transform: uppercase;
+  color: #fff;
+  text-decoration: none;
+  display: block;
+  padding: 16px;
+}
+
+ul li:hover {
+  background: #70ad47;
+
+}
+
+ul li i {
+  color: #fff;
+  float: right;
+  padding-left: 10px;
+  padding-top: 0px;
+}
+nav div{
+   display: none;
+}
+@media(max-width: 768px) {
+  nav div {
+    display: block;
+    text-align: right;
+    padding: 10px 15px;
+    color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+ 
+  }
+  nav div .fa{
+    font-size: 40px;
+  }
+  ul {
+    display: none;
+    background: #38ada9;
+  }
+  ul li{
+    width: 100%;
+    text-align: center;
+    padding: 0px;
+  }
+  .drop .fa-sort-desc {
+    display: none;
+  }
+}
+
+#main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+form {
+  background-color: #70ad47;
+  width: 40%;
+  padding: 30px;
+}
+
+input {
+  width: 100%;
+  height: 40px;
+  border: 0px;
+  margin: 5px 5px 15px;
+  box-sizing: border-box;
+  padding: 15px 15px;
+}
+
+input:focus,
+button:focus {
+  outline: none;
+}
+
+button {
+  background: #63cdda;
+  color: #fff;
+  border: 0px;
+  width: 100%;
+  padding: 10px;
+  margin: 5px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.checkbox {
+  color: #fff;
+  padding-bottom: 10px;
+}
+
+h3 {
+  font-size: 24px;
+  text-align: center;
+  color: #fff;
+  text-transform: capitalize;
+  margin-bottom: 10px;
+}
+
+p {
+  text-align: center;
+  color: #fff;
+  text-transform: capitalize;
+}
+
+.social {
+  display: flex;
+  justify-content: center;
+}
+
+.social button {
+  display: flex;
+  width: 30px;
+  padding: 5px;
+  background-color: transparent;
+  justify-content: center;
+  text-transform: capitalize;
+}
+
+.social button:nth-child(1) {
+  background-color: #3498db;
+}
+
+.social button:nth-child(2) {
+  background-color: #e74c3c;
+}
+
+.fa {
+  float: left;
+  font-size: 18px;
+}
+
+a {
+  padding-left: 5px;
+  text-decoration: none;
+  color: rgb(0, 85, 0);
+  text-transform: capitalize;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.label {
+  font-size: 40px;
+  text-align: center;
+  color: #fff;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  text-transform: capitalize;
+}
+
+@media(max-width:610px) {
+  form {
+    width: 60%;
+  }
+
+  button {
+    padding: 5px;
+  }
+}
+
+@media(max-width:420px) {
+  form {
+    width: 70%;
+  }
+
+  h3 {
+    margin: 10px;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.content {
+  margin: 20px;
+  text-align: center; 
+}
+
+table {
+  width: 100%;
+  border: 1px solid #fff;
+  border-collapse: collapse;
+  border-radius: 8px;
+}
+
+
+
+body > .content > table > tbody > #first{
+  background-color: #70ad47;
+  color: #fff;
+}
+
+body > .container > .content > table > tbody > #first{
+  background-color: #70ad47;
+  color: #fff;
+  text-align: center;
+}
+
+tr{
+  padding: 8px 10px;
+  height: 48px;
+}
+
+td {
+  padding: 6px 8px;
+  height: 40px;
+}
+
+tbody tr:hover {
+  background-color: #778ca3;
+  cursor: pointer;
+}
+
+@media(max-width: 540px) {
+  .content {
+    overflow: auto;
+    max-width: 100%;
+  }
+}
+
+.container {
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  width: 90%;
+  font-family: 'Inter';
+}
+
+
+.h1 .h2 .h3 .h4 .h5 .h6 {
+  font-family: 'Inter';
+  font-weight: 500;
+  line-height: 1.1;
+  color: inherit;
+}

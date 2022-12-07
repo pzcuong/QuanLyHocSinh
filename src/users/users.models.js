@@ -1,4 +1,4 @@
-const sql = require("mssql/msnodesqlv8");
+const sql = require("mssql");
 const fs = require('fs');
 const stringComparison = require('string-comparison');
 const { config } = require('dotenv');
@@ -6,7 +6,7 @@ const { config } = require('dotenv');
 require('dotenv').config();
 
 const configAdmin = {
-    user: process.env.admin,
+    user: process.env.user,
     password: process.env.password,
     server: process.env.server,
     database: process.env.database,
@@ -44,7 +44,7 @@ async function getUser (username) {
                 alert: 'Username không hợp lệ!'
             });
         else {
-            let result = await TruyVan("HocSinh", `select * from HOCSINH where username = '${HoTen}'`);
+            let result = await TruyVan("Admin", `select * from XACTHUC where MaND = '${username}'`);
             if(result.statusCode == 200 && result.result.recordset.length > 0) 
                 return ({ 
                     statusCode: 200,
@@ -72,9 +72,9 @@ async function getUser (username) {
 
 async function createUser (data) {
     try {
-        let SQLQuery = `insert into Admin_Users 
-            (username, fullname, rawpassword, password, refreshToken, email, phoneNumber, role) 
-            values (N'${data.username}', N'${data.fullname}', N'${data.rawpassword}', N'${data.password}', N'${data.refreshToken}', N'${data.email}', '${data.phoneNumber}', '${data.role}')`;
+        let SQLQuery = `insert into XACTHUC 
+            (MaND,HashPassword, RefreshToken, Role) 
+            values (N'${data.username}', N'${data.password}', N'${data.refreshToken}', N'${data.role}')`;
         
         let result = await TruyVan("Admin", SQLQuery);
         return ({
@@ -98,16 +98,14 @@ async function createUser (data) {
 async function updateRefreshToken (username, refreshToken) {
     await sql.connect(configAdmin); 
     const request = await new sql.Request();
-    const result = await request.query`update Admin_Users set refreshToken = ${refreshToken} where username = ${username}`;
+    const result = await request.query`update XACTHUC set RefreshToken = ${refreshToken} where MaND = ${username}`;
     await sql.close()
     return result.rowsAffected[0];
 }
 
 async function getInfoUser (username) {
     try {
-        let userCache = username + ":InfoUser";
-        let value = myCache.get(userCache);
-        if(value == undefined) {
+        if(1 == 1) {
             if(username == undefined || username.indexOf(' ') > -1 || username.indexOf('@') > -1 || username.indexOf('.') > -1) 
                 return ({ 
                     statusCode: 400,
@@ -116,12 +114,11 @@ async function getInfoUser (username) {
                 });
             else {
                 let SQLQuery = `
-                    SELECT .username, fullname, SinhNhat, email, phoneNumber, role
-                    FROM Admin_Users FULL JOIN dbo.Admin_ThanhVienNhom ON Admin_ThanhVienNhom.Username = Admin_Users.username
-                    WHERE Admin_Users.username = '${username}'
+                    SELECT MaND,HashPassword,RefreshToken,Role
+                    FROM XACTHUC
+                    WHERE  MaND = '${username}'
                 `;
                 let result = await TruyVan("Admin", SQLQuery);
-                myCache.set(userCache, result.result.recordset, 1800);
                 console.log(result)
 
                 if(result.statusCode == 200)
@@ -138,18 +135,11 @@ async function getInfoUser (username) {
                         alert: 'Không tìm thấy user'
                     })
             }
-        } else {
-            console.log("Lấy thông tin user từ cache");
-            return ({
-                statusCode: 200,
-                message: 'Thành công',
-                result: value[0],
-                table: value
-            })
+        
         }
     } catch(err) {
         console.log("Lỗi getInfoUser (users.models)", err);
-        GhiLog(`Lỗi getInfoUser - ${err}`);
+        // GhiLog(`Lỗi getInfoUser - ${err}`);
 
         return ({
             statusCode: 500,
@@ -161,7 +151,7 @@ async function getInfoUser (username) {
 
 async function updatePassword(username, hashPassword) {
     try {
-        let SQLQuery = `update XACTHUC set password = N'${hashPassword}' where username = N'${username}'`;
+        let SQLQuery = `update XACTHUC set HashPassword = N'${hashPassword}', where MaND = N'${username}'`;
         let result = await TruyVan("Admin", SQLQuery);
         return ({
             statusCode: 200,
@@ -170,7 +160,7 @@ async function updatePassword(username, hashPassword) {
         });
     } catch(err) {
         console.log("Lỗi updatePassword (users.models)", err);
-        GhiLog(`Lỗi updatePassword - ${err}`);
+        // GhiLog(`Lỗi updatePassword - ${err}`);
 
         return ({
             statusCode: 500,
@@ -179,7 +169,6 @@ async function updatePassword(username, hashPassword) {
         });
     }
 }
-
 exports.getUser = getUser;
 exports.createUser = createUser;
 exports.updateRefreshToken = updateRefreshToken;
@@ -199,7 +188,18 @@ async function TruyVan(TypeUser, SQLQuery) {
                 message: "Thành công",
                 result: queryResult
             };
-        } else {
+        } else if (TypeUser == 'GiaoVien') {
+            let pool = await new sql.ConnectionPool(configAdmin);
+            let result = await pool.connect();
+            let queryResult = await result.query(SQLQuery);
+            await pool.close();
+            return {
+                statusCode: 200,
+                user: 'Admin',
+                message: "Thành công",
+                result: queryResult
+            };
+        }else {
             let pool = await new sql.ConnectionPool(configUser);
             let result = await pool.connect();
             let queryResult = await result.query(SQLQuery);
@@ -222,4 +222,55 @@ async function TruyVan(TypeUser, SQLQuery) {
         };
     }
 }
+
+async function DanhSachHocSinh() {
+    try {
+        let SQLQuery = `SELECT HS.MaHS, HS.HoTen, HS.GioiTinh,HS.NgSinh,L.TenLop
+        FROM HOCSINH HS, LOP L, HOCSINH_LOP HS_L
+         WHERE HS.MaH = HS_L.MaHS AND HS_L.MaLop = L.MaLop`;
+
+        let result = await TruyVan("Admin", SQLQuery);
+
+        if(result.statusCode == 200 && result.result.recordset.length > 0) { // Có học sinh
+            return { 
+                statusCode: 200,
+                message: result.result.recordsets
+            };
+        }
+        else
+            return { 
+                statusCode: 404,
+                message: 'Không có học sinh nào!'
+            };
+    } catch(err) {
+        console.log("Lỗi DanhSachHocSinh (users.models)", err);
+        
+        return { 
+            statusCode: 500,
+            message: 'Lỗi truy vấn SQL!',
+            alert: 'Lỗi truy vấn SQL'
+        };
+    }
+}
+
+async function DanhSachLop() {
+    try {
+        let SQLQuery = `SELECT MaLop,TenLop
+        FROM LOP`;
+        let result = await TruyVan("Admin",SQLQuery);
+        console.log("Danh sách các lớp học", result);
+        return result;
+    } catch(err) {
+        console.log(err);
+        return ({ 
+            statusCode: 400,
+            message: 'Lỗi truy vấn SQL!',
+            alert: 'Kiểm tra lại câu lệnh SQL!'
+        });
+    }
+}
+
+
 exports.TruyVan = TruyVan;
+exports.DanhSachHocSinh = DanhSachHocSinh;
+exports.DanhSachLop = DanhSachLop;
