@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./assets/css/edit-student.css" />
+    <link
+      rel="stylesheet"
+      href="./assets/fonts/fontawesome-free-6.2.0-web/css/all.css" />
+
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <div class="content">
+        <div class="page-header">
+          <div class="page-header-title">
+            <div class="page-header-student-title">
+              <h3 class="page-title">Chỉnh sửa học sinh</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="student-form">
+          <div class="card">
+            <div class="card-table">
+              <div class="card-body">
+                <form>
+                  <div class="page-header-student-title">
+                    <h5 class="page-title">Thông tin học sinh</h5>
+                  </div>
+                  <div class="row">
+                    <div class="edit-form">
+                      <div class="submit-form">
+                        <div class="form-group local-form">
+                          <label>
+                            Họ và tên đệm
+                            <span class="login-danger">*</span>
+                          </label>
+                          <input
+                            required
+                            type="text"
+                            class="form-control"
+                            placeholder="Nhập họ và tên đệm..." />
+                        </div>
+                      </div>
+
+                      <div class="submit-form">
+                        <div class="form-group local-form">
+                          <label>
+                            Tên
+                            <span class="login-danger">*</span>
+                          </label>
+                          <input
+                            required
+                            type="text"
+                            class="form-control"
+                            placeholder="Nhập tên..." />
+                        </div>
+                      </div>
+
+                      <div class="submit-form">
+                        <div class="form-group local-form">
+                          <label>
+                            Giới tính
+                            <span class="login-danger">*</span>
+                          </label>
+                          <select required class="form-control">
+                            <option>Nam</option>
+                            <option>Nữ</option>
+                            <option>Khác</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="submit-form">
+                        <div class="form-group local-form">
+                          <label>
+                            Ngày sinh
+                            <span class="login-danger">*</span>
+                          </label>
+                          <input required type="date" class="form-control" />
+                        </div>
+                      </div>
+
+                      <div class="submit-form">
+                        <div class="form-group local-form">
+                          <label>
+                            Số điện thoại
+                            <span class="login-danger">*</span>
+                          </label>
+                          <input
+                            required
+                            type="tel"
+                            class="form-control"
+                            placeholder="Nhập SĐT..." />
+                        </div>
+                      </div>
+
+                      <div class="submit-form">
+                        <div class="form-group local-form">
+                          <label>
+                            Email
+                            <span class="login-danger">*</span>
+                          </label>
+                          <input
+                            required
+                            type="email"
+                            class="form-control"
+                            placeholder="Nhập email..." />
+                        </div>
+                      </div>
+
+                      <div class="submit-form">
+                        <div class="form-group local-form">
+                          <label>
+                            Khối
+                            <span class="login-danger">*</span>
+                          </label>
+                          <select required class="form-control">
+                            <option>Khối 10</option>
+                            <option>Khối 11</option>
+                            <option>Khối 12</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="submit-form">
+                        <div class="form-group local-form">
+                          <label>
+                            Lớp
+                            <span class="login-danger">*</span>
+                          </label>
+                          <select required class="form-control">
+                            <option>A1</option>
+                            <option>A2</option>
+                            <option>A3</option>
+                            <option>A4</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="submit-form">
+                        <div class="form-group local-form">
+                          <label>
+                            Mã số học sinh
+                            <span class="login-danger">*</span>
+                          </label>
+                          <input
+                            required
+                            type="text"
+                            class="form-control"
+                            placeholder="Nhập mã số học sinh..." />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="student-image">
+                      <label> Tải lên ảnh chân dung của học sinh </label>
+                      <div class="form-group">
+                        <div class="student-avatar">
+                          <img
+                            src="./assets/img/profile-avatar.png"
+                            alt="avatar"
+                            id="avatar" />
+                        </div>
+                        <div class="upload">
+                          <input
+                            accept="image/*"
+                            required
+                            type="file"
+                            hidden
+                            id="UploadImage" />
+                          <label for="UploadImage">Chọn tệp</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="student-image-submit">
+                    <div class="image-submit">
+                      <button class="search-btn btn" type="submit">
+                        Xác nhận
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="./assets/js/edit-student.js"></script>
+  </body>
+</html>

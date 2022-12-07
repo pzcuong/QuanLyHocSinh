@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./assets/css/students.css" />
+    <link
+      rel="stylesheet"
+      href="./assets/fonts/fontawesome-free-6.2.0-web/css/all.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <div class="content">
+        <div class="page-header">
+          <div class="page-header-title">
+            <div class="page-header-student-title">
+              <h3 class="page-title">Học Sinh</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Start: Search Bar -->
+        <div class="student-group-form">
+          <div class="search-group">
+            <div class="search-bar">
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Tìm kiếm theo mã số ..." />
+              </div>
+            </div>
+            <div class="search-bar">
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Tìm kiếm theo tên ..." />
+              </div>
+            </div>
+            <div class="search-bar">
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Tìm theo số điện thoại ..." />
+              </div>
+            </div>
+            <div class="search-student-btn">
+              <div class="search-btn">
+                <button type="button" class="btn">Tìm Kiếm</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End: Search Bar -->
+
+        <div class="student-form">
+          <div class="card">
+            <div class="card-table">
+              <div class="card-body">
+                <div class="card-body_head">
+                  <div class="card-body_header">
+                    <div class="page-header-student-title">
+                      <h3 class="page-title">Học Sinh</h3>
+                    </div>
+                    <div class="card-body_header-icon">
+                      <a href="./edit-student.html" class="btn">
+                        <i class="fa-solid fa-plus"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body_body">
+                  <div class="Data-Table">
+                    <div class="Data-Table-header">
+                      <div class="Table-header-data">
+                        <div class="Data-Table_length" id="Data-Table-length">
+                          <label>
+                            Xem
+                            <select
+                              name="Data-Table-length"
+                              class="custom-select form-control-not-width">
+                              <option value="50">50</option>
+                              <option value="100">100</option>
+                            </select>
+                            mục
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="Data-Table-body">
+                      <div class="Table-body">
+                        <table class="Table" id="Data-Table_0"></table>
+                      </div>
+                    </div>
+                    <div class="Data-Table-footer"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
