@@ -4,7 +4,7 @@ var json2html = require('json2html');
 const { config } = require('dotenv');
 require('dotenv').config();
 
-const configAdmin = {
+const configUser = {
     user: process.env.user,
     password: process.env.password,
     server: process.env.server,
@@ -12,86 +12,54 @@ const configAdmin = {
     port: 1433
 }
 
-async function TruyVan(SQLQuery) {
+async function TruyVan(TypeUser, SQLQuery) {
     try {
-        let pool = await new sql.ConnectionPool(configAdmin);
-        let result = await pool.connect();
-        let queryResult = await result.query(SQLQuery);
-        //console.log("Admin, QueryResult", queryResult);
-        await pool.close();
+        if (TypeUser == 'Admin') {
+            let pool = await new sql.ConnectionPool(configUser);
+            let result = await pool.connect();
+            let queryResult = await result.query(SQLQuery);
+            await pool.close();
+            return {
+                statusCode: 200,
+                user: 'Admin',
+                message: "Thành công",
+                result: queryResult
+            };
+        }
+    } catch (err) {
+        console.log("Lỗi TruyVan (admin.models)", SQLQuery, err);  
         return {
-            statusCode: 200,
-            user: 'Admin',
-            message: "Thành công",
-            result: queryResult
-        };
-    } catch(err) {
-        console.log("Lỗi TruyVan (admin.models)", SQLQuery, err);
-        // GhiLog(`Lỗi truy vấn SQL - ${SQLQuery}\t${err}`);
-
-        return { 
             statusCode: 500,
             message: 'Lỗi truy vấn SQL!'
         };
     }
 }
 
-
-// async function ThemCauHoi(data) {
-//     try {
-//         let SQLQuery = `insert into Admin_CauHoi (MucDo, TieuDe, NoiDung, LuocDo, TinhTrang) 
-//             values (N'${data.MucDo}', N'${data.TieuDe}', N'${data.NoiDung}', N'${data.LuocDo}', '${data.TinhTrang}')`;
-//         let result = await TruyVan(SQLQuery);
-//         console.log("Thêm Câu Hỏi ", result);
-//         if(result.statusCode != 200) 
-//             return ({
-//                 statusCode: 400,
-//                 message: 'Thêm Câu Hỏi Thất Bại'
-//             })
-//         else {
-//             SQLQuery = `select MaCH from Admin_CauHoi where TieuDe = N'${data.TieuDe}' and NoiDung = N'${data.NoiDung}' and LuocDo = N'${data.LuocDo}'`;
-//             result = await TruyVan(SQLQuery);
-//             let MaCH = result.result.recordset[0].MaCH;
-//             console.log("Thêm Câu Hỏi ", MaCH);
-//             result = await ThemTestCase(MaCH, data.SQLQuery);
-//             if(result.statusCode != 200)
-//                 return ({
-//                     statusCode: 400,
-//                     message: 'Thêm Test case Thất Bại'
-//                 })
-//             return ({
-//                 statusCode: 200,
-//                 message: `Thêm Câu Hỏi Thành Công - Mã số câu hỏi: ${MaCH}`,
-//                 MaCH: MaCH
-//             })
-//         }
-//     } catch(err) {  
-//         console.log(err);
-//         return ({
-//             statusCode: 400,
-//             message: 'Thêm Câu Hỏi Thất Bại'
-//         })
-//     }
-// }
-
-
-async function createUser (data) {
+async function getClass(malop) {
     try {
-        let SQLQuery = `insert into XACTHUC 
-            (MaND,HashPassword, RefreshToken, Role) 
-            values (N'${data.username}', N'${data.password}', N'${data.refreshToken}', N'${data.role}')`;
-        
-        let result = await TruyVan("Admin", SQLQuery);
-        return ({
-            statusCode: 200,
-            message: 'Thành công',
-            result: result.result.rowsAffected[0]
-        })
-    }
-    catch(err) {
-        console.log("Lỗi createUser (users.models)", err);
-        // GhiLog(`Lỗi createUser - ${err}`);
-
+        if (!malop || malop.indexOf(' ') > -1 || malop.indexOf('@') > -1 || malop.indexOf('.') > -1)
+            return ({
+                statusCode: 400,
+                message: 'Lớp không hợp lệ!',
+                alert: 'Lớp không hợp lệ!'
+            });
+        else {
+            let result = await TruyVan("Admin", `select * from LOP where MaLop = '${malop}'`);
+            if (result.statusCode == 200 && result.result.recordset.length > 0)
+                return ({
+                    statusCode: 200,
+                    message: 'Thành công',
+                    result: result.result.recordset[0]
+                });
+            else
+                return ({
+                    statusCode: 404,
+                    message: 'Không tìm thấy lớp',
+                    alert: 'Không tìm thấy lớp'
+                });
+        }
+    } catch (err) {
+        console.log("Lỗi getClass (admin.models)", err);
         return ({
             statusCode: 500,
             message: 'Lỗi hệ thống!',
@@ -101,6 +69,33 @@ async function createUser (data) {
 }
 
 
-exports.createUser = createUser;
+async function createClass(data) {
+    try {
+
+        let SQLQuery = `insert into LOP 
+            (MaLop,TenLop, MaHocKy, SiSo, MaKhoiLop) 
+            values (N'${data.malop}', N'${data.tenlop}', N'${data.mahocky}', N'${data.siso}', N'${data.makhoilop}')`;
+        console.log(SQLQuery);
+        let result = await TruyVan("Admin", SQLQuery);
+        console.log(result);
+        return ({
+            statusCode: 200,
+            message: 'Thành công',
+            result: result.result.recordsets
+            
+        })
+    }
+    catch (err) {
+        console.log("Lỗi createClass (admin.models)", err);
+        return ({
+            statusCode: 500,
+            message: 'Lỗi hệ thống!',
+            alert: 'Lỗi hệ thống'
+        });
+    }
+}
+
+exports.getClass = getClass;
+exports.createClass = createClass;
 exports.TruyVan = TruyVan;
 

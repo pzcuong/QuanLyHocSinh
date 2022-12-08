@@ -155,7 +155,7 @@ async function ThemTaiKhoan() {
 
   data = {
     username: form.querySelector("input[name=username]").value,
-    password: form.querySelector("input[name=password]").value,
+    role: form.querySelector("input[name=role]").value,
  
   }
 
@@ -187,6 +187,9 @@ async function ResetPassword() {
 
   data = {
     username: form.querySelector("input[name=username]").value, 
+    password: form.querySelector("input[name=password]").value,
+    newPassword: form.querySelector("input[name=newpassword]").value,
+    confirmPassword: form.querySelector("input[name=confirmNewPassword]").value
   }
 
   let response = await fetch('/auth/forgot-password', {
@@ -204,3 +207,70 @@ async function ResetPassword() {
   if(text.redirect)
       window.location.href = text.redirect;
 }
+
+
+
+async function ThayDoiTT() {
+  var form = document.querySelector("#formElem");
+
+  data = {
+    hoten: form.querySelector("input[name=hoten]").value,
+    ngsinh: form.querySelector("input[name=ngsinh]").value,
+    gioitinh: form.querySelector("input[name=gioitinh]").value,
+    diachi: form.querySelector("input[name=diachi]").value,
+    email: form.querySelector("input[name=email]").value
+  }
+
+  let response = await fetch('/user/ThayDoiTT', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+          json: true
+  })
+
+  let text = await response.json(); 
+  console.log(text)
+  alert(text.message);
+  if(text.redirect)
+      window.location.href = text.redirect;
+  //document.querySelector("#encoded").innerHTML = text.message;
+  //window.open(text.captcha_url, "mywindow","menubar=1,resizable=1,width=350,height=250").focus();
+}
+
+async function ThemLopHoc() {
+  var form = document.querySelector("#formElem");
+
+  data = {
+    malop: form.querySelector("input[name=malop]").value,
+    tenlop: form.querySelector("input[name=tenlop]").value,
+    mahocky: form.querySelector("input[name=mahocky]").value,
+    makhoilop: form.querySelector("input[name=makhoilop]").value,
+    siso: form.querySelector("input[name=siso]").value
+ 
+  }
+
+  let response = await fetch('/admin/ThemLopHoc', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+          json: true
+  })
+
+  let text = await response.json(); 
+  console.log(text)
+  alert(text.message);
+  if(text.redirect)
+      window.location.href = text.redirect;
+  //document.querySelector("#encoded").innerHTML = text.message;
+  //window.open(text.captcha_url, "mywindow","menubar=1,resizable=1,width=350,height=250").focus();
+}
+
+//insert source code js
+// Language: javascript
+// Path: "https://www.gstatic.com/charts/loader.js"
+
+

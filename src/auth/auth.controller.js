@@ -2,7 +2,6 @@ const userModel = require('../users/users.models');
 const authMethod = require('../auth/auth.methods');
 var randToken = require('rand-token');
 const bcrypt = require('bcryptjs'); 
-
 const { config } = require('dotenv');
 require('dotenv').config();
 
@@ -11,7 +10,6 @@ const SALT_ROUNDS = 10;
 async function createToken(username, refreshToken) {
     const accessTokenLife = process.env.ACCESS_TOKEN_LIFE;
     const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
-
     const dataForAccessToken = {
         username: username
     };
@@ -43,92 +41,10 @@ async function createToken(username, refreshToken) {
     });
 }
 
-// async function register(req, res, next) {
-//     const username = req.body.username;
-//     const password = req.body.password;
-
-//     if(!req.body.username || !req.body.password) 
-//         return res
-//             .status(400)
-//             .send({
-//                 statusCode: 400,
-//                 message: 'Vui lòng nhập đầy đủ thông tin.',
-//                 alert: 'Vui lòng nhập đầy đủ thông tin.',
-//             });
-
-//     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-//     if (!regex.test(password))
-//         return res
-//             .status(400)
-//             .send({
-//                 statusCode: 400,
-//                 message: 'Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường và số.',
-//                 alert: 'Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường và số.',
-//             });
-
-//     const user = await userModel.getUser(username);
-//     console.log(username);
-//     if(user.statusCode == 400 || user.statusCode == 500)
-//         return res
-//             .status(user.statusCode)
-//             .send({
-//                 statusCode: user.statusCode,
-//                 message: user.message,
-//                 alert: user.alert
-//             });
-
-//     else if(user.statusCode == 404) {
-//         const hashPassword = bcrypt.hashSync(req.body.password, SALT_ROUNDS);
-//         let refreshToken = randToken.generate(24); 
-
-//         let role;
-//         role = req.body.role;
-        
-//         const data = {
-//             username: username,
-//             HoVaTen: req.body.fullname,
-//             password: hashPassword,
-//             refreshToken: refreshToken,
-//             role: role
-//         };
-
-//         const newUser = await userModel.createUser(data);
-//         const accessToken = await createToken(username, refreshToken);
-
-//         if(newUser.statusCode === 200 && accessToken.statusCode === 200) 
-//             return res
-//                 .status(200)
-//                 .send({
-//                     statusCode: 200,
-//                     message: 'Tạo tài khoản thành công',
-//                     username: username,
-//                     accessToken: accessToken.accessToken,
-//                     redirect: '/user/register'
-//                 });
-//         else
-//             return res
-//                 .status(400)
-//                 .send({
-//                     statusCode: 400,
-//                     message: "Tạo tài khoản không thành công",
-//                     alert: "Tạo tài khoản không thành công",
-//                 });
-//     }
-//     else
-//         return res
-//             .status(400)
-//             .send({
-//                 statusCode: 400,
-//                 message: "Username đã tồn tại",
-//                 alert: "Username đã tồn tại",
-//             });
-// }
-
 async function login(req, res, next) {
     try {
         const username = req.body.username;
         const password = req.body.password;
-
         if (username.length < 1 || password.length < 1) 
             return res
                 .status(400)
@@ -137,7 +53,6 @@ async function login(req, res, next) {
                     message: 'Vui lòng nhập đầy đủ thông tin.',
                     alert: 'Vui lòng nhập đầy đủ thông tin.',
                 });
-        
         const regex = /\w+/g;
         if (!regex.test(password))
             return res
@@ -149,21 +64,18 @@ async function login(req, res, next) {
                 });
 
         let user = await userModel.getUser(username);
-        // console.log(user.result.refreshToken);
-
         if(user.statusCode == 200){
-            if(user.result.RefreshToken == null) {
+            if(user.result.RefreshToken == 'NULL') {
                 const hashPassword = await bcrypt.hashSync("Abc123456", SALT_ROUNDS);
                 let refreshToken = await randToken.generate(24); 
-                let SQLQueryInsert = `UPDATE XACTHUC 
-                    SET Hashpassword = '${hashPassword}',RefreshToken = '${refreshToken}' 
-                    WHERE MaND = '${username}'`;
+                let SQLQueryInsert = `  UPDATE XACTHUC 
+                                        SET Hashpassword = '${hashPassword}',RefreshToken = '${refreshToken}' 
+                                        WHERE MaND = '${username}'`;
                 await userModel.TruyVan("Admin", SQLQueryInsert);
                 user = await userModel.getUser(username);
             }
 
             const isValid = await bcrypt.compareSync(password, user.result.HashPassword);
-
             if(!isValid)
                 return res
                     .status(400)
@@ -173,9 +85,7 @@ async function login(req, res, next) {
                         alert: "Tài khoản hoặc Mật khẩu không đúng",
                     });
 
-            
             let refreshToken = await createToken(username, user.result.refreshToken);
-
             if(refreshToken.statusCode === 200) {
                 return res.header({
                     'Keep-Alive': 'true',
@@ -273,11 +183,13 @@ async function refreshToken(req, res) {
 
 async function DoiMatKhau (req, res){
     try {
-        const username = req.body.username;
+
+        console.log(`Thông tin ${JSON.stringify(req.user)}`)
+        const username = req.user.result.MaND;
         const password = req.body.password;
         const newPassword = req.body.newPassword;
         const confirmNewPassword = req.body.newPassword;
-        if (!username || !password || !newPassword || !confirmNewPassword )
+        if ( !password || !newPassword || !confirmNewPassword )
             return res 
                 .status(400)
                 .send({
@@ -285,10 +197,10 @@ async function DoiMatKhau (req, res){
                     message: 'Vui lòng nhập đầy đủ thông tin.',
                     alert: 'Vui lòng nhập đầy đủ thông tin.',
                 });
-            const user = await userModel.getUser(username);
-            if(user.statusCode == 200){
-                const isValid = bcrypt.compareSync(password, user.result.HashPassword);
-    
+        const user = await userModel.getUser(username);
+        if(user.statusCode == 200){
+            const isValid = bcrypt.compareSync(password, user.result.HashPassword);
+
             if(!isValid)
                 return res
                     .status(400)
@@ -305,8 +217,10 @@ async function DoiMatKhau (req, res){
                         message: 'Mật khẩu mới không khớp', 
                         alert: "Mật khẩu mới không khớp",
                     });
+
             const hashPassword = bcrypt.hashSync(newPassword, 10);
             const updatePassword = await userModel.updatePassword(username, hashPassword);
+
             if(updatePassword.statusCode == 200)
                 return res
                     .status(200)
@@ -324,9 +238,113 @@ async function DoiMatKhau (req, res){
                         message: 'Đổi mật khẩu thất bại', 
                         alert: "Đổi mật khẩu thất bại",
                     });
-            }
+        }
     }catch (error) {
         console.log("Lỗi DoiMatKhau (auth.controllers): ", error);
+        return res
+            .status(500)
+            .send({
+                statusCode: 500,
+                message: 'Lỗi server', 
+                alert: "Lỗi server",
+            });
+    }
+}
+
+async function ThayDoiTT(req, res){
+    try {
+            const hoten = req.body.hoten;
+            const ngsinh = req.body.ngsinh;
+            const gioitinh = req.body.gioitinh;
+            const diachi = req.body.diachi;
+            const email = req.body.email;
+            console.log(req.body);
+            if ( !hoten || !ngsinh || !gioitinh || !diachi || !email )
+                return res 
+                    .status(400)
+                    .send({
+                        statusCode: 400,
+                        message: 'Vui lòng nhập đầy đủ thông tin.',
+                        alert: 'Vui lòng nhập đầy đủ thông tin.',
+                    });
+            if (req.user.result.Role == "HocSinh"){
+                const user = await userModel.getUser(req.user.result.MaND);
+            
+                console.log(user);
+
+                if(user.statusCode == 200){
+                    const updateUser = await userModel.updateUser({
+                        hoten:hoten, 
+                        ngsinh:ngsinh, 
+                        gioitinh:gioitinh, 
+                        diachi:diachi, 
+                        email: email,
+                        MaND: req.user.result.MaND,
+                        role: req.user.result.Role
+                    });
+                
+                    if(updateUser.statusCode == 200)
+                        return res
+                            .status(200)
+                            .send({
+                                statusCode: 200,
+                                message: 'Cập nhật thông tin thành công', 
+                                alert: "Cập nhật thông tin thành công",
+                                redirect: '/user/profile'
+                            });
+                } else
+                        return res
+                            .status(400)
+                            .send({
+                                statusCode: 400,
+                                message: 'Không tồn tại người dùng !', 
+                                alert: "Không tồn tại người dùng !",
+                            });
+            }  
+            if (req.user.result.Role = "GiaoVien"){
+                const user = await userModel.getUser(req.user.result.MaND);
+                console.log(user);
+                if(user.statusCode == 200){
+                    const updateUser = await userModel.updateUser({
+                        hoten:hoten, 
+                        ngsinh:ngsinh, 
+                        gioitinh:gioitinh, 
+                        diachi:diachi, 
+                        email: email,
+                        MaND: req.user.result.MaND,
+                        role: req.user.result.Role
+                    });
+                
+                    if(updateUser.statusCode == 200)
+                        return res
+                            .status(200)
+                            .send({
+                                statusCode: 200,
+                                message: 'Cập nhật thông tin thành công', 
+                                alert: "Cập nhật thông tin thành công",
+                                redirect: '/user/profile'
+                            });
+                } else   
+                        return res
+                            .status(400)
+                            .send({
+                                statusCode: 400,
+                                message: 'Không tồn tại người dùng !', 
+                                alert: "Không tồn tại người dùng !",
+                            });
+                        
+                }
+            else
+                return res
+                    .status(400)
+                    .send({
+                        statusCode: 400,
+                        message: 'Cập nhật thông tin thất bại', 
+                        alert: "Cập nhật thông tin thất bại",
+                    });
+
+    }catch (error) {
+        console.log("Lỗi updatethongtin (auth.controllers): ", error);
         return res
             .status(500)
             .send({
@@ -348,7 +366,6 @@ async function QuenMatKhau(req, res) {
                     message: 'Vui lòng nhập đầy đủ thông tin.',
                 });
         }
-
         const user = await userModel.getUser(username);
         if(user.statusCode == 200){
             const newPassword = "Abc123456"
@@ -392,8 +409,10 @@ async function QuenMatKhau(req, res) {
     }
 }
 
+
+
+exports.ThayDoiTT = ThayDoiTT;
 exports.createToken = createToken;
-// exports.register = register;
 exports.login = login;
 exports.refreshToken = refreshToken;
 exports.DoiMatKhau = DoiMatKhau;

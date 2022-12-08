@@ -40,8 +40,6 @@ async function decodeToken (token, secretKey) {
 			data
 		});
 	} catch (error) {
-		// let data = await verify(token, secretKey);
-		// console.log(data)
 		console.log(`Error in decode access token: ${error}`);
 		return ({
 			statusCode: 401,

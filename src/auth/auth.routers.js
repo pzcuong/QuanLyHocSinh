@@ -5,13 +5,6 @@ const authController = require('./auth.controller');
 const middleware = require('./auth.middlewares');
 var path = require("path");
 
-// router.route('/register', )
-//     .post(authController.register)
-//     .get(middleware.isAuthAdmin, (req, res) => {
-//         let html = pug.renderFile('public/auth/Register.pug');
-//         res.send(html);
-//     });
-
 router.route('/login')
     .post(authController.login)
     .get(middleware.isLogined, (req, res) => {

@@ -1,0 +1,27 @@
+doctype html
+html(lang="en")
+  head
+    title Cường Phúc tới chơi và tạo lớp học
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Lato:300,400,700,900&display=swap')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
+    link(rel='stylesheet', href='/public/source/style.css')
+  body
+    #main
+        form(action="#" method="post" id="formElem")
+            div.label Cường Phúc tới chơi và tạo lớp học
+            div.malop
+                input(type="text" placeholder="mã lớp" name="malop")
+            div.tenlop
+                input(type="text" placeholder="tên lớp" name="tenlop")
+            div.mahocky
+                input(type="text" placeholder="mã học kỳ" name="mahocky")
+            div.makhoilop
+                input(type="text" placeholder="mã khối lớp" name="makhoilop")
+            div.siso
+                input(type="text" placeholder="nhập sỉ số" name="siso")
+
+            button(type="button" onclick="ThemLopHoc()") Tạo Lớp Học
+
+    script(src="/public/source/js/script.js")
