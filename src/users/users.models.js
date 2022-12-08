@@ -169,8 +169,6 @@ async function updatePassword(username, hashPassword) {
 
 async function updateUser(data) {
     try {
-        console.log("đây là update user185")
-        console.log(data)
         let SQLQuery;
         if (data.role == "GiaoVien") {
             SQLQuery = `update GIAOVIEN set HoTen = N'${data.hoten}',NgSinh = N'${data.ngsinh}',GioiTinh = N'${data.gioitinh}',DiaChi = N'${data.diachi}',Email = N'${data.email}' where MaGV = N'${data.MaND}'`;
@@ -228,54 +226,25 @@ async function TruyVan(TypeUser, SQLQuery) {
     }
 }
 
-async function DanhSachHocSinh() {
+
+async function getAllClass() {
     try {
-        let SQLQuery = `SELECT HS.MaHS, HS.HoTen, HS.GioiTinh,HS.NgSinh,L.TenLop
-        FROM HOCSINH HS, LOP L, HOCSINH_LOP HS_L
-        WHERE HS.MaH = HS_L.MaHS AND HS_L.MaLop = L.MaLop`;
-
-        let result = await TruyVan("Admin", SQLQuery);
-
-        if (result.statusCode == 200 && result.result.recordset.length > 0) { // Có học sinh
-            return {
-                statusCode: 200,
-                message: result.result.recordsets
-            };
-        }
-        else
-            return {
-                statusCode: 404,
-                message: 'Không có học sinh nào!'
-            };
+            
+            let result = await TruyVan("Admin", `select * from LOP `);
+            console.log(result);
+            let class_data = result.result.recordset[0];
+            console.log(class_data.MaLop)
+            return result;
+        
     } catch (err) {
-        console.log("Lỗi DanhSachHocSinh (users.models)", err);
-
-        return {
-            statusCode: 500,
-            message: 'Lỗi truy vấn SQL!',
-            alert: 'Lỗi truy vấn SQL'
-        };
-    }
-}
-
-async function DanhSachLop() {
-    try {
-        let SQLQuery = `SELECT MaLop,TenLop
-                        FROM LOP`;
-        let result = await TruyVan("Admin", SQLQuery);
-        console.log("Danh sách các lớp học", result);
-        return result;
-    } catch (err) {
-        console.log(err);
+        console.log("Lỗi getAllClass (user.models)", err);
         return ({
-            statusCode: 400,
-            message: 'Lỗi truy vấn SQL!',
-            alert: 'Kiểm tra lại câu lệnh SQL!'
+            statusCode: 500,
+            message: 'Lỗi hệ thống!',
+            alert: 'Lỗi hệ thống'
         });
     }
 }
 
-
+exports.getAllClass = getAllClass;
 exports.TruyVan = TruyVan;
-exports.DanhSachHocSinh = DanhSachHocSinh;
-exports.DanhSachLop = DanhSachLop;

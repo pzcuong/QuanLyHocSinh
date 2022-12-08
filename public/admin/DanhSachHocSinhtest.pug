@@ -77,7 +77,7 @@ html(style='font-size: 16px;' lang='en')
                       a.u-button-style.u-nav-link.u-white(href='/user/DoiMatKhau') Đổi mật khẩu
                     li.u-nav-item
                       a.u-button-style.u-nav-link.u-white(href='/' onclick="eraseCookie('x_authorization')") Đăng xuất
-              if(user.role == "Admin")
+              //- if(user.role == "Admin")
                 li.u-nav-item
                   a.u-button-style.u-nav-link() Admin
                   .u-nav-popup
@@ -89,7 +89,7 @@ html(style='font-size: 16px;' lang='en')
 
     section#sec-6943.u-align-center.u-clearfix.u-section-1
       .u-clearfix.u-sheet.u-sheet-1
-        h3.u-text.u-text-default.u-text-1 Thông tin người dùng - #{user.username}
+        h3.u-text.u-text-default.u-text-1 Thông tin lớp học
         .u-expanded-width.u-table.u-table-responsive.u-table-1
           table.u-table-entity.u-table-entity-1
             colgroup
@@ -100,18 +100,22 @@ html(style='font-size: 16px;' lang='en')
               col(width='20%')
             thead.u-align-center.u-custom-color-1.u-table-header.u-table-header-1
               tr(style='height: 29px;')
-                th.u-border-3.u-border-custom-color-1.u-table-cell.u-table-cell-1 Họ và tên
-                th.u-border-3.u-border-custom-color-1.u-table-cell.u-table-cell-2 Sinh nhật
-                th.u-border-3.u-border-custom-color-1.u-table-cell.u-table-cell-3 Email
-                th.u-border-3.u-border-custom-color-1.u-table-cell.u-table-cell-4 Số điện thoại
-                th.u-border-3.u-border-custom-color-1.u-table-cell.u-table-cell-5 Đội / Nhóm
+                th.u-border-3.u-border-custom-color-1.u-table-cell.u-table-cell-1 Mã Học Sinh 
+                th.u-border-3.u-border-custom-color-1.u-table-cell.u-table-cell-2 Họ Tên Học Sinh
+                th.u-border-3.u-border-custom-color-1.u-table-cell.u-table-cell-3 Giới Tính
+                th.u-border-3.u-border-custom-color-1.u-table-cell.u-table-cell-4 Ngày Sinh
+                th.u-border-3.u-border-custom-color-1.u-table-cell.u-table-cell-5 Tên Lớp
             tbody.u-table-body
+            each Class in ClassDataList 
               tr(style='height: 75px;')
-                td.u-border-1.u-border-grey-30.u-first-column.u-grey-5.u-table-cell.u-table-cell-6 #{user.fullname}
-                td.u-border-1.u-border-grey-30.u-table-cell #{user.birthday}
-                td.u-border-1.u-border-grey-30.u-table-cell #{user.email}
-                td.u-border-1.u-border-grey-30.u-table-cell #{user.phoneNumber}
-                td.u-border-1.u-border-grey-30.u-table-cell #{user.team}
+                td.u-border-1.u-border-grey-30.u-first-column.u-grey-5.u-table-cell.u-table-cell-6 #{Class.MaHS}
+                td.u-border-1.u-border-grey-30.u-table-cell #{Class.HoTen}
+                td.u-border-1.u-border-grey-30.u-table-cell #{Class.GioiTinh}
+                td.u-border-1.u-border-grey-30.u-table-cell #{Class.NgSinh}
+                td.u-border-1.u-border-grey-30.u-table-cell #{Class.TenLop}
+
+
+
 
   script(src="https://www.gstatic.com/charts/loader.js") 
   script(src="/public/source/js/script.js")

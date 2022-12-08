@@ -41,15 +41,6 @@ router.get('/DanhSachLop', isAuth, async (req, res) => {
 	res.send(html);
 });
 
-router.get('/DanhSachHocSinh', isAuth, async (req, res) => {
-	console.log(req.user);
-	let html = pug.renderFile('public/Home.pug', {             //FE học sinh
-		user: req.user.result,        
-		image: req.image,
-	});
-	res.send(html);
-});
-
 router.route('/ThayDoiTT')
 	.get(isAuth, async (req, res) => {
 		let html = pug.renderFile('public/auth/ThayDoiTT.pug');
@@ -65,4 +56,8 @@ router.get('/profile', isAuth, async (req, res) => {
 		});
 		res.send(html);
 	});
+
+router.route('/LopHoc')
+	.get(isAuth, userController.getAllClass);
+
 module.exports = router;

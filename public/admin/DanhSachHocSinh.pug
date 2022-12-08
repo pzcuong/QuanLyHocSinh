@@ -1,0 +1,32 @@
+doctype html
+html(lang="en")
+  head
+    title Cường Phúc tới chơi và tạo lớp học
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Lato:300,400,700,900&display=swap')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
+    link(rel='stylesheet', href='/public/source/style.css')
+  body
+    #main
+        form(action="#" method="post" id="formElem")
+            div.label Cường Phúc tới chơi và tạo lớp học
+            div.malop
+                input(type="text" placeholder="mã lớp" name="malop")
+            button(type="button" onclick="DanhSachHocSinh()") Danh Sách
+            thead.u-align-center.u-custom-color-1.u-table-header.u-table-header-1
+              tr(style='height: 29px;')
+                th.u-border-3.u-border-custom-color-1.u-table-cell.u-table-cell-1 Mã Học Sinh 
+                th.u-border-3.u-border-custom-color-1.u-table-cell.u-table-cell-2 Họ Tên Học Sinh
+                th.u-border-3.u-border-custom-color-1.u-table-cell.u-table-cell-3 Giới Tính
+                th.u-border-3.u-border-custom-color-1.u-table-cell.u-table-cell-4 Ngày Sinh
+                th.u-border-3.u-border-custom-color-1.u-table-cell.u-table-cell-5 Tên Lớp
+            tbody.u-table-body
+            each Class in ClassDataList 
+              tr(style='height: 75px;')
+                td.u-border-1.u-border-grey-30.u-first-column.u-grey-5.u-table-cell.u-table-cell-6 #{Class.MaHS}
+                td.u-border-1.u-border-grey-30.u-table-cell #{Class.HoTen}
+                td.u-border-1.u-border-grey-30.u-table-cell #{Class.GioiTinh}
+                td.u-border-1.u-border-grey-30.u-table-cell #{Class.NgSinh}
+                td.u-border-1.u-border-grey-30.u-table-cell #{Class.MaLop}
+    script(src="/public/source/js/script.js")

@@ -2,10 +2,27 @@ const usersModel = require('../users/users.models');
 var pug = require('pug');
 
 
-async function DanhSachLop(req, res) { 
-    let result = await usersModel.DanhSachLop();
+
+// async function getAllClass(req, res) { 
+//     let result = await usersModel.getAllClass();
+//     if(result.statusCode === 200) {
+//         let html = pug.renderFile('public/user/LopHoc.pug');
+//         res.send(html);
+//     } else {
+//         let html = pug.renderFile('public/404.pug', { 
+//             message: result.message,
+//             redirect: 'public/Home.pug'
+//         });
+//         res.send(html);
+//     }
+// }
+
+async function getAllClass(req, res) { 
+    let result = await usersModel.getAllClass();
     if(result.statusCode === 200) {
-        let html = pug.renderFile('public/Home.pug');
+        let html = pug.renderFile('public/user/LopHoc.pug',{
+            classlist:  result.result.recordset 
+        });
         res.send(html);
     } else {
         let html = pug.renderFile('public/404.pug', { 
@@ -16,20 +33,4 @@ async function DanhSachLop(req, res) {
     }
 }
 
-async function DanhSachHocSinh(req, res) { 
-    let result = await usersModel.DanhSachHocSinh();
-    if(result.statusCode === 200) {
-        let html = pug.renderFile('public/Home.pug'); // FE hoc sinh
-        res.send(html);
-    } else {
-        let html = pug.renderFile('public/404.pug', { 
-            message: result.message,
-            redirect: 'public/Home.pug'       
-        });
-        res.send(html);
-    }
-}
-
-
-exports.DanhSachHocSinh = DanhSachHocSinh;
-exports.DanhSachLop = DanhSachLop;
+exports.getAllClass = getAllClass;

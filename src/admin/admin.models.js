@@ -95,6 +95,66 @@ async function createClass(data) {
     }
 }
 
+// async function DanhSachHocSinh(malop) {
+//     try {
+        
+    //     let SQLQuery = `SELECT HS.MaHS, HS.HoTen, HS.GioiTinh,HS.NgSinh,L.TenLop
+    //     FROM HOCSINH HS, LOP L, HOCSINH_LOP HS_L
+    //     WHERE HS.MaH = HS_L.MaHS AND HS_L.MaLop = L.MaLop AND L.MaLop = '${malop}'`;
+
+    //     let result = await TruyVan("Admin", SQLQuery);
+    //     console.log(result);
+    //     return result;
+    // } catch (err) {
+    //     console.log("Lỗi DanhSachHocSinh (users.models)", err);
+    //     return {
+    //         statusCode: 500,
+    //         message: 'Lỗi truy vấn SQL!',
+    //         alert: 'Lỗi truy vấn SQL'
+    //     };
+    // }
+// }
+
+async function DanhSachHocSinh() {
+    try {
+            
+            let SQLQuery = `SELECT HS.MaHS, HS.HoTen, HS.GioiTinh,HS.NgSinh,L.TenLop
+            FROM HOCSINH HS, LOP L, HOCSINH_LOP HS_L
+            WHERE HS.MaHS = HS_L.MaHS AND HS_L.MaLop = L.MaLop `;
+
+            let result = await TruyVan("Admin", SQLQuery);
+            let class_data = result.result.recordset[0];
+            console.log(result);
+            return result;
+
+    } catch (err) {
+        console.log("Lỗi DanhSachHocSinh (admin.models)", err);
+        return ({
+            statusCode: 500,
+            message: 'Lỗi hệ thống!',
+            alert: 'Lỗi hệ thống'
+        });
+    }
+}
+
+async function ThemHocSinhVaoLop(MaHS, MaLop) {
+    try {
+        let SQLQuery = `insert into HOCSINH_LOP (MaHS, MaLop) values ('${MaHS}', '${MaLop}')`;
+        let result = await TruyVan("Admin", SQLQuery);
+        console.log("Thêm học sinh vào lớp", result);
+        return result;
+    } catch(err) {
+        console.log(err);
+        return ({ 
+            statusCode: 400,
+            message: 'Lỗi truy vấn SQL!',
+            alert: 'Kiểm tra lại câu lệnh SQL!'
+        });
+    }
+}
+
+exports.ThemHocSinhVaoLop = ThemHocSinhVaoLop;
+exports.DanhSachHocSinh = DanhSachHocSinh;
 exports.getClass = getClass;
 exports.createClass = createClass;
 exports.TruyVan = TruyVan;

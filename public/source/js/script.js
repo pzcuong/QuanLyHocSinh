@@ -273,4 +273,60 @@ async function ThemLopHoc() {
 // Language: javascript
 // Path: "https://www.gstatic.com/charts/loader.js"
 
+// async function DanhSachHocSinh() {
+//   var form = document.querySelector("#formElem");
+//   data = {
+//     malop: form.querySelector("input[name=malop]").value,
+//   }
 
+//   let response = await fetch('/admin/DanhSachHocSinh', {
+//           method: 'POST',
+//           headers: {
+//               'Content-Type': 'application/json',
+//           },
+//           body: JSON.stringify(data),
+//           json: true
+//   })
+
+//   let text = await response.json(); 
+//   console.log(text)
+//   alert(text.message);
+//   if(text.redirect)
+//       window.location.href = text.redirect;
+//   //document.querySelector("#encoded").innerHTML = text.message;
+//   //window.open(text.captcha_url, "mywindow","menubar=1,resizable=1,width=350,height=250").focus();
+// }
+
+// //insert source code js
+// // Language: javascript
+// // Path: "https://www.gstatic.com/charts/loader.js"
+
+
+
+
+async function ThemHocSinhVaoLop() {
+  var form = document.querySelector("#formElem");
+
+  data = {
+    malop: form.querySelector("input[name=malop]").value,
+    mahs: form.querySelector("input[name=mahs]").value,
+ 
+  }
+
+  let response = await fetch('/admin/ThemHocSinh', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+          json: true
+  })
+
+  let text = await response.json(); 
+  console.log(text)
+  alert(text.message);
+  if(text.redirect)
+      window.location.href = text.redirect;
+  //document.querySelector("#encoded").innerHTML = text.message;
+  //window.open(text.captcha_url, "mywindow","menubar=1,resizable=1,width=350,height=250").focus();
+}

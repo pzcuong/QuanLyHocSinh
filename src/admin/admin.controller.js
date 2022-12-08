@@ -141,5 +141,84 @@ async function ThemLopHoc(req, res, next) {
             });
 }
 
+// async function DanhSachHocSinh(req, res, next) {
+    
+//     const Class = req.body.Class;
+//     if(!req.body.Class) 
+//         return res
+//             .status(400)
+//             .send({
+//                 statusCode: 400,
+//                 message: 'Vui lòng nhập mã lớp.',
+//                 alert: 'Vui lòng nhập mã lớp.',
+//             });
+
+//     const Class_data = await adminModel.getClass(Class);
+//     console.log(Class_data);
+//     if(Class_data.statusCode == 400 || Class_data.statusCode == 500)
+//         return res
+//             .status(Class.statusCode)
+//             .send({
+//                 statusCode: Class_data.statusCode,
+//                 message: Class_data.message,
+//                 alert: Class_data.alert,
+                
+//             });
+
+//     else if(Class_data.statusCode == 404) {
+
+//         let result = await adminModel.DanhSachHocSinh();
+//         console.log(result)
+//         if(result.statusCode === 200) {
+//             let html = pug.renderFile('public/admin/DanhSachHocSinhtest.pug',{
+//                 ClassDataList: result.result.recordset 
+//             }); // FE hoc sinh
+//             res.send(html);
+//         } else {
+//             let html = pug.renderFile('public/404.pug', { 
+//                 message: result.message,
+//                 redirect: 'public/Home.pug'       
+//             });
+//             res.send(html);
+//         }
+        
+//     }
+
+// }
+
+async function DanhSachHocSinh(req, res) { 
+    let result = await adminModel.DanhSachHocSinh();
+    if(result.statusCode === 200) {
+        let html = pug.renderFile('public/admin/DanhSachHocSinhtest.pug',{
+            ClassDataList:  result.result.recordset 
+        });
+        res.send(html);
+    } else {
+        let html = pug.renderFile('public/404.pug', { 
+            message: result.message,
+            redirect: 'public/Home.pug'
+        });
+        res.send(html);
+    }
+}
+
+
+async function ThemHocSinhVaoLop(req, res) {
+    try {
+
+        const data = req.body;
+        console.log("dữ liệu " + data.malop + " " + data.mahs)
+        if(!data.malop)
+            return res.status(400).send({message: 'Không tìm thấy lớp'});
+        const result = await adminModel.ThemHocSinhVaoLop(data.mahs, data.malop);
+        console.log(result);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+exports.ThemHocSinhVaoLop = ThemHocSinhVaoLop;
+exports.DanhSachHocSinh = DanhSachHocSinh;
 exports.ThemLopHoc = ThemLopHoc;
 exports.ThemTaiKhoan = ThemTaiKhoan;
