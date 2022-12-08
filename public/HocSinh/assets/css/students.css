@@ -26,7 +26,7 @@ body {
 }
 .page-title {
   font-size: 22px;
-  margin-bottom: 5px;
+  margin-bottom: 50px;
   font-weight: 600;
 }
 .search-group {
@@ -88,6 +88,14 @@ body {
   border-radius: 8px;
   height: max-content;
 }
+
+.page-header-student-title h5 {
+  text-align: center;
+}
+.page-header-student-title h5 {
+  margin-top: 30px;
+}
+
 .card-table {
   display: flex;
   flex-direction: column;
@@ -95,10 +103,12 @@ body {
 .card-body {
   padding: 25px;
   position: relative;
+  height: max-content;
 }
 .card-body_head {
   margin-bottom: 30px;
   display: flex;
+  width: 100px;
 }
 .card-body_header {
   display: flex;
@@ -113,10 +123,74 @@ body {
   top: 17px;
   right: 25px;
 }
+
 .card-body_header-icon i:hover {
   background-color: var(--foreign-color);
   cursor: pointer;
 }
-.Data-Table_length label {
-  color: black;
+
+/* Modal */
+.modal.open {
+  display: flex;
+}
+.modal-close {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--primary-color);
+  padding: 12px;
+  font-size: 15px;
+  margin-bottom: 20px;
+  background-color: white;
+}
+.modal-close:hover {
+  color: rgb(255, 255, 255);
+  background-color: var(--primary-color);
+  cursor: pointer;
+}
+.card-body-edit {
+  padding: 25px;
+  position: relative;
+  height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  /* border-radius: 10px; */
+  overflow: auto;
+}
+.student-form-edit {
+  background-color: white;
+  height: max-content;
+  width: max-content;
+  overflow-y: initial !important;
+  position: relative;
+  /* border-radius: 10px; */
+}
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  box-shadow: 5px 10px #000;
+  align-items: center;
+  justify-content: center;
+  display: none;
+}
+/* Table */
+.Table .sorting {
+  background-color: #f7f7fa;
+  padding: 16px 30px 16px 12px;
+  min-width: 200px;
+}
+.card-body_body {
+  overflow-x: auto;
+}
+.Table th {
+  color: #000;
+  background-color: #f8f9fa;
+  /* border-color: #eff2f7; */
+  white-space: nowrap;
+  text-align: left;
+  /* border: 1px solid #eff2f7; */
 }

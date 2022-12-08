@@ -39,7 +39,7 @@ body {
   display: flex;
   flex-direction: column;
 }
-.form-control {
+.form-control-edit {
   border: 1px solid #ddd;
   box-shadow: none;
   font-size: 15px;
@@ -57,7 +57,7 @@ body {
   padding: 6px 12px;
   border-radius: 4px;
 }
-.form-control:focus {
+.form-control-edit:focus {
   border-color: var(--primary-color);
   box-shadow: none;
   outline: 0 none;
@@ -134,10 +134,6 @@ body {
   background-color: var(--foreign-color);
   cursor: pointer;
 }
-.Data-Table_length label {
-  color: black;
-}
-
 /* Edit form */
 .row {
   display: flex;
@@ -148,6 +144,9 @@ body {
 .submit-form {
   margin: 10px 20px;
 }
+.submit-form:first-child {
+  margin-top: 0;
+}
 
 .submit-form label {
   font-weight: 600;
@@ -155,6 +154,9 @@ body {
 }
 .submit-form span {
   color: red;
+}
+.submit-form input {
+  font-family: "Roboto", sans-serif;
 }
 .student-image .form-group {
   margin-top: 10px;
@@ -178,7 +180,12 @@ body {
   width: 150px;
   border-radius: 50%;
 }
-.student-image label:fis {
+.student-image .login-danger {
+  color: red;
+  font-size: 15px;
+  font-weight: 600;
+}
+.student-image label:first-child {
   font-weight: 600;
   font-size: 15px;
   margin-left: 20px;
