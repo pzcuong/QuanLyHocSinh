@@ -279,3 +279,21 @@ async function DanhSachLop() {
 exports.TruyVan = TruyVan;
 exports.DanhSachHocSinh = DanhSachHocSinh;
 exports.DanhSachLop = DanhSachLop;
+
+async function DanhSachBaiDang() {
+    try {
+        let SQLQuery = `SELECT * FROM BAIDANG`;
+        let result = await TruyVan("Admin", SQLQuery);
+        console.log("Danh sách các bài đăng", result);
+        return result;
+    } catch (err) {
+        console.log(err);
+        return ({
+            statusCode: 400,
+            message: 'Lỗi truy vấn SQL!',
+            alert: 'Kiểm tra lại câu lệnh SQL!'
+        });
+    }
+}
+
+exports.DanhSachBaiDang = DanhSachBaiDang;

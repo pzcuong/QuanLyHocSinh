@@ -274,3 +274,26 @@ async function ThemLopHoc() {
 // Path: "https://www.gstatic.com/charts/loader.js"
 
 
+async function ThemBaiDang() {
+  var form = document.querySelector("#formElem");
+
+  data = {
+    TieuDe: form.querySelector("input[name=TieuDe]").value, 
+    NoiDung: form.querySelector("textarea[name=NoiDung]").value,
+  }
+
+  let response = await fetch('/admin/ThemBaiDang', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+          json: true
+  })
+
+  let text = await response.json(); 
+  console.log(text)
+  alert(text.message);
+  if(text.redirect)
+      window.location.href = text.redirect;
+}

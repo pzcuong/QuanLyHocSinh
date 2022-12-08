@@ -22,31 +22,38 @@ async function isAuth(req, res, next) {
 };
 
 async function isAuthAdmin(req, res, next) {
-	const accessTokenFromHeader = req.cookies.x_authorization;
-	if (!accessTokenFromHeader) {
+	try {
+		const accessTokenFromHeader = req.cookies.x_authorization;
+		if (!accessTokenFromHeader) {
+			return res
+				.writeHead(302, {'Location': '/auth/login'})
+				.end();
+		}
+
+		const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
+		const verified = await authMethod.verifyToken( accessTokenFromHeader, accessTokenSecret );
+		if (verified.statusCode === 401) {
+			return res
+				.writeHead(302, {'Location': '/auth/login'})
+				.end();
+		}
+
+		const user = await userModle.getUser(verified.data.payload.username);
+
+		console.log(user.result.Role);
+		if (user.result.Role !== 'Admin') 
+			return res
+				.writeHead(302, {'Location': '/auth/login'})
+				.end();
+
+		req.user = user;
+		return next();
+	} catch (error) {
+		console.log(error);
 		return res
 			.writeHead(302, {'Location': '/auth/login'})
 			.end();
 	}
-
-	const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
-	const verified = await authMethod.verifyToken( accessTokenFromHeader, accessTokenSecret );
-	if (verified.statusCode === 401) {
-		return res
-			.writeHead(302, {'Location': '/auth/login'})
-			.end();
-	}
-
-	const user = await userModle.getUser(verified.data.payload.username);
-
-	console.log(user.result.Role);
-	if (user.result.Role !== 'Admin') 
-		return res
-			.writeHead(302, {'Location': '/auth/login'})
-			.end();
-
-	req.user = user;
-	return next();
 };
 
 async function isLogined(req, res, next) {

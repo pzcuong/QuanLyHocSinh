@@ -99,3 +99,27 @@ exports.getClass = getClass;
 exports.createClass = createClass;
 exports.TruyVan = TruyVan;
 
+async function ThemBaiDang(data) {
+    try {
+        let SQLQuery = `insert into BaiDang 
+        (NoiDung, NgayDang, TieuDe) 
+        values (N'${data.NoiDung}', N'${data.NgayDang}', N'${data.TieuDe}')`;
+
+        let result = await TruyVan("Admin", SQLQuery);
+        console.log(result);
+        return ({
+            statusCode: 200,
+            message: 'Thành công',
+            result: result.result.recordsets
+        })
+    } catch (err) {
+        console.log("Lỗi ThemBaiDang (admin.models)", err);
+        return ({
+            statusCode: 500,
+            message: 'Lỗi hệ thống!',
+            alert: 'Lỗi hệ thống'
+        });
+    }
+}
+
+exports.ThemBaiDang = ThemBaiDang;

@@ -143,3 +143,50 @@ async function ThemLopHoc(req, res, next) {
 
 exports.ThemLopHoc = ThemLopHoc;
 exports.ThemTaiKhoan = ThemTaiKhoan;
+
+async function ThemBaiDang(req, res) {
+    // Get day, month, year from date
+    const date = new Date();
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    const NgayDang = day + '/' + month + '/' + year;
+
+    const TieuDe = req.body.TieuDe;
+    const NoiDung = req.body.NoiDung;
+
+    if(!TieuDe || !NoiDung)
+        return res
+            .status(400)
+            .send({
+                statusCode: 400,
+                message: 'Vui lòng nhập đầy đủ thông tin.',
+                alert: 'Vui lòng nhập đầy đủ thông tin.',
+            });
+
+    const BaiDang = await adminModel.ThemBaiDang({
+        TieuDe: TieuDe,
+        NoiDung: NoiDung,
+        NgayDang: NgayDang
+    })
+
+    if(BaiDang.statusCode === 200)
+        return res
+            .status(200)
+            .send({
+                statusCode: 200,
+                message: 'Thêm bài đăng thành công',
+                redirect: '/admin/ThemBaiDang'
+            });
+    else
+        return res
+            .status(400)
+            .send({
+                statusCode: 400,
+                message: 'Thêm bài đăng không thành công',
+                alert: 'Thêm bài đăng không thành công',
+                redirect: '/admin/ThemBaiDang'
+            });
+}
+
+exports.ThemBaiDang = ThemBaiDang;
