@@ -65,4 +65,5 @@ router.get('/profile', isAuth, async (req, res) => {
 		});
 		res.send(html);
 	});
+	
 module.exports = router;

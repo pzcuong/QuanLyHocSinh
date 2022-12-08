@@ -23,4 +23,11 @@ router.route('/ThemLopHoc' )
 })
 .post(isAuthAdmin,adminController.ThemLopHoc)
 
+router.route('/ThemBaiDang')
+.get(isAuthAdmin, (req, res) => {
+    let html = pug.renderFile('public/admin/ThemBaiDang.pug');
+    res.send(html);
+})
+.post(isAuthAdmin,adminController.ThemBaiDang)
+
 module.exports = router;

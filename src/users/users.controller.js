@@ -33,3 +33,21 @@ async function DanhSachHocSinh(req, res) {
 
 exports.DanhSachHocSinh = DanhSachHocSinh;
 exports.DanhSachLop = DanhSachLop;
+
+async function DanhSachBaiDang(req, res) {
+    let result = await usersModel.DanhSachBaiDang();
+    if(result.statusCode === 200) {
+        let html = pug.renderFile('public/Home.pug', {
+            DanhSachThongBao: result.result.recordsets[0]
+        });
+        res.send(html);
+    } else {
+        let html = pug.renderFile('public/404.pug', { 
+            message: result.message,
+            redirect: 'public/Home.pug'
+        });
+        res.send(html);
+    }
+}
+
+exports.DanhSachBaiDang = DanhSachBaiDang;

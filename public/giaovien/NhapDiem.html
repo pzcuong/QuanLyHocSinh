@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Utopian-io | How to create a Spreadsheet component using HTML and JavaScript</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/handsontable/0.35.1/handsontable.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <main role="main" class="container">
+        <h1>Employee Database</h1>
+        <p class="lead">Managing employee database using Spreadsheet</p>
+        <div class="container welcome-div">
+            <div id="employee">
+            </div>
+        </div>
+    </main>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/handsontable/0.35.1/handsontable.min.js"></script>
+
+    <button id="btnSave">Save</button>   
+    
+    <script type="text/javascript">
+        var data = [{
+            "MSHS": "",
+            "HoVaTen": "",
+            "DiemMieng": "",
+            "Diem15p": "",
+            "Diem1Tiet": "",
+            "DiemGK": "",
+            "DiemCK": "",
+        }]
+        var container = document.getElementById('employee');
+        var hot = new Handsontable(container, {
+            data: data,
+            rowHeaders: true,
+            colHeaders: false,
+            colHeaders: ["MSHS", "Họ và tên", "Điểm miệng", "Điểm 15 phút", "Điểm 1 tiết", "Điểm GK", "Điểm CK"],
+            columnSorting: true,
+            sortIndicator: true
+        });  
+        
+    </script>
+
+    <!-- button onclick -->
+    <script>
+        $(document).ready(function () {
+            $("#btnSave").click(function () {
+                var data = hot.getData();
+                console.log(data);
+            });
+        });
+    </script>
+</body>
+
+</html>
