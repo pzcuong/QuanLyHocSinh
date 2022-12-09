@@ -103,12 +103,21 @@ body
   transition: all 0.2s ease;
 
 }
+.sidebar .nav_links li a i:hover
+{
+  color: #3d5ee1;
+}
 .sidebar .nav_links li .iocn_link .dropdown
 {
   color: black;
   position: relative;
   left: -13px;
-  padding: 10px;
+  padding: 10px; 
+
+}
+.sidebar .nav_links li .iocn_link .dropdown:hover
+{
+ color: #3d5ee1;
 }
 .sidebar .nav_links li .iocn_link 
 {
@@ -117,9 +126,9 @@ body
   align-items: center;
   justify-content: space-between;
 }
-.sidebar .nav_links li .iocn_link:hover 
+.iocn_link:hover 
 {
- 
+  color: red;
 }
 .sidebar.close .nav_links li .iocn_link
 {
@@ -138,6 +147,11 @@ body
 {
   transform: rotate(90deg);
 }
+.sidebar .nav_links li.ShowMenu i.dropdown:focus
+{
+  color: #3D5EE1;
+}
+
 .sidebar.close .nav_links i.dropdown
 {
   display: none;
@@ -157,18 +171,19 @@ body
 }
 /* .sidebar .nav_links li a .link_name:hover
 {
-  color:#3D5EE1;
+  color: red;
 } */
 
 .sidebar.close .nav_links li a .link_name
 {
   opacity: 0;
   pointer-events: none;
+
 }
 .sidebar .nav_links li .sub-menu
 {
   padding: 7px 6px 14px 80px;
-  margin-top: -10px;
+  margin-top: 0px;
   display: none;
   background: #fff;
 }
@@ -203,7 +218,7 @@ body
   top: -10px;
   margin-top: 0;
   padding: 10px 20px;
-  border-radius: 0 6px 6px 0;
+  border-radius: 0 7px 7px 0;
 
   opacity: 0;
   display: block;
@@ -239,7 +254,7 @@ body
 .sidebar .nav_links li:hover .sub-menu.blank
 {
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-36%);
 }
 
 
@@ -247,10 +262,8 @@ body
 {
   display: block;
   position: absolute;
-  /* background: #e4e9f7; */
   left: 260px;
   height: 60px;
-  /* width: calc(100% - 260px); */
   transition: all 0.5s ease;
 }
 .sidebar.close ~ .home-section
@@ -274,10 +287,10 @@ body
 {
   cursor: pointer;
   margin: 5px;
-  font-size: 25px;
+  font-size: 20px;
   background-color: #3D5EE1;
-  padding: 9px;
-  border-radius: 8px;
+  padding: 8px;
+  border-radius: 7px;
 }
 /* ////////////////////////////////////////////////////////////////////////////// */
 .header{
@@ -290,8 +303,6 @@ body
   border-bottom: 1px solid rgba(0,0,0,0.05);
 
 }
-
-
 .header .actions_user_hd
 {
   position: fixed;
@@ -356,6 +367,7 @@ body
   font-size: 14px;
   color: #6f6f6f;
   font-weight: 400;
+
 }
 
 
