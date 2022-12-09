@@ -81,7 +81,7 @@ async function login(req, res, next) {
                     .status(400)
                     .send({
                         statusCode: 400,
-                        message: 'Tài khoản hoặc Mật khẩu không đúng.', // Sai mật khẩu
+                        message: 'Tài khoản hoặc Mật khẩu không đúng.',
                         alert: "Tài khoản hoặc Mật khẩu không đúng",
                     });
 
@@ -185,11 +185,13 @@ async function DoiMatKhau (req, res){
     try {
 
         console.log(`Thông tin ${JSON.stringify(req.user)}`)
-        const username = req.user.result.MaND;
         const password = req.body.password;
         const newPassword = req.body.newPassword;
         const confirmNewPassword = req.body.newPassword;
-        if ( !password || !newPassword || !confirmNewPassword )
+        let result_user = await userModel.getUser(req.body.username)
+        const username = result_user.result.MaND;
+        console.log(username);
+        if ( !username || !password || !newPassword || !confirmNewPassword )
             return res 
                 .status(400)
                 .send({

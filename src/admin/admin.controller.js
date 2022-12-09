@@ -29,9 +29,9 @@ async function ThemTaiKhoan(req, res, next) {
         return res
             .status(user.statusCode)
             .send({
-                statusCode: user.statusCode,
-                message: user.message,
-                alert: user.alert
+                statusCode: 500,
+                message: "lỗi truy vấn SQL",
+                alert: "Tài khoản đã tồn tại"
             });
 
     else if(user.statusCode == 404) {
@@ -42,7 +42,7 @@ async function ThemTaiKhoan(req, res, next) {
 
         const newUser = await userModel.createUser(data);
 
-        if(newUser.statusCode === 200 /*&& accessToken.statusCode === 200*/) 
+        if(newUser.statusCode === 200 ) 
 
             return res
                 .status(200)
@@ -141,8 +141,156 @@ async function ThemLopHoc(req, res, next) {
             });
 }
 
-exports.ThemLopHoc = ThemLopHoc;
-exports.ThemTaiKhoan = ThemTaiKhoan;
+
+async function DanhSachHocSinh(req, res) { 
+    let result = await adminModel.DanhSachHocSinh();
+    if(result.statusCode === 200) {
+        let html = pug.renderFile('public/admin/DanhSachHocSinhtest.pug',{
+            ClassDataList:  result.result.recordset 
+        });
+        res.send(html);
+    } else {
+        let html = pug.renderFile('public/404.pug', { 
+            message: result.message,
+            redirect: 'public/Home.pug'
+        });
+        res.send(html);
+    }
+}
+
+
+async function ThemHocSinhVaoLop(req, res) {
+    try {
+
+        const data = req.body;
+        if(!data.malop || !data.mahs)
+            return res
+                .status(400)
+                .send({
+                    statusCode: 400,
+                    message: 'Vui lòng nhập đầy đủ thông tin',
+                    alert: "Vui lòng nhập đầy đủ thông tin",
+                    redirect: '/admin/ThemHocSinh'
+                });
+        let result_user = await  userModel.getUser(data.mahs);
+        if (result_user.statusCode == 200 ){
+            let result_class = await adminModel.getClass(data.malop)
+            if (result_class.statusCode == 200 ){
+                const result = await adminModel.ThemHocSinhVaoLop(data.mahs, data.malop);
+                console.log(result);
+                return res
+                    .status(200)
+                    .send({
+                        statusCode: 200,
+                        message: 'Thêm học sinh vào lớp thành công',
+                        alert: "Thêm học sinh vào lớp thành công",
+                        redirect: '/admin/ThemHocSinh'
+                    });
+            }else {
+                return res
+                        .status(400)
+                        .send({
+                            statusCode: 400,
+                            message: 'Không tìm thấy lớp',
+                            alert: "Không tìm thấy lớp",
+                            redirect: '/admin/ThemHocSinh'
+                    });
+            }
+
+        }else{
+            return res
+                .status(400)
+                .send({
+                    statusCode: 400,
+                    message: 'Không tìm thấy học sinh',
+                    alert: "Không tìm thấy học sinh",
+                    redirect: '/admin/ThemHocSinh'
+            });
+        }
+    } catch (error) {
+        console.log(error);
+        return res
+        .status(400)
+        .send({
+            statusCode: 400,
+            message: 'Thêm học sinh vào lớp không thành công',
+            alert: "Thêm học sinh vào lớp không thành công thành công",
+            redirect: '/admin/ThemHocSinh'
+        });
+    }
+}
+
+async function ThemGiaoVienVaoLop(req, res) {
+    try {
+
+        const data = req.body;
+        console.log(data.magv)
+        if(!data.malop || !data.mamh || data.magv)
+            return res
+                    .status(400)
+                    .send({
+                        statusCode: 400,
+                        message: 'Vui lòng nhập đầy đủ thông tin!',
+                        alert: "Vui lòng nhập đầy đủ thông tin!",
+                        redirect: '/admin/ThemGiaoVien'
+                    });
+        let result_class = await adminModel.getClass(data.malop);
+        if (result_class.statusCode == 200 ){
+            let result_monhoc = await userModel.getMonHoc(data.mamh);
+            if (result_monhoc.statusCode == 200){
+                let result_giaovien = await userModel.getUser(data.magv);
+                if(result_giaovien.statusCode == 200){
+                    const result = await adminModel.ThemGiaoVienVaoLop(data.malop, data.mamh, data.magv);
+                    console.log(result);
+                    return res
+                        .status(200)
+                        .send({
+                            statusCode: 200,
+                            message: 'Thêm giáo viên vào lớp thành công',
+                            alert: "Thêm giáo viên vào lớp thành công",
+                            redirect: '/admin/ThemGiaoVien'
+                        });
+                }else{
+                        return res
+                            .status(400)
+                            .send({
+                                statusCode: 400,
+                                message: 'Không tìm thấy giáo viên',
+                                alert: "Không tìm thấy giáo viên",
+                                redirect: '/admin/ThemGiaoVien'
+                        });
+                }
+            }else{
+                    return res
+                    .status(400)
+                    .send({
+                        statusCode: 400,
+                        message: 'Không tìm thấy môn học',
+                        alert: "Không tìm thấy môn học",
+                        redirect: '/admin/ThemGiaoVien'
+                });
+            }
+        }else{
+                return res
+                .status(400)
+                .send({
+                    statusCode: 400,
+                    message: 'Không tìm thấy lớp',
+                    alert: "Không tìm thấy lớp",
+                    redirect: '/admin/ThemGiaoVien'
+            });
+        }
+    } catch (error) {
+        console.log(error);
+        return res.status(400)
+                .send({
+                    statusCode: 400,
+                    message: 'Thêm giáo viên vào lớp không thành công',
+                    alert: "Thêm giáo viên vào lớp không thành công thành công",
+                    redirect: '/admin/ThemGiaoVien'
+                });
+    }
+}
 
 async function ThemBaiDang(req, res) {
     // Get day, month, year from date
@@ -189,4 +337,10 @@ async function ThemBaiDang(req, res) {
             });
 }
 
+
+exports.ThemGiaoVienVaoLop = ThemGiaoVienVaoLop;
+exports.ThemHocSinhVaoLop = ThemHocSinhVaoLop;
+exports.DanhSachHocSinh = DanhSachHocSinh;
+exports.ThemLopHoc = ThemLopHoc;
+exports.ThemTaiKhoan = ThemTaiKhoan;
 exports.ThemBaiDang = ThemBaiDang;

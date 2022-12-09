@@ -17,7 +17,6 @@ const configUser = {
         trustedConnection: false,
         encrypt: true
     }
-
 }
 
 async function getUser(username) {
@@ -53,6 +52,40 @@ async function getUser(username) {
     }
 }
 
+async function getMonHoc(mamh) {
+    try {
+        if (!mamh || mamh.indexOf(' ') > -1 || mamh.indexOf('@') > -1 || mamh.indexOf('.') > -1)
+            return ({
+                statusCode: 400,
+                message: 'Môn học không hợp lệ!',
+                alert: 'Môn học không hợp lệ!'
+            });
+        else {
+            let result = await TruyVan("Admin", `select * from MONHOC where MaMH = '${mamh}'`);
+            if (result.statusCode == 200 && result.result.recordset.length > 0)
+                return ({
+                    statusCode: 200,
+                    message: 'Thành công',
+                    result: result.result.recordset[0]
+                });
+            else
+                return ({
+                    statusCode: 404,
+                    message: 'Không tìm thấy môn học',
+                    alert: 'Không tìm thấy môn học'
+                });
+        }
+    } catch (err) {
+        console.log("Lỗi getMonHoc (admin.models)", err);
+        return ({
+            statusCode: 500,
+            message: 'Lỗi hệ thống!',
+            alert: 'Lỗi hệ thống'
+        });
+    }
+}
+
+
 async function createUser(data) {
     try {
 
@@ -67,7 +100,6 @@ async function createUser(data) {
         }
         let result = await TruyVan("Admin", SQLQuery);
         let result_1 = await TruyVan("Admin", SQLQuery_1);
-        console.log("Hello ba gia giua mua dong co don lanh gia!!! ");
         console.log(result_1);
         return ({
             statusCode: 200,
@@ -169,8 +201,6 @@ async function updatePassword(username, hashPassword) {
 
 async function updateUser(data) {
     try {
-        console.log("đây là update user185")
-        console.log(data)
         let SQLQuery;
         if (data.role == "GiaoVien") {
             SQLQuery = `update GIAOVIEN set HoTen = N'${data.hoten}',NgSinh = N'${data.ngsinh}',GioiTinh = N'${data.gioitinh}',DiaChi = N'${data.diachi}',Email = N'${data.email}' where MaGV = N'${data.MaND}'`;
@@ -180,7 +210,6 @@ async function updateUser(data) {
         }
         console.log(SQLQuery)
         let result = await TruyVan("Admin", SQLQuery);
-        console.log("đây là result 194");
         console.log(result)
         if (result.statusCode == 200)
             return ({
@@ -197,13 +226,6 @@ async function updateUser(data) {
         });
     }
 }
-
-exports.updateUser = updateUser;
-exports.getUser = getUser;
-exports.createUser = createUser;
-exports.updateRefreshToken = updateRefreshToken;
-exports.getInfoUser = getInfoUser;
-exports.updatePassword = updatePassword;
 
 async function TruyVan(TypeUser, SQLQuery) {
     try {
@@ -228,57 +250,25 @@ async function TruyVan(TypeUser, SQLQuery) {
     }
 }
 
-async function DanhSachHocSinh() {
+
+async function getAllClass() {
     try {
-        let SQLQuery = `SELECT HS.MaHS, HS.HoTen, HS.GioiTinh,HS.NgSinh,L.TenLop
-        FROM HOCSINH HS, LOP L, HOCSINH_LOP HS_L
-        WHERE HS.MaH = HS_L.MaHS AND HS_L.MaLop = L.MaLop`;
-
-        let result = await TruyVan("Admin", SQLQuery);
-
-        if (result.statusCode == 200 && result.result.recordset.length > 0) { // Có học sinh
-            return {
-                statusCode: 200,
-                message: result.result.recordsets
-            };
-        }
-        else
-            return {
-                statusCode: 404,
-                message: 'Không có học sinh nào!'
-            };
+            
+            let result = await TruyVan("Admin", `select * from LOP `);
+            console.log(result);
+            let class_data = result.result.recordset[0];
+            console.log(class_data.MaLop)
+            return result;
+        
     } catch (err) {
-        console.log("Lỗi DanhSachHocSinh (users.models)", err);
-
-        return {
-            statusCode: 500,
-            message: 'Lỗi truy vấn SQL!',
-            alert: 'Lỗi truy vấn SQL'
-        };
-    }
-}
-
-async function DanhSachLop() {
-    try {
-        let SQLQuery = `SELECT MaLop,TenLop
-                        FROM LOP`;
-        let result = await TruyVan("Admin", SQLQuery);
-        console.log("Danh sách các lớp học", result);
-        return result;
-    } catch (err) {
-        console.log(err);
+        console.log("Lỗi getAllClass (user.models)", err);
         return ({
-            statusCode: 400,
-            message: 'Lỗi truy vấn SQL!',
-            alert: 'Kiểm tra lại câu lệnh SQL!'
+            statusCode: 500,
+            message: 'Lỗi hệ thống!',
+            alert: 'Lỗi hệ thống'
         });
     }
 }
-
-
-exports.TruyVan = TruyVan;
-exports.DanhSachHocSinh = DanhSachHocSinh;
-exports.DanhSachLop = DanhSachLop;
 
 async function DanhSachBaiDang() {
     try {
@@ -295,8 +285,6 @@ async function DanhSachBaiDang() {
         });
     }
 }
-
-exports.DanhSachBaiDang = DanhSachBaiDang;
 
 async function DanhSachNamHoc(HocKy) {
     try {
@@ -335,9 +323,6 @@ async function DanhSachHocSinhTrongLop(MaLop, HocKy, Nam2) {
         });
     }
 }
-
-exports.DanhSachHocSinhTrongLop = DanhSachHocSinhTrongLop;
-exports.DanhSachNamHoc = DanhSachNamHoc;
 
 async function NhapDiem(MaMH, data) {
     try {
@@ -449,3 +434,19 @@ async function DanhSachDiem(MaMH, MaLop, HocKy, Nam2) {
 }
 
 exports.DanhSachDiem = DanhSachDiem;
+
+
+exports.getMonHoc = getMonHoc;
+exports.updateUser = updateUser;
+exports.getUser = getUser;
+exports.createUser = createUser;
+exports.updateRefreshToken = updateRefreshToken;
+exports.getInfoUser = getInfoUser;
+exports.updatePassword = updatePassword;
+exports.getAllClass = getAllClass;
+exports.TruyVan = TruyVan;
+exports.DanhSachBaiDang = DanhSachBaiDang;
+exports.DanhSachHocSinhTrongLop = DanhSachHocSinhTrongLop;
+exports.DanhSachNamHoc = DanhSachNamHoc;    
+exports.NhapDiem = NhapDiem;
+

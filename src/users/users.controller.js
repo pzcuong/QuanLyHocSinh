@@ -1,11 +1,12 @@
 const usersModel = require('../users/users.models');
 var pug = require('pug');
 
-
-async function DanhSachLop(req, res) { 
-    let result = await usersModel.DanhSachLop();
+async function getAllClass(req, res) { 
+    let result = await usersModel.getAllClass();
     if(result.statusCode === 200) {
-        let html = pug.renderFile('public/Home.pug');
+        let html = pug.renderFile('public/user/LopHoc.pug',{
+            classlist:  result.result.recordset 
+        });
         res.send(html);
     } else {
         let html = pug.renderFile('public/404.pug', { 
@@ -15,24 +16,6 @@ async function DanhSachLop(req, res) {
         res.send(html);
     }
 }
-
-async function DanhSachHocSinh(req, res) { 
-    let result = await usersModel.DanhSachHocSinh();
-    if(result.statusCode === 200) {
-        let html = pug.renderFile('public/Home.pug'); // FE hoc sinh
-        res.send(html);
-    } else {
-        let html = pug.renderFile('public/404.pug', { 
-            message: result.message,
-            redirect: 'public/Home.pug'       
-        });
-        res.send(html);
-    }
-}
-
-
-exports.DanhSachHocSinh = DanhSachHocSinh;
-exports.DanhSachLop = DanhSachLop;
 
 async function DanhSachBaiDang(req, res) {
     let result = await usersModel.DanhSachBaiDang();
@@ -49,8 +32,6 @@ async function DanhSachBaiDang(req, res) {
         res.send(html);
     }
 }
-
-exports.DanhSachBaiDang = DanhSachBaiDang;
 
 async function DanhSachHocSinhTrongLop(req, res) {
     let DanhSachNamHoc;
@@ -106,6 +87,8 @@ async function NhapDiem(req, res) {
     }
 }
 
+exports.DanhSachBaiDang = DanhSachBaiDang;
+exports.getAllClass = getAllClass;
 exports.DanhSachHocSinhTrongLop = DanhSachHocSinhTrongLop;
 exports.NhapDiem = NhapDiem;
 

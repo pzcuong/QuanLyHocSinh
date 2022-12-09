@@ -68,12 +68,11 @@ async function getClass(malop) {
     }
 }
 
-
 async function createClass(data) {
     try {
 
-        let SQLQuery = `insert into LOP 
-            (MaLop,TenLop, MaHocKy, SiSo, MaKhoiLop) 
+        let SQLQuery = `
+        insert into LOP (MaLop,TenLop, MaHocKy, SiSo, MaKhoiLop) 
             values (N'${data.malop}', N'${data.tenlop}', N'${data.mahocky}', N'${data.siso}', N'${data.makhoilop}')`;
         console.log(SQLQuery);
         let result = await TruyVan("Admin", SQLQuery);
@@ -95,9 +94,58 @@ async function createClass(data) {
     }
 }
 
-exports.getClass = getClass;
-exports.createClass = createClass;
-exports.TruyVan = TruyVan;
+async function DanhSachHocSinh() {
+    try {
+            
+            let SQLQuery = `SELECT HS.MaHS, HS.HoTen, HS.GioiTinh,HS.NgSinh,L.TenLop
+            FROM HOCSINH HS, LOP L, HOCSINH_LOP HS_L
+            WHERE HS.MaHS = HS_L.MaHS AND HS_L.MaLop = L.MaLop `;
+
+            let result = await TruyVan("Admin", SQLQuery);
+            let class_data = result.result.recordset[0];
+            console.log(result);
+            return result;
+
+    } catch (err) {
+        console.log("Lỗi DanhSachHocSinh (admin.models)", err);
+        return ({
+            statusCode: 500,
+            message: 'Lỗi hệ thống!',
+            alert: 'Lỗi hệ thống'
+        });
+    }
+}
+
+async function ThemHocSinhVaoLop(MaHS, MaLop) {
+    try {
+        let SQLQuery = `insert into HOCSINH_LOP (MaHS, MaLop) values ('${MaHS}', '${MaLop}')`;
+        let result = await TruyVan("Admin", SQLQuery);
+        console.log("Thêm học sinh vào lớp", result);
+        return result;
+    } catch(err) {
+        console.log(err);
+        return ({ 
+            statusCode: 400,
+            message: 'Lỗi truy vấn SQL!',
+            alert: 'Kiểm tra lại câu lệnh SQL!'
+        });
+    }
+}
+
+async function ThemGiaoVienVaoLop(MaGV, MaLop, MaMH) {
+    try {
+        let SQLQuery = `insert into LOP_MONHOC (MaLop, MaMH, MaGV) values ('${MaLop}', '${MaMH}','${MaGV}' )`;
+        let result = await TruyVan("Admin", SQLQuery);
+        return result;
+    } catch(err) {
+        console.log(err);
+        return ({ 
+            statusCode: 400,
+            message: 'Lỗi truy vấn SQL!',
+            alert: 'Kiểm tra lại câu lệnh SQL!'
+        });
+    }
+}
 
 async function ThemBaiDang(data) {
     try {
@@ -122,4 +170,10 @@ async function ThemBaiDang(data) {
     }
 }
 
+exports.ThemGiaoVienVaoLop = ThemGiaoVienVaoLop;
+exports.ThemHocSinhVaoLop = ThemHocSinhVaoLop;
+exports.DanhSachHocSinh = DanhSachHocSinh;
+exports.getClass = getClass;
+exports.createClass = createClass;
+exports.TruyVan = TruyVan;
 exports.ThemBaiDang = ThemBaiDang;
