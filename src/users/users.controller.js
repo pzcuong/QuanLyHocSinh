@@ -94,6 +94,7 @@ exports.NhapDiem = NhapDiem;
 
 async function DanhSachDiem (req, res) {
     let DanhSachNamHoc;
+    console.log(req.body)
     req.MaLop = req.params.MaLop;
 
     if(!req.body.NamHoc) {
@@ -106,26 +107,22 @@ async function DanhSachDiem (req, res) {
         });
     }
 
-    let MaMH = 'TOAN10'
+    if(!req.body.MaMH) {
+        let result = await usersModel.DanhSachMHDoGVDay(req.user.result.MaND, req.body.HocKy, req.body.NamHoc);
+        console.log(result.result)
+        return res.json({
+            statusCode: 200,
+            message: 'Lấy danh sách môn học thành công',
+            result: result.result
+        });
+    }
+
+    let MaMH = req.body.MaMH;
     let MaLop = req.params.MaLop;
     let result = await usersModel.DanhSachDiem(MaMH, MaLop, req.body.HocKy, req.body.NamHoc);
+    console.log("Danh sach diem")
     console.log(result.result)
     console.log(result.result.length)
-
-    // let data = [{
-    //     MaHS: '20521361',
-    //     HoTen: 'Đỗ Hữu Khánh Hưng',
-    //     MaLHKT: 'DM',
-    //     Diem: 10,
-    //     MaLop: 'TN101'
-    //   },
-    //   {
-    //     MaHS: '20521361',
-    //     HoTen: 'Đỗ Hữu Khánh Hưng',
-    //     MaLHKT: 'KT15P',
-    //     Diem: 10,
-    //     MaLop: 'TN101'
-    //   }];
 
     let kq = [];
     let index = 0;

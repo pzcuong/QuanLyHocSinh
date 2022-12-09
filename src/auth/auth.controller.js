@@ -65,7 +65,7 @@ async function login(req, res, next) {
 
         let user = await userModel.getUser(username);
         if(user.statusCode == 200){
-            if(user.result.RefreshToken == 'NULL') {
+            if(user.result.RefreshToken == 'NULL' || user.result.RefreshToken == null) {
                 const hashPassword = await bcrypt.hashSync("Abc123456", SALT_ROUNDS);
                 let refreshToken = await randToken.generate(24); 
                 let SQLQueryInsert = `  UPDATE XACTHUC 
