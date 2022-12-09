@@ -297,3 +297,98 @@ async function DanhSachBaiDang() {
 }
 
 exports.DanhSachBaiDang = DanhSachBaiDang;
+
+async function DanhSachNamHoc(HocKy) {
+    try {
+        let SQLQuery = `SELECT * FROM NAMHOC`;
+        let result = await TruyVan("Admin", SQLQuery);
+        console.log("Danh sách các năm học", result);
+        return result;
+    } catch (err) {
+        console.log(err);
+        return ({
+            statusCode: 400,
+            message: 'Lỗi truy vấn SQL!',
+            alert: 'Kiểm tra lại câu lệnh SQL!'
+        });
+    }
+}
+
+async function DanhSachHocSinhTrongLop(MaLop, HocKy, Nam2) {
+    try {
+        let SQLQuery = `SELECT * FROM HOCKY
+            inner join NAMHOC on HOCKY.MaNam = NAMHOC.MaNamHoc
+            inner join LOP on LOP.MaHocKy = HOCKY.MaHocKy
+            inner join HOCSINH_LOP on HOCSINH_LOP.MaLop = LOP.MaLop
+            inner join HOCSINH on HOCSINH.MaHS = HOCSINH_LOP.MaHS
+            where LOP.MaLop = N'${MaLop}' and HocKy = ${HocKy} and Nam2 = ${Nam2}`;
+
+        let result = await TruyVan("Admin", SQLQuery);
+        console.log("Danh sách các học sinh trong lớp", result);
+        return result;
+    } catch (err) {
+        console.log(err);
+        return ({
+            statusCode: 400,
+            message: 'Lỗi truy vấn SQL!',
+            alert: 'Kiểm tra lại câu lệnh SQL!'
+        });
+    }
+}
+
+exports.DanhSachHocSinhTrongLop = DanhSachHocSinhTrongLop;
+exports.DanhSachNamHoc = DanhSachNamHoc;
+
+async function NhapDiem(MaMH, data) {
+    try {
+        console.log(MaMH);
+
+        console.log(data);
+        for(let i = 0; i < data.length; i++){
+            let CheckHS = `SELECT * FROM KETQUAHOCMON WHERE MaHS = '${data[i].MSHS}'`;
+            CheckHS = await TruyVan("Admin", CheckHS);
+            console.log(CheckHS)
+
+            if(CheckHS.statusCode == 200 && CheckHS.result.recordset.length == 0){
+                let SQLQuery = `INSERT KETQUAHOCMON(MaMH, MaHS) VaLUES ('${MaMH}','${data[i].MSHS}')`;
+                let result = await TruyVan("Admin", SQLQuery);
+                console.log("Danh sách kết quả học môn", result);
+
+                CheckHS = `SELECT * FROM KETQUAHOCMON WHERE MaHS = '${data[i].MSHS}'`;
+                CheckHS = await TruyVan("Admin", CheckHS);
+            }
+            let CheckDaCoDiem = `SELECT * FROM CT_HOCMON 
+                WHERE MaQTHoc = '${CheckHS.result.recordset[0].MaQTHoc}' AND MaLHKT = '${data[i].MaLHKT}'`;
+            CheckDaCoDiem = await TruyVan("Admin", CheckDaCoDiem);
+            if(CheckDaCoDiem.statusCode == 200 && CheckDaCoDiem.result.recordset.length > 0){
+                let SQLQuery = `UPDATE CT_HOCMON SET
+                    Diem = '${data[i].Diem}'
+                    WHERE MaQTHoc = '${CheckHS.result.recordset[0].MaQTHoc}' AND MaLHKT = '${data[i].MaLHKT}'`;
+                let result = await TruyVan("Admin", SQLQuery); 
+                console.log("Danh sách kết quả học môn", result);
+
+            } else {
+                console.log(data[i].length)
+                let SQLQuery = `INSERT CT_HOCMON(MaQTHoc, MaLHKT, Diem) VaLUES
+                    MaQTHoc = '${CheckHS.result.recordset[0].MaQTHoc}',
+                    MaLHKT = '${data[i].MaLHKT}',
+                    Diem = '${data[i].Diem}'`;
+                let result = await TruyVan("Admin", SQLQuery);
+                console.log("Danh sách kết quả học môn", result);
+            }
+        }
+
+        let result = await TruyVan("Admin", SQLQuery);
+        console.log("Danh sách các điểm", result);
+        return result;
+    } catch (err) {
+        console.log(err);
+        return ({
+            statusCode: 400,
+            message: 'Lỗi truy vấn SQL!',
+            alert: 'Kiểm tra lại câu lệnh SQL!'
+        });
+    }
+}
+
+exports.NhapDiem = NhapDiem;
