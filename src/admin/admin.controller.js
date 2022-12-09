@@ -29,9 +29,9 @@ async function ThemTaiKhoan(req, res, next) {
         return res
             .status(user.statusCode)
             .send({
-                statusCode: user.statusCode,
-                message: user.message,
-                alert: user.alert
+                statusCode: 500,
+                message: "lỗi truy vấn SQL",
+                alert: "Tài khoản đã tồn tại"
             });
 
     else if(user.statusCode == 404) {
@@ -163,13 +163,22 @@ async function ThemHocSinhVaoLop(req, res) {
     try {
 
         const data = req.body;
-        if(!data.malop)
-            return res.status(400).send({message: 'Không tìm thấy lớp'});
-        
-        else{
-            const result = await adminModel.ThemHocSinhVaoLop(data.mahs, data.malop);
-            console.log(result);
+        if(!data.malop || !data.mahs)
             return res
+                .status(400)
+                .send({
+                    statusCode: 400,
+                    message: 'Vui lòng nhập đầy đủ thông tin',
+                    alert: "Vui lòng nhập đầy đủ thông tin",
+                    redirect: '/admin/ThemHocSinh'
+                });
+        let result_user = await  userModel.getUser(data.mahs);
+        if (result_user.statusCode == 200 ){
+            let result_class = await adminModel.getClass(data.malop)
+            if (result_class.statusCode == 200 ){
+                const result = await adminModel.ThemHocSinhVaoLop(data.mahs, data.malop);
+                console.log(result);
+                return res
                     .status(200)
                     .send({
                         statusCode: 200,
@@ -177,6 +186,26 @@ async function ThemHocSinhVaoLop(req, res) {
                         alert: "Thêm học sinh vào lớp thành công",
                         redirect: '/admin/ThemHocSinh'
                     });
+            }else {
+                return res
+                        .status(400)
+                        .send({
+                            statusCode: 400,
+                            message: 'Không tìm thấy lớp',
+                            alert: "Không tìm thấy lớp",
+                            redirect: '/admin/ThemHocSinh'
+                    });
+            }
+
+        }else{
+            return res
+                .status(400)
+                .send({
+                    statusCode: 400,
+                    message: 'Không tìm thấy học sinh',
+                    alert: "Không tìm thấy học sinh",
+                    redirect: '/admin/ThemHocSinh'
+            });
         }
     } catch (error) {
         console.log(error);
@@ -196,20 +225,60 @@ async function ThemGiaoVienVaoLop(req, res) {
 
         const data = req.body;
         console.log(data.magv)
-        if(!data.malop)
-            return res.status(400).send({message: 'Không tìm thấy lớp'});
-        else 
-        {   
-            const result = await adminModel.ThemGiaoVienVaoLop(data.malop, data.mamh, data.magv);
-            console.log(result);
+        if(!data.malop || !data.mamh || data.magv)
             return res
-                .status(200)
-                .send({
-                    statusCode: 200,
-                    message: 'Thêm giáo viên vào lớp thành công',
-                    alert: "Thêm giáo viên vào lớp thành công",
-                    redirect: '/admin/ThemGiaoVien'
+                    .status(400)
+                    .send({
+                        statusCode: 400,
+                        message: 'Vui lòng nhập đầy đủ thông tin!',
+                        alert: "Vui lòng nhập đầy đủ thông tin!",
+                        redirect: '/admin/ThemGiaoVien'
+                    });
+        let result_class = await adminModel.getClass(data.malop);
+        if (result_class.statusCode == 200 ){
+            let result_monhoc = await userModel.getMonHoc(data.mamh);
+            if (result_monhoc.statusCode == 200){
+                let result_giaovien = await userModel.getUser(data.magv);
+                if(result_giaovien.statusCode == 200){
+                    const result = await adminModel.ThemGiaoVienVaoLop(data.malop, data.mamh, data.magv);
+                    console.log(result);
+                    return res
+                        .status(200)
+                        .send({
+                            statusCode: 200,
+                            message: 'Thêm giáo viên vào lớp thành công',
+                            alert: "Thêm giáo viên vào lớp thành công",
+                            redirect: '/admin/ThemGiaoVien'
+                        });
+                }else{
+                        return res
+                            .status(400)
+                            .send({
+                                statusCode: 400,
+                                message: 'Không tìm thấy giáo viên',
+                                alert: "Không tìm thấy giáo viên",
+                                redirect: '/admin/ThemGiaoVien'
+                        });
+                }
+            }else{
+                    return res
+                    .status(400)
+                    .send({
+                        statusCode: 400,
+                        message: 'Không tìm thấy môn học',
+                        alert: "Không tìm thấy môn học",
+                        redirect: '/admin/ThemGiaoVien'
                 });
+            }
+        }else{
+                return res
+                .status(400)
+                .send({
+                    statusCode: 400,
+                    message: 'Không tìm thấy lớp',
+                    alert: "Không tìm thấy lớp",
+                    redirect: '/admin/ThemGiaoVien'
+            });
         }
     } catch (error) {
         console.log(error);
@@ -223,8 +292,55 @@ async function ThemGiaoVienVaoLop(req, res) {
     }
 }
 
+async function ThemBaiDang(req, res) {
+    // Get day, month, year from date
+    const date = new Date();
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    const NgayDang = day + '/' + month + '/' + year;
+
+    const TieuDe = req.body.TieuDe;
+    const NoiDung = req.body.NoiDung;
+
+    if(!TieuDe || !NoiDung)
+        return res
+            .status(400)
+            .send({
+                statusCode: 400,
+                message: 'Vui lòng nhập đầy đủ thông tin.',
+                alert: 'Vui lòng nhập đầy đủ thông tin.',
+            });
+
+    const BaiDang = await adminModel.ThemBaiDang({
+        TieuDe: TieuDe,
+        NoiDung: NoiDung,
+        NgayDang: NgayDang
+    })
+
+    if(BaiDang.statusCode === 200)
+        return res
+            .status(200)
+            .send({
+                statusCode: 200,
+                message: 'Thêm bài đăng thành công',
+                redirect: '/admin/ThemBaiDang'
+            });
+    else
+        return res
+            .status(400)
+            .send({
+                statusCode: 400,
+                message: 'Thêm bài đăng không thành công',
+                alert: 'Thêm bài đăng không thành công',
+                redirect: '/admin/ThemBaiDang'
+            });
+}
+
+
 exports.ThemGiaoVienVaoLop = ThemGiaoVienVaoLop;
 exports.ThemHocSinhVaoLop = ThemHocSinhVaoLop;
 exports.DanhSachHocSinh = DanhSachHocSinh;
 exports.ThemLopHoc = ThemLopHoc;
 exports.ThemTaiKhoan = ThemTaiKhoan;
+exports.ThemBaiDang = ThemBaiDang;

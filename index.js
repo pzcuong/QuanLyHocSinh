@@ -32,10 +32,10 @@ app.use('/auth', authRoute);
 app.use('/user', userRoute);
 app.use('/admin', adminRoute);
  
+const userController = require('./src/users/users.controller');
 
 app.get('/', (req, res) => {
-    let html = pug.renderFile('public/Home.pug');
-    res.send(html);
+    userController.DanhSachBaiDang(req, res);
 });
 
 app.use((req, res, next) => {

@@ -278,7 +278,6 @@ async function ThemLopHoc() {
 //   data = {
 //     malop: form.querySelector("input[name=malop]").value,
 //   }
-
 //   let response = await fetch('/admin/DanhSachHocSinh', {
 //           method: 'POST',
 //           headers: {
@@ -314,6 +313,32 @@ async function ThemHocSinhVaoLop() {
   }
 
   let response = await fetch('/admin/ThemHocSinh', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+    json: true
+})
+
+let text = await response.json(); 
+console.log(text)
+alert(text.message);
+if(text.redirect)
+window.location.href = text.redirect;
+//document.querySelector("#encoded").innerHTML = text.message;
+//window.open(text.captcha_url, "mywindow","menubar=1,resizable=1,width=350,height=250").focus();
+}
+
+async function ThemBaiDang() {
+  var form = document.querySelector("#formElem");
+
+  data = {
+    TieuDe: form.querySelector("input[name=TieuDe]").value, 
+    NoiDung: form.querySelector("textarea[name=NoiDung]").value,
+  }
+
+  let response = await fetch('/admin/ThemBaiDang', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
@@ -330,8 +355,6 @@ async function ThemHocSinhVaoLop() {
   //document.querySelector("#encoded").innerHTML = text.message;
   //window.open(text.captcha_url, "mywindow","menubar=1,resizable=1,width=350,height=250").focus();
 }
-
-
 
 async function ThemGiaoVienVaoLop() {
   var form = document.querySelector("#formElem");

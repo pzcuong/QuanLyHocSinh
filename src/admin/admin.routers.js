@@ -16,12 +16,13 @@ router.route('/ThemTaiKhoan' )
 })
 .post(isAuthAdmin,adminController.ThemTaiKhoan)
 
-router.route('/ThemLopHoc' )
+router.route('/ThemLopHoc')
 .get(isAuthAdmin, (req, res) => {
     let html = pug.renderFile('public/admin/ThemLopHoc.pug');
     res.send(html);
 })
 .post(isAuthAdmin,adminController.ThemLopHoc)
+
 
 router.route('/DanhSachHocSinh')
 	.get(isAuth, adminController.DanhSachHocSinh);
@@ -39,5 +40,13 @@ router.route('/ThemGiaoVien')
     	res.send(html)
 	})
 	.post(isAuthAdmin, adminController.ThemGiaoVienVaoLop);
+
+router.route('/ThemBaiDang')
+.get(isAuthAdmin, (req, res) => {
+    let html = pug.renderFile('public/admin/ThemBaiDang.pug');
+    res.send(html);
+})
+.post(isAuthAdmin,adminController.ThemBaiDang)
+
 
 module.exports = router;
