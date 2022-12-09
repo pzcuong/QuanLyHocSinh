@@ -67,7 +67,6 @@ async function createUser(data) {
         }
         let result = await TruyVan("Admin", SQLQuery);
         let result_1 = await TruyVan("Admin", SQLQuery_1);
-        console.log("Hello ba gia giua mua dong co don lanh gia!!! ");
         console.log(result_1);
         return ({
             statusCode: 200,
@@ -196,13 +195,6 @@ async function updateUser(data) {
     }
 }
 
-exports.updateUser = updateUser;
-exports.getUser = getUser;
-exports.createUser = createUser;
-exports.updateRefreshToken = updateRefreshToken;
-exports.getInfoUser = getInfoUser;
-exports.updatePassword = updatePassword;
-
 async function TruyVan(TypeUser, SQLQuery) {
     try {
         if (TypeUser == 'Admin') {
@@ -246,5 +238,11 @@ async function getAllClass() {
     }
 }
 
+exports.updateUser = updateUser;
+exports.getUser = getUser;
+exports.createUser = createUser;
+exports.updateRefreshToken = updateRefreshToken;
+exports.getInfoUser = getInfoUser;
+exports.updatePassword = updatePassword;
 exports.getAllClass = getAllClass;
 exports.TruyVan = TruyVan;

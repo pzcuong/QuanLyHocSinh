@@ -81,7 +81,7 @@ async function login(req, res, next) {
                     .status(400)
                     .send({
                         statusCode: 400,
-                        message: 'Tài khoản hoặc Mật khẩu không đúng.', // Sai mật khẩu
+                        message: 'Tài khoản hoặc Mật khẩu không đúng.',
                         alert: "Tài khoản hoặc Mật khẩu không đúng",
                     });
 

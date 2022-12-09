@@ -31,6 +31,7 @@ async function isAuthAdmin(req, res, next) {
 
 	const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
 	const verified = await authMethod.verifyToken( accessTokenFromHeader, accessTokenSecret );
+	
 	if (verified.statusCode === 401) {
 		return res
 			.writeHead(302, {'Location': '/auth/login'})

@@ -12,7 +12,6 @@ router.route('/login')
         res.send(html);
     });
 
-
 router.route('/forgot-password')
     .get((req,res) => {
         let html = pug.renderFile('public/auth/forgotPassword.pug');

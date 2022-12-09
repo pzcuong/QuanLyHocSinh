@@ -330,3 +330,32 @@ async function ThemHocSinhVaoLop() {
   //document.querySelector("#encoded").innerHTML = text.message;
   //window.open(text.captcha_url, "mywindow","menubar=1,resizable=1,width=350,height=250").focus();
 }
+
+
+
+async function ThemGiaoVienVaoLop() {
+  var form = document.querySelector("#formElem");
+
+  data = {
+    malop: form.querySelector("input[name=malop]").value,
+    magv: form.querySelector("input[name=magv]").value,
+    mamh: form.querySelector("input[name=mamh]").value
+  }
+
+  let response = await fetch('/admin/ThemGiaoVien', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+          json: true
+  })
+
+  let text = await response.json(); 
+  console.log(text)
+  alert(text.message);
+  if(text.redirect)
+      window.location.href = text.redirect;
+  //document.querySelector("#encoded").innerHTML = text.message;
+  //window.open(text.captcha_url, "mywindow","menubar=1,resizable=1,width=350,height=250").focus();
+}

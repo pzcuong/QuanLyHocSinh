@@ -68,12 +68,11 @@ async function getClass(malop) {
     }
 }
 
-
 async function createClass(data) {
     try {
 
-        let SQLQuery = `insert into LOP 
-            (MaLop,TenLop, MaHocKy, SiSo, MaKhoiLop) 
+        let SQLQuery = `
+        insert into LOP (MaLop,TenLop, MaHocKy, SiSo, MaKhoiLop) 
             values (N'${data.malop}', N'${data.tenlop}', N'${data.mahocky}', N'${data.siso}', N'${data.makhoilop}')`;
         console.log(SQLQuery);
         let result = await TruyVan("Admin", SQLQuery);
@@ -94,26 +93,6 @@ async function createClass(data) {
         });
     }
 }
-
-// async function DanhSachHocSinh(malop) {
-//     try {
-        
-    //     let SQLQuery = `SELECT HS.MaHS, HS.HoTen, HS.GioiTinh,HS.NgSinh,L.TenLop
-    //     FROM HOCSINH HS, LOP L, HOCSINH_LOP HS_L
-    //     WHERE HS.MaH = HS_L.MaHS AND HS_L.MaLop = L.MaLop AND L.MaLop = '${malop}'`;
-
-    //     let result = await TruyVan("Admin", SQLQuery);
-    //     console.log(result);
-    //     return result;
-    // } catch (err) {
-    //     console.log("Lỗi DanhSachHocSinh (users.models)", err);
-    //     return {
-    //         statusCode: 500,
-    //         message: 'Lỗi truy vấn SQL!',
-    //         alert: 'Lỗi truy vấn SQL'
-    //     };
-    // }
-// }
 
 async function DanhSachHocSinh() {
     try {
@@ -153,6 +132,23 @@ async function ThemHocSinhVaoLop(MaHS, MaLop) {
     }
 }
 
+async function ThemGiaoVienVaoLop(MaGV, MaLop, MaMH) {
+    try {
+        let SQLQuery = `insert into LOP_MONHOC (MaLop, MaMH, MaGV) values ('${MaLop}', '${MaMH}','${MaGV}' )`;
+        let result = await TruyVan("Admin", SQLQuery);
+        return result;
+    } catch(err) {
+        console.log(err);
+        return ({ 
+            statusCode: 400,
+            message: 'Lỗi truy vấn SQL!',
+            alert: 'Kiểm tra lại câu lệnh SQL!'
+        });
+    }
+}
+
+
+exports.ThemGiaoVienVaoLop = ThemGiaoVienVaoLop;
 exports.ThemHocSinhVaoLop = ThemHocSinhVaoLop;
 exports.DanhSachHocSinh = DanhSachHocSinh;
 exports.getClass = getClass;
