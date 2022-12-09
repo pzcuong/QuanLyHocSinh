@@ -1,18 +1,5 @@
-let dropdown = document.querySelectorAll(".dropdown");
-console.log(dropdown);
 
-for (var i = 0; i < dropdown.length; i++)
-{
-    dropdown[i].addEventListener("click", (e)=>{
-        let dropdownParent = e.target.parentElement.parentElement;
-        console.log(dropdownParent);
-        dropdownParent.classList.toggle("ShowMenu");
-    });
-
-}
-
-
-
+// thu vao thu ra
 let sidebar = document.querySelector(".sidebar");
 let sidebarBtn = document.querySelector(".fa-bars");
 console.log(sidebarBtn);
@@ -23,10 +10,25 @@ sidebarBtn.addEventListener("click" , ()=>{
 
 
 
+// user
 function menuhdToggle(){
     console.log("funtion call")
     const toggleMenuhd = document.querySelector('.menu_user_hd');
     toggleMenuhd.classList.toggle('active');
 } 
 
-var header = $('.header');
+// dropdown
+var dropdown1 = document.getElementsByClassName("dropdown-btn");
+var i;
+
+for (i = 0; i < dropdown1.length; i++) {
+  dropdown1[i].addEventListener("click", function() {
+  this.classList.toggle("active");
+  var dropdownContent = this.nextElementSibling;
+  if (dropdownContent.style.display === "block") {
+  dropdownContent.style.display = "none";
+  } else {
+  dropdownContent.style.display = "block";
+  }
+  });
+}

@@ -3,10 +3,9 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>QLSV</title>
+   <title>CoCoEdu </title>
    <link rel="stylesheet" href="style.css">
    <script src="https://kit.fontawesome.com/7b85820244.js" crossorigin="anonymous"></script>
-
 </head>
 <body>
    
@@ -41,66 +40,64 @@
         </a>
         <span class="logo_name">CoCoEdu</span>
       </div>
-      
-   <ul class="nav_links">
-      <!-- Bảng điều khiển  -->
-      <li>
-         <div class="iocn_link">
-            <a href="#">
-               <i class="fa-solid fa-border-all"></i>
-               <span class="link_name">Bảng điều khiển</span>
-            </a>
-            <i class="fas fa-angle-right dropdown"></i>
-         </div>
-         <ul class="sub-menu">
-            <li><a class="link_name" href="#">Bảng điều khiển</a></li>
-            <li><a  href="#">Giáo viên</a></l  i>
-         </ul>
-      </li>
-      <!-- Sinh viên -->
-      <li>
-      
-         <div class="iocn_link">
-            <a href="#">
-               <i class="fa-solid fa-graduation-cap"></i>
-               <span class="link_name">Sinh viên</span>
-            </a>
-            <i class="fas fa-angle-right dropdown"></i>
-         </div>
-         <ul class="sub-menu">
-            <li><a class="link_name" href="#">Sinh viên</a></li>
-            <li><a  href="#">View Sinh viên</a></li>
-            <li><a  href="#">Add Sinh viên</a></li>
-         </ul>
-      </li>
-      <!-- Giảng viên-->
-      <li>
-         <div class="iocn_link">
-            <a href="#">
-               <i class="fa-solid fa-chalkboard-user"></i>
-               <span class="link_name">Giáo viên</span>
-            </a>
-            <i class="fas fa-angle-right dropdown"></i>
-         </div>
-         <ul class="sub-menu">
-            <li><a class="link_name" href="#">Giáo viên</a></li>
-            <li><a  href="#">View Giáo viên</a></li>
-            <li><a  href="#">Add Giáo viên</a></li>
-         </ul>
-      </li>
-       <!-- Bảng điểm-->
-      <li>
-         <a href="#">
-            <i class="fa-regular fa-calendar"></i>
-            <span class="link_name">Bảng điểm</span>
-         </a>
-         <ul class="sub-menu blank">
-            <li><a class="link_name" href="#">Bảng điểm</a></li>
-         </ul>
-      </li>
-      <li>
+      <div class="nav_links">
    
-   </div>
+         <div class="sidenav">
+            <!-- Bảng điều khiển -->
+             <div>
+               <button class="dropdown-btn">
+                <br> 
+                <i class="fa-solid fa-border-all" id="icon_sn"></i>
+                <span class="link_name">Bảng điều khiển</span>
+                <i class="fas fa-angle-right" id="drop"></i>
+               </button>
+               <div class="dropdown-container">
+                <a class="link_name" href="#">Bảng điều khiển</a>
+                <a href="#">Quản trị viên</a>
+               </div>
+            </div>
+               <!-- SInh viên -->
+            <div>
+               <button class="dropdown-btn">
+                <i class="fa-solid fa-graduation-cap" id="icon_sn"></i>
+                <span class="link_name">Sinh Viên</span>
+                <i class="fas fa-angle-right" id="drop"></i>
+               </button>
+               <div class="dropdown-container">
+                <a class="link_name" href="#">Sinh viên</a>
+                <a href="#">View Sinh Viên</a>
+                <a href="#">Add Sinh Viên</a>
+               </div>
+            </div>
+               <!-- Giảng Viên -->
+            <div>
+               <button class="dropdown-btn">
+                <i class="fa-solid fa-chalkboard-user" id="icon_sn"></i>
+                <span class="link_name">Giảng Viên</span>
+                <i class="fas fa-angle-right" id="drop"></i>
+               </button>
+               <div class="dropdown-container">
+                <a class="link_name" href="#">Giảng Viên</a>
+                <a href="#">View Giảng Viên</a>
+                <a href="#">Add Giảng Viên</a>
+               </div>
+            </div>
+               <!-- Bảng điểm-->
+            <div>
+               <button class="dropdown-btn">
+                <i class="fa-regular fa-calendar" id="icon_sn"></i>
+                <span class="link_name">Bảng điểm</span>
+                <i class="fas fa-angle-right" id="drop"></i>
+               </button>
+               <div class="dropdown-container">
+                <a class="link_name" href="#">Bảng điểm</a>
+                <a href="#">Bảng điểm sinh viên</a>
+               </div>
+            </div>
+            
+          </div> 
+   </div>   
+</div>
    
    <section class="home-section">
       <div class="home-content">
