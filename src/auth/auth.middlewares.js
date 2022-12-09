@@ -56,6 +56,43 @@ async function isAuthAdmin(req, res, next) {
 	}
 };
 
+async function isAuthGiaoVien(req, res, next) {
+	try {
+		const accessTokenFromHeader = req.cookies.x_authorization;
+		if (!accessTokenFromHeader) {
+			return res
+				.writeHead(302, {'Location': '/auth/login'})
+				.end();
+		}
+
+		const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
+		const verified = await authMethod.verifyToken( accessTokenFromHeader, accessTokenSecret );
+		if (verified.statusCode === 401) {
+			return res
+				.writeHead(302, {'Location': '/auth/login'})
+				.end();
+		}
+
+		const user = await userModle.getUser(verified.data.payload.username);
+		console.log(user.result.Role);
+
+		console.log(user.result.Role);
+		if (user.result.Role !== 'GiaoVien' && user.result.Role !== 'Admin') 
+			return res
+				.writeHead(302, {'Location': '/auth/login'})
+				.end();
+
+		req.user = user;
+		return next();
+	} catch (error) {
+		console.log(error);
+		return res
+			.writeHead(302, {'Location': '/auth/login'})
+			.end();
+	}
+};
+
+
 async function isLogined(req, res, next) {
 	const accessTokenFromHeader = req.cookies.x_authorization;
 	if (!accessTokenFromHeader) 
@@ -76,4 +113,5 @@ async function isLogined(req, res, next) {
 
 exports.isAuth = isAuth;
 exports.isAuthAdmin = isAuthAdmin;
+exports.isAuthGiaoVien = isAuthGiaoVien;
 exports.isLogined = isLogined;

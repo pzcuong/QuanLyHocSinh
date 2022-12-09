@@ -6,24 +6,8 @@ const authMiddleware = require('../auth/auth.middlewares');
 const authController = require('../auth/auth.controller');
 const userController = require('./users.controller');
 const isAuth = authMiddleware.isAuth;
-
-router.post('/LuuDiem', async(req, res) => {
-	console.log('router LuuDiem');
-	console.log(req);
-});
-
-router.get('/LuuDiem', async(req, res) => {
-	return res.sendFile(path.join(__dirname, '../public/BangDiemMonHoc/index.html'));
-})
-
-router.get('/LuuDiem', async(req, res) => {
-	let html = pug.renderFile('public/BangDiemMonHoc/index.pug');
-    res.send(html);
-})
-
-router.post('/LuuDiem', async(req, res,next) => {
-	console.log(req.body)
-})
+const isAuthAdmin = authMiddleware.isAuthAdmin;
+const isAuthGiaoVien = authMiddleware.isAuthGiaoVien;
 
 router.route('/DoiMatKhau')
 	.get(isAuth, async (req, res) => {
@@ -66,4 +50,14 @@ router.get('/profile', isAuth, async (req, res) => {
 		res.send(html);
 	});
 	
+router.route('/NhapDiem/:MaLop/')
+	.get(isAuthGiaoVien, async (req, res) => {
+		console.log(req.user);
+		req.MaLop = req.params.MaLop;
+		let html = pug.renderFile('public/giaovien/NhapDiem.pug');
+		res.send(html);
+	})
+	.post(isAuthGiaoVien, userController.DanhSachHocSinhTrongLop)
+	.put(isAuthGiaoVien, userController.NhapDiem);
+
 module.exports = router;
