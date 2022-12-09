@@ -433,7 +433,35 @@ async function DanhSachDiem(MaMH, MaLop, HocKy, Nam2) {
     }
 }
 
+async function DanhSachMHDoGVDay(MaGV, HocKy, Nam2) {
+    try {
+        let SQLQuery = `select MH.MaMH, TenMH from LOP L 
+                inner join HOCKY HK on L.MaHocKy = HK.MaHocKy 
+                inner join LOP_MONHOC L_MH ON L.MaLop = L_MH.MaLop
+                inner join MONHOC MH ON MH.MaMH = L_MH.MaMH
+            where L_MH.MaGV = '${MaGV}' and HocKy = '${HocKy}' and MaNam = 'NH${Nam2}'`;
+        
+        console.log(SQLQuery)
+        let result = await TruyVan("Admin", SQLQuery);
+        
+        console.log("Danh sách các lớp do GV dạy", result);
+        return ({
+            statusCode: 200,
+            message: 'Lấy danh sách lớp thành công!',
+            result: result.result.recordset
+        });
+    } catch (err) {
+        console.log(err);
+        return ({
+            statusCode: 400,
+            message: 'Lỗi truy vấn SQL!',
+            alert: 'Kiểm tra lại câu lệnh SQL!'
+        });
+    }
+}
+
 exports.DanhSachDiem = DanhSachDiem;
+exports.DanhSachMHDoGVDay = DanhSachMHDoGVDay;
 
 
 exports.getMonHoc = getMonHoc;
