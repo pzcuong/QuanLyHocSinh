@@ -57,7 +57,7 @@ router.route('/NhapDiem/:MaLop/')
 		let html = pug.renderFile('public/giaovien/NhapDiem.pug');
 		res.send(html);
 	})
-	.post(isAuthGiaoVien, userController.DanhSachHocSinhTrongLop)
+	.post(isAuthGiaoVien, userController.DanhSachDiem)
 	.put(isAuthGiaoVien, userController.NhapDiem);
 
 module.exports = router;

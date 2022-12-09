@@ -357,30 +357,60 @@ async function NhapDiem(MaMH, data) {
                 CheckHS = `SELECT * FROM KETQUAHOCMON WHERE MaHS = '${data[i].MSHS}'`;
                 CheckHS = await TruyVan("Admin", CheckHS);
             }
-            let CheckDaCoDiem = `SELECT * FROM CT_HOCMON 
-                WHERE MaQTHoc = '${CheckHS.result.recordset[0].MaQTHoc}' AND MaLHKT = '${data[i].MaLHKT}'`;
-            CheckDaCoDiem = await TruyVan("Admin", CheckDaCoDiem);
-            if(CheckDaCoDiem.statusCode == 200 && CheckDaCoDiem.result.recordset.length > 0){
-                let SQLQuery = `UPDATE CT_HOCMON SET
-                    Diem = '${data[i].Diem}'
-                    WHERE MaQTHoc = '${CheckHS.result.recordset[0].MaQTHoc}' AND MaLHKT = '${data[i].MaLHKT}'`;
-                let result = await TruyVan("Admin", SQLQuery); 
-                console.log("Danh sách kết quả học môn", result);
 
-            } else {
-                console.log(data[i].length)
-                let SQLQuery = `INSERT CT_HOCMON(MaQTHoc, MaLHKT, Diem) VaLUES
-                    MaQTHoc = '${CheckHS.result.recordset[0].MaQTHoc}',
-                    MaLHKT = '${data[i].MaLHKT}',
-                    Diem = '${data[i].Diem}'`;
-                let result = await TruyVan("Admin", SQLQuery);
-                console.log("Danh sách kết quả học môn", result);
-            }
+            for(let j = 2; j < Object.keys(data[i]).length; j++){
+                let MaLHKT = Object.keys(data[i])[j];
+                let Diem = Object.values(data[i])[j];
+
+                let CheckDaCoDiem = `SELECT * FROM CT_HOCMON 
+                    WHERE MaQTHoc = '${CheckHS.result.recordset[0].MaQTHoc}' AND MaLHKT = '${MaLHKT}'`;
+
+                console.log(CheckDaCoDiem)
+                CheckDaCoDiem = await TruyVan("Admin", CheckDaCoDiem);
+                console.log("CheckDaCoDiem")
+                console.log(CheckDaCoDiem.result.recordset)
+                if(CheckDaCoDiem.statusCode == 200 && CheckDaCoDiem.result.recordset.length > 0){
+                    // console.log(Object.keys(data[i]).length)
+
+                    // if(Object.keys(data[i]).length == 2) continue;
+
+                    // for(let j = 2; j < Object.keys(data[i]).length; j++){
+                        let MaLHKT = Object.keys(data[i])[j];
+                        let Diem = Object.values(data[i])[j];
+
+                        let SQLQuery = `UPDATE CT_HOCMON SET
+                            Diem = '${Diem}'
+                            WHERE MaQTHoc = '${CheckHS.result.recordset[0].MaQTHoc}' AND MaLHKT = '${MaLHKT}'`;
+                        let result = await TruyVan("Admin", SQLQuery); 
+                        console.log("Danh sách kết quả học môn", result);
+                    // }
+                } else {
+                    console.log(Object.keys(data[i]).length)
+    
+                    if(Object.keys(data[i]).length == 2) continue;
+    
+                    for(let j = 2; j < Object.keys(data[i]).length; j++){
+                        let MaLHKT = Object.keys(data[i])[j];
+                        let Diem = Object.values(data[i])[j];
+    
+                        let SQLQuery = `INSERT CT_HOCMON(MaQTHoc, MaLHKT, Diem) VaLUES (
+                            '${CheckHS.result.recordset[0].MaQTHoc}',
+                            '${MaLHKT}',
+                            '${Diem}')`;
+                        let result = await TruyVan("Admin", SQLQuery);
+                        console.log("Danh sách kết quả học môn", result);
+                    }
+                }
+
+            } 
         }
 
-        let result = await TruyVan("Admin", SQLQuery);
-        console.log("Danh sách các điểm", result);
-        return result;
+        // let result = await TruyVan("Admin", SQLQuery);
+        // console.log("Danh sách các điểm", result);
+        return ({
+            statusCode: 200,
+            message: 'Nhập điểm thành công!',
+        });
     } catch (err) {
         console.log(err);
         return ({
@@ -392,3 +422,30 @@ async function NhapDiem(MaMH, data) {
 }
 
 exports.NhapDiem = NhapDiem;
+
+async function DanhSachDiem(MaMH, MaLop, HocKy, Nam2) {
+    try {
+        let SQLQuery = `SELECT HS.MaHS, HoTen, MaLHKT, Diem, MaLop FROM HOCSINH HS, 
+            (SELECT KQHM.MaHS, MaLHKT, Diem, L.MaLop
+            FROM KETQUAHOCMON KQHM LEFT JOIN CT_HOCMON CTHM ON KQHM.MaQTHoc = CTHM.MaQTHoc INNER JOIN HOCSINH_LOP HS_L ON HS_L.MaHS = KQHM.MaHS INNER JOIN LOP L ON L.MaLop = HS_L.MaLop INNER JOIN HOCKY HK ON HK.MaHocKy = L.MaHocKy
+            WHERE MaMH = '${MaMH}'AND L.MaLop = N'${MaLop}' AND HK.HocKy = N'${HocKy}' AND HK.MaNam = N'NH${Nam2}'
+            GROUP BY KQHM.MaHS, MaLHKT, Diem, L.MaLop) BD
+        WHERE HS.MaHS = BD.MaHS`;
+        let result = await TruyVan("Admin", SQLQuery);
+        console.log("Danh sách các điểm", result);
+        return ({
+            statusCode: 200,
+            message: 'Lấy danh sách điểm thành công!',
+            result: result.result.recordset
+        });
+    } catch (err) {
+        console.log(err);
+        return ({
+            statusCode: 400,
+            message: 'Lỗi truy vấn SQL!',
+            alert: 'Kiểm tra lại câu lệnh SQL!'
+        });
+    }
+}
+
+exports.DanhSachDiem = DanhSachDiem;
