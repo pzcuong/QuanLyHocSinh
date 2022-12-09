@@ -47,8 +47,8 @@ html(lang='en')
     script.
       async function LayThongTin() {
         //Disable button
-        document.getElementById("GetData").disabled = true;
-        document.getElementById("GetData").innerHTML = "Đang tải...";
+        //- document.getElementById("GetData").disabled = true;
+        //- document.getElementById("GetData").innerHTML = "Đang tải...";
 
         data = {
           HocKy: document.getElementById("HocKy").value,
@@ -71,8 +71,8 @@ html(lang='en')
         console.log(result)
 
         //Enable button
-        document.getElementById("GetData").disabled = false;
-        document.getElementById("GetData").innerHTML = "Lấy thông tin";
+        //- document.getElementById("GetData").disabled = false;
+        //- document.getElementById("GetData").innerHTML = "Lấy thông tin";
 
         if(data.NamHoc == null || data.NamHoc == "") {
           let SelectNamHoc = document.getElementById("NamHoc");
@@ -90,13 +90,13 @@ html(lang='en')
 
         for(let i = 0; i < result.result.length; i++) {
           data.push({
-            "MSHS": result.result[i].MaHS[0], 
+            "MSHS": result.result[i].MaHS, 
             "HoTen": result.result[i].HoTen, 
-            "DiemMieng": result.result[i].DiemMieng, 
-            "Diem15P": result.result[i].Diem15Phut, 
-            "Diem1Tiet": result.result[i].Diem1Tiet, 
-            "DiemGK": result.result[i].DiemGK, 
-            "DiemCK": result.result[i].DiemCK
+            "DM": result.result[i].DM, 
+            "KT15P": result.result[i].KT15P, 
+            "KT1T": result.result[i].KT1T, 
+            "KTGK": result.result[i].KTGK, 
+            "KTCK": result.result[i].KTCK
           })
         }
 
