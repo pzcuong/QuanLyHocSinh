@@ -250,6 +250,23 @@ async function DanhSachLopHoc() {
         });
     }
 }
+
+async function XoaBaiDang(MaBD) {
+    try {
+        let SQLQuery = `delete from BaiDang where MaBaiDang = N'${MaBD}'`;
+        let result = await TruyVan("Admin", SQLQuery);
+        console.log("Xóa bài đăng", result);
+        return result;
+    } catch(err) {
+        console.log(err);
+        return ({ 
+            statusCode: 400,
+            message: 'Lỗi truy vấn SQL!',
+            alert: 'Kiểm tra lại câu lệnh SQL!'
+        });
+    }
+}
+
 exports.ThemGiaoVienVaoLop = ThemGiaoVienVaoLop;
 exports.ThemHocSinhVaoLop = ThemHocSinhVaoLop;
 exports.DanhSachHocSinh = DanhSachHocSinh;
@@ -261,3 +278,4 @@ exports.ThayDoiThongTin = ThayDoiThongTin;
 exports.DanhSachLopHoc = DanhSachLopHoc;
 exports.DanhSachGiaoVien = DanhSachGiaoVien;
 exports.DanhSachBaiDang = DanhSachBaiDang;
+exports.XoaBaiDang = XoaBaiDang;

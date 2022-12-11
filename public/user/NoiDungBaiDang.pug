@@ -9,7 +9,7 @@ html(lang='en')
     script(src='/public/source/js/script.js')
     script(src='https://kit.fontawesome.com/7b85820244.js' crossorigin='anonymous')
     // Mới sửa
-    link(rel='stylesheet' href='/public/source/css/index.css')
+    link(rel='stylesheet' href='/public/source/css/notice.css')
     // Mới sửa
   body
     - var role = role
@@ -143,7 +143,6 @@ html(lang='en')
                   a(href='/public/auth/ThemBaiDang.html') Tạo Thông báo
         // Mới sửa
         
-
     section.home-section
       .home-content
         i.fa-solid.fa-bars
@@ -152,7 +151,7 @@ html(lang='en')
         .page-header
           .page-header-title
             .page-header-student-title
-              h3.page-title Thông báo chung
+              h3.page-title Thông báo chung 
         .student-form-view
           .card
             .card-table
@@ -162,15 +161,15 @@ html(lang='en')
                     // Mới sửa
                     .card-body-content
                       .view-content
-                        .item-list
-                          ul
-                            each ThongBao in DanhSachThongBao
-                                - var NgayDang = new Date(ThongBao.NgayDang).toLocaleDateString()
-                                li.view-row
-                                    .view-row-icon
-                                        i.fa-solid.fa-caret-right
-                                        - var href = '/user/XemThongBao/' + ThongBao.MaBaiDang + '/'
-                                        a(href=href) #{ThongBao.TieuDe} - #{NgayDang}
-                            
+                        .content-head
+                            h1.content-title #{NoiDung[0].TieuDe}
+                        .content-body
+                          .content-body-main
+                            .content-date
+                              p.notice-up-date
+                                i #{"Ngày đăng: " + NoiDung[0].NgayDang}
+                            .content-main
+                              .content-main
+                                #{NoiDung[0].NoiDung}/
                     // Mới sửa
     script(src='/public/source/js/main.js')

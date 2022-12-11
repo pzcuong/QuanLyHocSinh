@@ -107,6 +107,7 @@ body {
   margin-top: 30px;
   border-radius: 8px;
   height: max-content;
+  border: 1px solid rgba(0, 0, 0, 0.125);
 }
 .card-table {
   display: flex;
@@ -115,6 +116,9 @@ body {
 .card-body {
   padding: 25px;
   position: relative;
+}
+.edit-form-student {
+  /* width: 50%; */
 }
 .edit-form {
   width: 50%;

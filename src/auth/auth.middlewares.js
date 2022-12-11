@@ -17,6 +17,11 @@ async function isAuth(req, res, next) {
 			.end();
 	}
 	const user = await userModle.getInfoUser(verified.data.payload.username);
+	if(user.statusCode == 500) 
+		return res
+			.writeHead(302, {'Location': '/auth/login'})
+			.end();
+			
 	req.user = user;
 	return next();
 };

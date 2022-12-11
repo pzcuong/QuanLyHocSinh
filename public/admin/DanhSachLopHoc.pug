@@ -4,15 +4,15 @@ html(lang='en')
     meta(charset='UTF-8')
     meta(http-equiv='X-UA-Compatible' content='IE=edge')
     meta(name='viewport' content='width=device-width, initial-scale=1.0')
-    link(rel='stylesheet' href='/public/source/css/students.css  ')
-    link(rel='stylesheet' href='/public/source/css/edit-student.css ')
+    link(rel='stylesheet' href='/public/source/css/classroom.css  ')
+    link(rel='stylesheet' href='/public/source/css/edit-classroom.css ')
     link(rel='stylesheet' href='/public/source/fonts/fontawesome-free-6.2.0-web/css/all.css')
     link(rel='icon' type='image/x-icon' href='/public/source/img/favicon.png')
     link(rel='stylesheet' href='/public/source/css/style.css')
-    script(src='/public/source/js/script.js')
+    script(src="/public/source/js/script.js")
     script(src='https://kit.fontawesome.com/7b85820244.js' crossorigin='anonymous')
     title CoCoEdu
-  body#body-wrapper
+  body
     - var role = role
     - var role_encode;
       if (role == 'Admin')
@@ -153,7 +153,27 @@ html(lang='en')
         .page-header
           .page-header-title
             .page-header-student-title
-              h3.page-title Quản Lý Giáo Viên
+              h3.page-title Danh Sách Lớp
+        // Start: Search Bar
+        .student-group-form
+          .search-group
+            .submit-form-student.submit
+              .form-group.local-form
+                select.form-control-edit-btn(required='')
+                  option Khối 10
+                  option Khối 11
+                  option Khối 12
+            .submit-form-student.submit
+              .form-group.local-form
+                select.form-control-edit-btn(required='')
+                  option Tự Nhiên
+                  option Xã Hội
+            .search-bar
+              .form-group
+                input.form-control(type='text' placeholder='Tìm kiếm ...')
+            .search-student-btn
+              .search-btn
+                button.btn(type='button') Tìm Kiếm
         // End: Search Bar
         .student-form
           .card
@@ -161,10 +181,11 @@ html(lang='en')
               .card-body
                 .card-body_head
                   .card-body_header
-                    if(role == 'Admin')
-                      .card-body_header-icon
-                        a.btn(href='./edit-student.html')
-                          i.fa-solid.fa-plus
+                    .page-header-student-title
+                      h3.page-title Lớp
+                    .card-body_header-icon
+                      a.btn(href='/public/auth/edit-classroom.html')
+                        i.fa-solid.fa-plus
                 .card-body_body
                   .Data-Table
                     .Data-Table-body
@@ -172,44 +193,33 @@ html(lang='en')
                         table.Table
                           thead.student-thead
                             tr.thead(role='row')
-                              th.sorting(tabindex='0' rowspan='1' colspan='1' aria-label='MaSo')
-                                | Mã Số
-                              th.sorting(tabindex='0' rowspan='1' colspan='1' aria-label='HoTen')
-                                | Họ Tên
-                              th.sorting(tabindex='0' rowspan='1' colspan='1' aria-label='GioiTinh')
-                                | Giới Tính
-                              th.sorting(tabindex='0' rowspan='1' colspan='1' aria-label='NgaySinh')
-                                | Ngày Sinh
-                              th.sorting(tabindex='0' rowspan='1' colspan='1' aria-label='SoDienThoai')
-                                | Số Điện Thoại
-                              th.sorting(tabindex='0' rowspan='1' colspan='1' aria-label='Email')
-                                | Email
-                              th.sorting.address(tabindex='0' rowspan='1' colspan='1' aria-label='DiaChi')
-                                | Địa Chỉ
-                              if(role == 'Admin')
-                                th.text-end.sorting(tabindex='0' rowspan='1' colspan='1' aria-label='DiaChi')
-                                  | Chỉnh sửa
+                              th.sorting(tabindex='0' rowspan='1' colspan='1' aria-label='MaLop')
+                                | Mã Lớp
+                              th.sorting(tabindex='0' rowspan='1' colspan='1' aria-label='Lop')
+                                | Tên Lớp
+                              th.sorting(tabindex='0' rowspan='1' colspan='1' aria-label='Khoi')
+                                | Khối
+                              th.sorting(tabindex='0' rowspan='1' colspan='1' aria-label='HocKy')
+                                | Học Kỳ
+                              th.sorting(tabindex='0' rowspan='1' colspan='1' aria-label='NamHoc')
+                                | Năm Học
+                              th.text-end.sorting(tabindex='0' rowspan='1' colspan='1' aria-label='ChinhSua')
+                                | Chỉnh sửa
                           tbody.student-tbody
-                            each user in ClassDataList
-                              - var date = new Date(user.NgSinh).toLocaleDateString();
-                                                              
-                              tr.odd.table-normal(role='row', id=user.MaGV)
-                                td #{user.MaGV}
-                                td
-                                    a(href='./view-student.html') #{user.HoTen}
-                                td #{user.GioiTinh}
-                                td #{date}
-                                td +84756126896
-                                td #{user.Email}
-                                td #{user.DiaChi}
-                                if(role == 'Admin')
-                                  td.text-end
-                                    .action
-                                      a.delete-btn(href='#')
-                                          i.fa-solid.fa-trash
-                                      - var functionName = 'LayThongTin(' + user.MaGV + ')';
-                                      a.edit-btn.js-edit-student(href='#', onclick=functionName)
-                                          i.fa-solid.fa-pen-to-square
+                            each LopHoc in ClassDataList
+                                tr.odd.table-normal(role='row' id=LopHoc.MaLop)
+                                    td #{LopHoc.MaLop}
+                                    td #{LopHoc.TenLop}
+                                    td #{LopHoc.MaKhoiLop}
+                                    td #{LopHoc.MaHocKy}
+                                    td 2021 - 2022
+                                    td.text-end
+                                        .action
+                                            a.delete-btn(href='#')
+                                                i.fa-solid.fa-trash
+                                            - var functionName = "XemThongTinLop('" + LopHoc.MaLop + "')"
+                                            a.edit-btn.js-edit-student(href='#' onclick=functionName)
+                                                i.fa-solid.fa-pen-to-square
 
                     .Data-Table-footer
     // Modal
@@ -220,70 +230,58 @@ html(lang='en')
             .card-body-edit
               .modal-close.js-modal-close
                 i.fa-solid.fa-xmark
-              form(id="edit-student-form")
+              form(id="formElem")
                 .page-header-student-title
-                  h5.page-title Thông tin giáo viên
+                  h5.page-title Thông tin lớp
                 .row
-                  .edit-form-student
+                  .edit-form
                     .submit-form
                       .form-group.local-form
                         label
-                          | Họ và tên 
+                          | Mã số lớp học
                           span.login-danger *
-                        input.form-control-edit(required='' type='text' placeholder='Nhập họ và tên...', id='HoTen')
-                    
+                        input.form-control-edit(required='' type='text' placeholder='Nhập mã số lớp học...' id="MaLop")
                     .submit-form
                       .form-group.local-form
                         label
-                          | Giới tính
+                          | Tên lớp
                           span.login-danger *
-                        select.form-control-edit(required='' id='GioiTinh')
-                          option Nam
-                          option Nữ
-                          option Khác
+                        input.form-control-edit(required='' type='text' placeholder='Nhập tên lớp...' id="TenLop")
                     .submit-form
                       .form-group.local-form
                         label
-                          | Ngày sinh
+                          | Khối
                           span.login-danger *
-                        input.form-control-edit(required='' type='date' id='NgSinh')
-              
+                        select.form-control-edit(required='')
+                          option Khối 10
+                          option Khối 11
+                          option Khối 12
                     .submit-form
                       .form-group.local-form
                         label
-                          | Email
+                          | Lớp
                           span.login-danger *
-                        input.form-control-edit(required='' type='email' placeholder='Nhập email...' id='Email')
-                    
+                        select.form-control-edit(required='')
+                          option Tự Nhiên
+                          option Xã Hội
                     .submit-form
                       .form-group.local-form
                         label
-                          | Địa chỉ
+                          | Học Kỳ
                           span.login-danger *
-                        input.form-control-edit(required='' type='text' placeholder='Nhập địa chỉ...' id='DiaChi')
-                   
+                        select.form-control-edit(required='')
+                          option 1
+                          option 2
                     .submit-form
                       .form-group.local-form
-                        //- label
-                        //-   | Mã học sinh
-                        //-   span.login-danger *
-                        input.form-control-edit(required='' type='hidden' id='MaGV')
-
-
-                  .student-image
-                    label  Tải lên ảnh chân dung của giáo viên
-                    span.login-danger *
-                    .form-group
-                      .student-avatar
-                        img#avatar(src='/public/source/img/profile-avatar.png ' alt='avatar')
-                      .upload
-                        input#UploadImage(accept='image/*' required='' type='file' hidden='')
-                        label(for='UploadImage') Chọn tệp
+                        label
+                          | Năm Học
+                          span.login-danger *
+                        input.form-control-edit(required='' type='text')
                 .student-image-submit
                   .image-submit
-                    button.search-btn.btn(id="submit-button" onclick="CapNhatThongTin()") 
+                    button.search-btn.btn(type='submit')
                       | Xác nhận
-
     script(src='/public/source/js/main.js')
     script(src='/public/source/js/edit-student.js ')
-    script(src='/public/source/js/teachers.js ')
+    script(src='/public/source/js/students.js ')

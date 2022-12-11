@@ -90,6 +90,7 @@ body {
   margin-top: 30px;
   border-radius: 8px;
   height: max-content;
+  border: 1px solid rgba(0, 0, 0, 0.125);
 }
 
 .page-header-student-title h5 {
@@ -141,7 +142,7 @@ body {
   margin: 0px 20px;
 }
 .edit-form-modal {
-  width: 100%;
+  /* width: 100%; */
 }
 .form-control-edit-btn {
   width: 140px;
@@ -196,6 +197,7 @@ body {
   width: max-content;
   overflow-y: initial !important;
   position: relative;
+  margin-top: 40px;
   /* border-radius: 10px; */
 }
 .modal {

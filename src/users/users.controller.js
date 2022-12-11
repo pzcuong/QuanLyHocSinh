@@ -19,13 +19,33 @@ async function getAllClass(req, res) {
 
 async function DanhSachBaiDang(req, res) {
     let result = await usersModel.DanhSachBaiDang();
-    
+
     if(result.statusCode === 200) {
         let html = pug.renderFile('public/user/XemThongBao.pug', {
             user: req.user.result,        
 			image: req.image,
 			role: req.user.role,
             DanhSachThongBao: result.result.recordsets[0]
+        });
+        res.send(html);
+    } else {
+        let html = pug.renderFile('public/404.pug', { 
+            message: result.message,
+            redirect: 'public/Home.pug'
+        });
+        res.send(html);
+    }
+}
+
+async function XemNoiDungBaiDang(req, res) {
+    let result = await usersModel.NoiDungBaiDang(req.params.MaBaiDang);
+
+    if(result.statusCode === 200) {
+        let html = pug.renderFile('public/user/NoiDungBaiDang.pug', {
+            user: req.user.result,        
+			image: req.image,
+			role: req.user.role,
+            NoiDung: result.result.recordsets[0]
         });
         res.send(html);
     } else {
@@ -180,5 +200,31 @@ async function DanhSachDiem (req, res) {
 }
 
 exports.DanhSachDiem = DanhSachDiem;
+exports.XemNoiDungBaiDang = XemNoiDungBaiDang;
 
+async function DanhSachHocSinhTheoMaHS(req, res) {
+    console.log(req.user.result)
+    let MaHS = req.user.result.MaHS;
+    if(!MaHS) 
+        MaHS = "20521150"
+    
+    let result = await usersModel.DanhSachHocSinhTheoMaHS(MaHS);
+    console.log("Danh sach hoc sinh theo ma hs")
+    console.log(result.result)
+    if(result.statusCode === 200) {
+        let html = pug.renderFile('public/user/DanhSachHocSinh.pug',{
+            ClassDataList:  result.result,
+            user: {
+                HoTen: req.user.result.HoTen,
+            }, role: req.user.role
+        });
+        res.send(html);
+    } else {
+        return res.json({
+            statusCode: 500,
+            message: 'Lấy danh sách học sinh theo mã học sinh thất bại',
+        })
+    }
+}
 
+exports.DanhSachHocSinhTheoMaHS = DanhSachHocSinhTheoMaHS;

@@ -2,16 +2,17 @@ doctype html
 html(lang='en')
   head
     meta(charset='UTF-8')
+    meta(http-equiv='X-UA-Compatible' content='IE=edge')
     meta(name='viewport' content='width=device-width, initial-scale=1.0')
-    title CoCoEdu
+    link(rel='stylesheet' href='/public/source/css/students.css  ')
+    link(rel='stylesheet' href='/public/source/css/edit-student.css ')
+    link(rel='stylesheet' href='/public/source/fonts/fontawesome-free-6.2.0-web/css/all.css')
     link(rel='icon' type='image/x-icon' href='/public/source/img/favicon.png')
     link(rel='stylesheet' href='/public/source/css/style.css')
     script(src='/public/source/js/script.js')
     script(src='https://kit.fontawesome.com/7b85820244.js' crossorigin='anonymous')
-    // Mới sửa
-    link(rel='stylesheet' href='/public/source/css/index.css')
-    // Mới sửa
-  body
+    title CoCoEdu
+  body#body-wrapper
     - var role = role
     - var role_encode;
       if (role == 'Admin')
@@ -152,25 +153,61 @@ html(lang='en')
         .page-header
           .page-header-title
             .page-header-student-title
-              h3.page-title Thông báo chung
-        .student-form-view
+              h3.page-title Danh sách Học Sinh
+        // Start: Search Bar
+        .student-form
           .card
             .card-table
               .card-body
-                div
-                  .row
-                    // Mới sửa
-                    .card-body-content
-                      .view-content
-                        .item-list
-                          ul
-                            each ThongBao in DanhSachThongBao
-                                - var NgayDang = new Date(ThongBao.NgayDang).toLocaleDateString()
-                                li.view-row
-                                    .view-row-icon
-                                        i.fa-solid.fa-caret-right
-                                        - var href = '/user/XemThongBao/' + ThongBao.MaBaiDang + '/'
-                                        a(href=href) #{ThongBao.TieuDe} - #{NgayDang}
-                            
-                    // Mới sửa
+
+                .card-body_body
+                  .Data-Table
+                    .Data-Table-body
+                      .Table-body 
+                        if (ClassDataList.length == 0)
+                            h2 Không có dữ liệu
+                        else
+                            table.Table
+                              thead.student-thead
+                                tr.thead(role='row')
+                                th.sorting(tabindex='0' rowspan='1' colspan='1' aria-label='MaSo')
+                                    | Mã Số
+                                th.sorting(tabindex='0' rowspan='1' colspan='1' aria-label='HoTen')
+                                    | Họ Tên
+                                th.sorting(tabindex='0' rowspan='1' colspan='1' aria-label='Lop')
+                                    | Lớp
+                                th.sorting(tabindex='0' rowspan='1' colspan='1' aria-label='GioiTinh')
+                                    | Giới Tính
+                                th.sorting(tabindex='0' rowspan='1' colspan='1' aria-label='NgaySinh')
+                                    | Ngày Sinh
+                                th.sorting(tabindex='0' rowspan='1' colspan='1' aria-label='SoDienThoai')
+                                    | Số Điện Thoại
+                                th.sorting(tabindex='0' rowspan='1' colspan='1' aria-label='Email')
+                                    | Email
+                                th.sorting.address(tabindex='0' rowspan='1' colspan='1' aria-label='DiaChi')
+                                    | Địa Chỉ
+
+                              tbody.student-tbody
+                                if (Object.keys(ClassDataList).length == 0)
+                                    h2 Không có dữ liệu
+                                else
+                                    each user in ClassDataList
+                                        - var date = new Date(user.NgSinh).toLocaleDateString();
+                                        
+                                        tr.odd.table-normal(role='row', id=user.MaHS)
+                                            td #{user.MaHS[0]}
+                                            td
+                                                a(href='./view-student.html') #{user.HoTen}
+                                            td #{user.MaLop}
+                                            td #{user.GioiTinh}
+                                            td #{date}
+                                            td +84756126896
+                                            td #{user.Email}
+                                            td #{user.DiaChi}
+
+
+                    .Data-Table-footer
+
     script(src='/public/source/js/main.js')
+    script(src='/public/source/js/edit-student.js ')
+    script(src='/public/source/js/students.js ')
