@@ -1,0 +1,37 @@
+doctype html
+html
+  head
+    title Đăng nhập PreSchool
+    link(rel='stylesheet' type='text/css' href='/public/source/css/login.css')
+    link(href='https://fonts.googleapis.com/css?family=Poppins:600&display=swap' rel='stylesheet')
+    script(src='https://kit.fontawesome.com/a81368914c.js')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+  body
+    img.wave(src='/public/source/img/wave.png')
+    .container
+      .img
+        img(src='/public/source/img/bg.svg')
+      .login-content
+        form(id='formElem')
+          img(src='/public/source/img/avatar.svg')
+          br
+          h3.title Xin chào - Đăng nhập
+          br
+          #encoded(style="color: red; font-weight: bold; text-align: center;") 
+          br
+          .input-div.one
+            .i
+              i.fas.fa-user
+            .div
+              h5 Mã người dùng
+              input.input(type='text' name='username')
+          .input-div.pass
+            .i
+              i.fas.fa-lock
+            .div
+              h5 Mật khẩu
+              input.input(type='password' name='password')
+          a(href='/auth/forgot-password') Quên mật khẩu?
+          input.btn(value="Đăng nhập" type="button" onclick='login();return false;')
+    script(type='text/javascript' src="/public/source/js/script.js")
+    script(type='text/javascript' src="/public/source/js/login.js")

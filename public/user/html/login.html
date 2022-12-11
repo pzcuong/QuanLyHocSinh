@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CocoEdu</title>
+    <link rel="stylesheet" type="text/css" href="../source/css/login.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:600&amp;display=swap"
+      rel="stylesheet" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="/public/source/img/favicon.png" />
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+
+  <body>
+    <img class="wave" src="/public/source/img/wave.png" />
+    <div class="container">
+      <div class="img"><img src="/public/source/img/bg.svg" /></div>
+      <div class="login-content">
+        <form id="formElem">
+          <img src="/public/source/img/avatar.svg" /><br />
+          <h3 class="title">Xin chào - Đăng nhập</h3>
+          <br />
+          <div
+            id="encoded"
+            style="color: red; font-weight: bold; text-align: center"></div>
+          <br />
+          <div class="input-div one">
+            <div class="i"><i class="fas fa-user"></i></div>
+            <div class="div">
+              <h5>Mã người dùng</h5>
+              <input class="input" type="text" name="username" />
+            </div>
+          </div>
+          <div class="input-div pass">
+            <div class="i"><i class="fas fa-lock"></i></div>
+            <div class="div">
+              <h5>Mật khẩu</h5>
+              <input class="input" type="password" name="password" />
+            </div>
+          </div>
+          <a href="/auth/forgot-password">Quên mật khẩu?</a
+          ><input
+            class="btn"
+            value="Đăng nhập"
+            type="button"
+            onclick="login();return false;" />
+        </form>
+      </div>
+    </div>
+    <script type="text/javascript" src="/public/source/js/script.js"></script>
+    <script type="text/javascript" src="/public/source/js/login.js"></script>
+  </body>
+</html>

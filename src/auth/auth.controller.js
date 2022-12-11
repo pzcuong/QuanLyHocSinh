@@ -255,11 +255,11 @@ async function DoiMatKhau (req, res){
 
 async function ThayDoiTT(req, res){
     try {
-            const hoten = req.body.hoten;
-            const ngsinh = req.body.ngsinh;
-            const gioitinh = req.body.gioitinh;
-            const diachi = req.body.diachi;
-            const email = req.body.email;
+            const hoten = req.body.HoTen;
+            const ngsinh = req.body.NgSinh;
+            const gioitinh = req.body.GioiTinh;
+            const diachi = req.body.Email;
+            const email = req.body.DiaChi;
             console.log(req.body);
             if ( !hoten || !ngsinh || !gioitinh || !diachi || !email )
                 return res 

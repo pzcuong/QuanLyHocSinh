@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Copy -->
+    <title>CoCoEdu</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="/public/source/img/favicon.png" />
+    <link rel="stylesheet" href="/public/source/css/style.css" />
+    <script
+      src="https://kit.fontawesome.com/7b85820244.js"
+      crossorigin="anonymous"></script>
+    <!-- End-->
+  </head>
+  <body>
+    <div class="header">
+      <div class="actions_user_hd">
+        <div class="profile_hd" id="profile" onclick="menuhdToggle()">
+          <img src="/public/source/img/user_none1.png" alt="image user" />
+        </div>
+        <div class="menu_user_hd">
+          <div class="profile_name">
+            Quốc Cường <br /><span>Administator</span>
+          </div>
+          <ul>
+            <li><a href="#">Hồ Sơ</a></li>
+            <li><a href="#">Đăng Xuất</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <form class="search-bar">
+        <input type="text" class="searchTerm" placeholder="Tìm kiếm tại đây" />
+        <button type="submit" class="searchButton">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>
+    </div>
+    <!-- Tên app,logo app+  -->
+    <!--  -->
+    <div class="sidebar">
+      <div class="logo-details">
+        <a href="/public/auth/index.html">
+          <img src="/public/source/img/preskool.png" alt="logo" />
+        </a>
+        <span class="logo_name">CoCoEdu</span>
+      </div>
+      <div class="nav_links">
+        <div class="sidenav">
+          <!-- Bảng điều khiển -->
+          <div>
+            <button class="dropdown-btn">
+              <i class="fa-solid fa-border-all" id="icon_sn"></i>
+              <span class="link_name">Bảng điều khiển</span>
+              <i class="fas fa-angle-right" id="drop"></i>
+            </button>
+            <div class="dropdown-container">
+              <a class="link_name" href="#">Bảng điều khiển</a>
+
+              <div class="nbar-sub">
+                <a href="/public/auth/admin_dashboard.html">Administrator</a>
+              </div>
+              <div class="nbar-sub">
+                <a href="/public/auth/teacher_dashboard.html">Giáo Viên</a>
+              </div>
+              <div class="nbar-sub">
+                <a href="/public/auth/student_dashboard.html">Học Sinh</a>
+              </div>
+            </div>
+          </div>
+          <!-- SInh viên -->
+          <div>
+            <button class="dropdown-btn">
+              <i class="fa-solid fa-graduation-cap" id="icon_sn"></i>
+              <span class="link_name">Học Sinh</span>
+              <i class="fas fa-angle-right" id="drop"></i>
+            </button>
+            <div class="dropdown-container">
+              <a class="link_name" href="#">Học Sinh</a>
+              <div class="nbar-sub">
+                <a href="/public/auth/students.html">Quản Lý Học Sinh</a>
+              </div>
+              <div class="nbar-sub">
+                <a href="/public/auth/view-student.html">Xem Học Sinh</a>
+              </div>
+              <div class="nbar-sub">
+                <a href="/public/auth/edit-student.html">Thêm Học Sinh</a>
+              </div>
+            </div>
+          </div>
+          <!-- Giáo Viên -->
+          <div>
+            <button class="dropdown-btn">
+              <i class="fa-solid fa-chalkboard-user" id="icon_sn"></i>
+              <span class="link_name">Giáo Viên</span>
+              <i class="fas fa-angle-right" id="drop"></i>
+            </button>
+            <div class="dropdown-container">
+              <a class="link_name" href="#">Giáo Viên</a>
+              <div class="nbar-sub">
+                <a href="/public/auth/teachers.html">Quản Lý Giáo Viên</a>
+              </div>
+              <div class="nbar-sub">
+                <a href="/public/auth/view-teacher.html">Xem Giáo Viên</a>
+              </div>
+              <div class="nbar-sub">
+                <a href="/public/auth/edit-teacher.html">Thêm Giáo Viên</a>
+              </div>
+            </div>
+          </div>
+          <!-- Bảng điểm-->
+          <div>
+            <button class="dropdown-btn">
+              <i class="fa-regular fa-calendar" id="icon_sn"></i>
+              <span class="link_name">Bảng điểm</span>
+              <i class="fas fa-angle-right" id="drop"></i>
+            </button>
+            <div class="dropdown-container">
+              <a class="link_name" href="#">Bảng điểm</a>
+
+              <div class="nbar-sub">
+                <a href="#">Nhập bảng điểm</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="home-section">
+      <div class="home-content">
+        <i class="fa-solid fa-bars"></i>
+      </div>
+    </section>
+
+    <script src="/public/source/js/main.js"></script>
+  </body>
+</html>

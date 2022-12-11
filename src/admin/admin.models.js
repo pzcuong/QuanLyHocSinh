@@ -96,8 +96,7 @@ async function createClass(data) {
 
 async function DanhSachHocSinh() {
     try {
-            
-            let SQLQuery = `SELECT HS.MaHS, HS.HoTen, HS.GioiTinh,HS.NgSinh,L.TenLop
+            let SQLQuery = `SELECT HS.MaHS, HS.HoTen, HS.GioiTinh,HS.NgSinh,L.TenLop, HS.Email, HS.DiaChi
             FROM HOCSINH HS, LOP L, HOCSINH_LOP HS_L
             WHERE HS.MaHS = HS_L.MaHS AND HS_L.MaLop = L.MaLop `;
 
@@ -108,6 +107,44 @@ async function DanhSachHocSinh() {
 
     } catch (err) {
         console.log("Lỗi DanhSachHocSinh (admin.models)", err);
+        return ({
+            statusCode: 500,
+            message: 'Lỗi hệ thống!',
+            alert: 'Lỗi hệ thống'
+        });
+    }
+}
+
+async function DanhSachGiaoVien() {
+    try {
+            let SQLQuery = `SELECT * FROM GIAOVIEN`;
+
+            let result = await TruyVan("Admin", SQLQuery);
+            let class_data = result.result.recordset[0];
+            console.log(result);
+            return result;
+
+    } catch (err) {
+        console.log("Lỗi DanhSachGiaoVien (admin.models)", err);
+        return ({
+            statusCode: 500,
+            message: 'Lỗi hệ thống!',
+            alert: 'Lỗi hệ thống'
+        });
+    }
+}
+
+async function DanhSachBaiDang() {
+    try {
+            let SQLQuery = `SELECT * FROM BAIDANG`;
+
+            let result = await TruyVan("Admin", SQLQuery);
+            let class_data = result.result.recordset[0];
+            console.log(result);
+            return result;
+
+    } catch (err) {
+        console.log("Lỗi DanhSachGiaoVien (admin.models)", err);
         return ({
             statusCode: 500,
             message: 'Lỗi hệ thống!',
@@ -170,6 +207,49 @@ async function ThemBaiDang(data) {
     }
 }
 
+async function ThayDoiThongTin(data, table) {
+    try {
+        let SQLQuery;
+        if (table == "HocSinh")
+            SQLQuery = `update ${table} set HoTen = N'${data.HoTen}', GioiTinh = N'Nam', NgSinh = N'${data.NgSinh}', Email = N'${data.Email}', DiaChi = N'${data.DiaChi}' where MaHS = N'${data.MaHS}'`;
+        else
+            SQLQuery = `update ${table} set HoTen = N'${data.HoTen}', GioiTinh = N'Nam', NgSinh = N'${data.NgSinh}', Email = N'${data.Email}', DiaChi = N'${data.DiaChi}' where MaGV = N'${data.MaHS}'`;
+
+        let result = await TruyVan("Admin", SQLQuery);
+        console.log(result);
+        return ({
+            statusCode: 200,
+            message: 'Thành công',
+            result: result.result.recordsets
+        })
+    } catch (err) {
+        console.log("Lỗi ThayDoiThongTin (admin.models)", err);
+        return ({
+            statusCode: 500,
+            message: 'Lỗi hệ thống!',
+            alert: 'Lỗi hệ thống'
+        });
+    }
+}
+
+async function DanhSachLopHoc() {
+    try {
+            let SQLQuery = `SELECT * FROM LOP`;
+
+            let result = await TruyVan("Admin", SQLQuery);
+            let class_data = result.result.recordset[0];
+            console.log(result);
+            return result;
+
+    } catch (err) {
+        console.log("Lỗi DanhSachLopHoc (admin.models)", err);
+        return ({
+            statusCode: 500,
+            message: 'Lỗi hệ thống!',
+            alert: 'Lỗi hệ thống'
+        });
+    }
+}
 exports.ThemGiaoVienVaoLop = ThemGiaoVienVaoLop;
 exports.ThemHocSinhVaoLop = ThemHocSinhVaoLop;
 exports.DanhSachHocSinh = DanhSachHocSinh;
@@ -177,3 +257,7 @@ exports.getClass = getClass;
 exports.createClass = createClass;
 exports.TruyVan = TruyVan;
 exports.ThemBaiDang = ThemBaiDang;
+exports.ThayDoiThongTin = ThayDoiThongTin;
+exports.DanhSachLopHoc = DanhSachLopHoc;
+exports.DanhSachGiaoVien = DanhSachGiaoVien;
+exports.DanhSachBaiDang = DanhSachBaiDang;

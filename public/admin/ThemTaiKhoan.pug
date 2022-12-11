@@ -1,0 +1,182 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(http-equiv='X-UA-Compatible' content='IE=edge')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    link(rel='stylesheet' href='/public/source/css/edit-student.css')
+    link(rel='stylesheet' href='/public/source/fonts/fontawesome-free-6.2.0-web/css/all.css')
+    link(rel='icon' type='image/x-icon' href='/public/source/img/favicon.png')
+    link(rel='icon' type='image/x-icon' href='/public/source/img/favicon.png')
+    link(rel='stylesheet' href='/public/source/css/style.css')
+    script(src="/public/source/js/ThemTaiKhoan.js") 
+    script(src='https://kit.fontawesome.com/7b85820244.js' crossorigin='anonymous')
+    title CoCoEdu
+  body#body-wrapper
+    .header
+      .actions_user_hd
+        #profile.profile_hd(onclick='menuhdToggle()')
+          img(src='/public/source/img/user_none1.png' alt='image user')
+        .menu_user_hd
+          .profile_name
+            | #{user.HoTen}
+            br
+            span #{role}
+          ul
+            li
+              a(href='#') Hồ Sơ
+            li
+              a(href='#') Đăng Xuất
+      form.search-bar
+        input.searchTerm(type='text' placeholder='Tìm kiếm tại đây')
+        button.searchButton(type='submit')
+          i.fa-solid.fa-magnifying-glass
+    // Tên app,logo app+
+    // 
+    .sidebar
+      .logo-details
+        a(href='index.html')
+          img(src='/public/source/img/preskool.png' alt='logo')
+        span.logo_name CoCoEdu
+      .nav_links
+        .sidenav
+          // Bảng điều khiển
+          div
+            button.dropdown-btn
+              i#icon_sn.fa-solid.fa-border-all
+              span.link_name Bảng điều khiển
+              i#drop.fas.fa-angle-right
+            .dropdown-container
+              a.link_name(href='#') Bảng điều khiển
+              .nbar-sub
+                a(href='#') Administrator
+              .nbar-sub
+                a(href='#') Giáo Viên
+              .nbar-sub
+                a(href='#') Học Sinh
+          // SInh viên
+          div
+            button.dropdown-btn
+              i#icon_sn.fa-solid.fa-graduation-cap
+              span.link_name Học Sinh
+              i#drop.fas.fa-angle-right
+            .dropdown-container
+              a.link_name(href='#') Học Sinh
+              .nbar-sub
+                a(href='/public/auth/students.html') Quản Lý Học Sinh
+              .nbar-sub
+                a(href='/public/auth/view-student.html') Xem Học Sinh
+              .nbar-sub
+                a(href='#') Thêm Học Sinh
+          // Giáo Viên
+          div
+            button.dropdown-btn
+              i#icon_sn.fa-solid.fa-chalkboard-user
+              span.link_name Giáo Viên
+              i#drop.fas.fa-angle-right
+            .dropdown-container
+              a.link_name(href='#') Giáo Viên
+              .nbar-sub
+                a(href='/public/auth/teachers.html') Quản Lý Giáo Viên
+              .nbar-sub
+                a(href='#') Xem Giáo Viên
+              .nbar-sub
+                a(href='#') Thêm Giáo Viên
+          // Bảng điểm
+          div
+            button.dropdown-btn
+              i#icon_sn.fa-regular.fa-calendar
+              span.link_name Bảng điểm
+              i#drop.fas.fa-angle-right
+            .dropdown-container
+              a.link_name(href='#') Bảng điểm
+              .nbar-sub
+                a(href='#') Nhập bảng điểm
+    section.home-section
+      .home-content
+        i.fa-solid.fa-bars
+    .page-wrapper
+      .content
+        .page-header
+          .page-header-title
+            .page-header-student-title
+              h3.page-title Tạo mới người dùng
+        .student-form
+          .card
+            .card-table
+              .card-body
+                form(id="form")
+                  .page-header-student-title
+                    h5.page-title Thông tin cơ bản
+                  .row
+                    .edit-form
+                      .submit-form
+                        .form-group.local-form
+                          label
+                            | Họ và tên
+                            span.login-danger *
+                          input.form-control-edit(required='' type='text' placeholder='Nhập họ và tên...' id='HoTen')
+                    
+                      .submit-form
+                        .form-group.local-form
+                          label
+                            | Giới tính
+                            span.login-danger *
+                          select.form-control-edit(required='' id='GioiTinh')
+                            option Nam
+                            option Nữ
+                            option Khác
+                      .submit-form
+                        .form-group.local-form
+                          label
+                            | Ngày sinh
+                            span.login-danger *
+                          input.form-control-edit(required='' type='date' id = 'NgSinh')
+               
+                      .submit-form
+                        .form-group.local-form
+                          label
+                            | Email
+                            span.login-danger *
+                          input.form-control-edit(required='' type='email' placeholder='Nhập email...' id='Email')
+                      
+                      .submit-form
+                        .form-group.local-form
+                          label
+                            | Địa chỉ
+                            span.login-danger *
+                          input.form-control-edit(required='' type='text' placeholder='Nhập địa chỉ...' id='DiaChi')
+                      
+
+                      .submit-form
+                        .form-group.local-form
+                          label
+                            | Mã số người dùng
+                            span.login-danger *
+                          input.form-control-edit(required='' type='text' placeholder='Nhập mã số người dùng...' id="MaND")
+
+                      .submit-form
+                        .form-group.local-form
+                          label
+                            | Loại người dùng
+                            span.login-danger *
+                          select.form-control-edit(required='' id='Role')
+                            option(value="HocSinh") Học Sinh
+                            option(value="GiaoVien") Giáo Viên
+                            option(value="Admin") Quản Trị Viên
+
+                    .student-image
+                      label  Tải lên ảnh chân dung của người dùng
+                      span.login-danger *
+                      .form-group
+                        .student-avatar
+                          img#avatar(src='/public/source/img/profile-avatar.png' alt='avatar')
+                        .upload
+                          input#UploadImage(accept='image/*' required='' type='file' hidden='')
+                          label(for='UploadImage') Chọn tệp
+                  .student-image-submit
+                    .image-submit
+                      button.search-btn.btn#btnSave(onclick="ThemTaiKhoan()")
+                        | Xác nhận
+    script(src='/public/source/js/main.js')
+    script(src='/public/source/js/edit-student.js')

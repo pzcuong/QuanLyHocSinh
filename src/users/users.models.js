@@ -12,10 +12,14 @@ const configUser = {
     database: process.env.database,
     port: 1433,
     driver: 'msnodesqlv8',
-    options:
-    {
+    options: {
         trustedConnection: false,
         encrypt: true
+    },
+    pool: {
+        max: 99,
+        min: 0,
+        idleTimeoutMillis: 30000
     }
 }
 
@@ -86,21 +90,30 @@ async function getMonHoc(mamh) {
 }
 
 
-async function createUser(data) {
+async function createUser(data, role) {
     try {
-
         let SQLQuery = `insert into XACTHUC 
             (MaND,HashPassword, RefreshToken, Role) 
-            values (N'${data.username}', N'NULL', N'NULL', N'${data.role}')`;
-        if (data.role == 'HocSinh') {
-            SQLQuery_1 = `insert into HOCSINH (MaHS) values (N'${data.username}')`;
+            values (N'${data.MaND}', N'NULL', N'NULL', N'${role}')`;
+        
+        if (data.GioiTinh == undefined) data.GioiTinh = 'Nam';
+        if (data.NgSinh == undefined) data.NgSinh = '01/01/2000';
+        if (data.DiaChi == undefined) data.DiaChi = 'NULL';
+
+        if (role == 'HocSinh') {
+            SQLQuery_1 = `insert into HOCSINH (MaHS, HoTen, GioiTinh, NgSinh, DiaChi, Email) 
+                values (N'${data.MaND}', N'${data.HoTen}', N'${data.GioiTinh}', N'${data.NgSinh}', N'${data.DiaChi}', N'${data.Email}')`;
         };
-        if (data.role == 'GiaoVien' || data.role == 'Admin') {
-            SQLQuery_1 = `insert into GIAOVIEN (MaGV) values (N'${data.username}')`;
+
+        if (role == 'GiaoVien' || role == 'Admin') {
+            SQLQuery_1 = `insert into GIAOVIEN (MaGV HoTen, GioiTinh, NgSinh, DiaChi, Email) 
+                values (N'${data.MaND}', N'${data.HoTen}', N'${data.GioiTinh}', N'${data.NgSinh}', N'${data.DiaChi}', N'${data.Email}')`;
         }
+
         let result = await TruyVan("Admin", SQLQuery);
         let result_1 = await TruyVan("Admin", SQLQuery_1);
         console.log(result_1);
+
         return ({
             statusCode: 200,
             message: 'Thành công',
@@ -136,7 +149,15 @@ async function getInfoUser(username) {
         else {
             let data = await TruyVan("Admin", `select * from xacthuc where mand = '${username}'`);
             let user_data = data.result.recordset[0];
-            console.log(user_data.Role)
+            try {
+                console.log(user_data.Role);
+            } catch (error) {
+                let result = await TruyVan("Admin", `insert into XACTHUC (MaND, Role) values (N'${username}', N'HocSinh')`);
+                user_data = {
+                    Role: "HocSinh",
+                    MaND: username
+                }
+            }
             let SQLQuery;
             if (user_data.Role == "HocSinh") {
                 SQLQuery = `
@@ -158,7 +179,8 @@ async function getInfoUser(username) {
                     statusCode: 200,
                     message: 'Thành công',
                     result: result.result.recordset[0],
-                    table: result.result.recordset
+                    table: result.result.recordset,
+                    role: user_data.Role
                 };
             else
                 return ({
@@ -227,13 +249,28 @@ async function updateUser(data) {
     }
 }
 
+let pool, result;
+
+async function ConnectSQL() {
+    try {
+        pool = new sql.ConnectionPool(configUser);
+        result = await pool.connect();
+        console.log("Kết nối thành công");
+        console.log(result)
+    } catch (err) {
+        console.log("Lỗi kết nối (users.models)", err);
+    }
+}
+
+ConnectSQL()
+
 async function TruyVan(TypeUser, SQLQuery) {
     try {
         if (TypeUser == 'Admin') {
-            let pool = await new sql.ConnectionPool(configUser);
-            let result = await pool.connect();
+            // let pool = await new sql.ConnectionPool(configUser);
+            // let result = await pool.connect();
             let queryResult = await result.query(SQLQuery);
-            await pool.close();
+            // pool.close();
             return {
                 statusCode: 200,
                 user: 'Admin',
@@ -326,18 +363,15 @@ async function DanhSachHocSinhTrongLop(MaLop, HocKy, Nam2) {
 
 async function NhapDiem(MaMH, data) {
     try {
-        console.log(MaMH);
-
-        console.log(data);
         for(let i = 0; i < data.length; i++){
             let CheckHS = `SELECT * FROM KETQUAHOCMON WHERE MaHS = '${data[i].MSHS}'`;
             CheckHS = await TruyVan("Admin", CheckHS);
-            console.log(CheckHS)
+            // console.log(CheckHS)
 
             if(CheckHS.statusCode == 200 && CheckHS.result.recordset.length == 0){
                 let SQLQuery = `INSERT KETQUAHOCMON(MaMH, MaHS) VaLUES ('${MaMH}','${data[i].MSHS}')`;
                 let result = await TruyVan("Admin", SQLQuery);
-                console.log("Danh sách kết quả học môn", result);
+                // console.log("Danh sách kết quả học môn", result);
 
                 CheckHS = `SELECT * FROM KETQUAHOCMON WHERE MaHS = '${data[i].MSHS}'`;
                 CheckHS = await TruyVan("Admin", CheckHS);
@@ -350,10 +384,9 @@ async function NhapDiem(MaMH, data) {
                 let CheckDaCoDiem = `SELECT * FROM CT_HOCMON 
                     WHERE MaQTHoc = '${CheckHS.result.recordset[0].MaQTHoc}' AND MaLHKT = '${MaLHKT}'`;
 
-                console.log(CheckDaCoDiem)
+                // console.log(CheckDaCoDiem)
                 CheckDaCoDiem = await TruyVan("Admin", CheckDaCoDiem);
-                console.log("CheckDaCoDiem")
-                console.log(CheckDaCoDiem.result.recordset)
+                // console.log("CheckDaCoDiem")
                 if(CheckDaCoDiem.statusCode == 200 && CheckDaCoDiem.result.recordset.length > 0){
                     // console.log(Object.keys(data[i]).length)
 
@@ -367,11 +400,9 @@ async function NhapDiem(MaMH, data) {
                             Diem = '${Diem}'
                             WHERE MaQTHoc = '${CheckHS.result.recordset[0].MaQTHoc}' AND MaLHKT = '${MaLHKT}'`;
                         let result = await TruyVan("Admin", SQLQuery); 
-                        console.log("Danh sách kết quả học môn", result);
+                        // console.log("Danh sách kết quả học môn", result);
                     // }
-                } else {
-                    console.log(Object.keys(data[i]).length)
-    
+                } else {    
                     if(Object.keys(data[i]).length == 2) continue;
     
                     for(let j = 2; j < Object.keys(data[i]).length; j++){
@@ -383,7 +414,6 @@ async function NhapDiem(MaMH, data) {
                             '${MaLHKT}',
                             '${Diem}')`;
                         let result = await TruyVan("Admin", SQLQuery);
-                        console.log("Danh sách kết quả học môn", result);
                     }
                 }
 
@@ -460,10 +490,9 @@ async function DanhSachMHDoGVDay(MaGV, HocKy, Nam2) {
     }
 }
 
+
 exports.DanhSachDiem = DanhSachDiem;
 exports.DanhSachMHDoGVDay = DanhSachMHDoGVDay;
-
-
 exports.getMonHoc = getMonHoc;
 exports.updateUser = updateUser;
 exports.getUser = getUser;
@@ -477,4 +506,5 @@ exports.DanhSachBaiDang = DanhSachBaiDang;
 exports.DanhSachHocSinhTrongLop = DanhSachHocSinhTrongLop;
 exports.DanhSachNamHoc = DanhSachNamHoc;    
 exports.NhapDiem = NhapDiem;
+exports.DanhSachBaiDang = DanhSachBaiDang;
 

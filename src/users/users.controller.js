@@ -19,8 +19,12 @@ async function getAllClass(req, res) {
 
 async function DanhSachBaiDang(req, res) {
     let result = await usersModel.DanhSachBaiDang();
+    
     if(result.statusCode === 200) {
-        let html = pug.renderFile('public/Home.pug', {
+        let html = pug.renderFile('public/user/XemThongBao.pug', {
+            user: req.user.result,        
+			image: req.image,
+			role: req.user.role,
             DanhSachThongBao: result.result.recordsets[0]
         });
         res.send(html);
@@ -67,16 +71,14 @@ async function DanhSachHocSinhTrongLop(req, res) {
 async function NhapDiem(req, res) {
     console.log("Nhap diem")
     // console.log(req.body);
-    let MaMH = 'TOAN10'
+    let MaMH = req.body.MaMH;
     let MaLop = req.params.MaLop;
 
-    let result = await usersModel.NhapDiem(
-        MaMH, req.body);
+    let result = await usersModel.NhapDiem(MaMH, req.body.Diem);
     if(result.statusCode === 200) {
         return res.json({
             statusCode: 200,
             message: 'Nhập điểm thành công',
-            
         });
     } else {
         return res.json({
@@ -108,7 +110,8 @@ async function DanhSachDiem (req, res) {
     }
 
     if(!req.body.MaMH) {
-        let result = await usersModel.DanhSachMHDoGVDay(req.user.result.MaND, req.body.HocKy, req.body.NamHoc);
+        console.log(req.user)
+        let result = await usersModel.DanhSachMHDoGVDay(req.user.result.MaGV, req.body.HocKy, req.body.NamHoc);
         console.log(result.result)
         return res.json({
             statusCode: 200,

@@ -16,18 +16,19 @@ router.route('/DoiMatKhau')
 	})
 	.post(isAuth, authController.DoiMatKhau);
 
-router.route('/ThayDoiTT')
+router.route('/ThayDoiThongTin')
 	.get(isAuth, async (req, res) => {
-		let html = pug.renderFile('public/auth/ThayDoiTT.pug');
+		let html = pug.renderFile('public/user/Profile.pug');
 		res.send(html);
 	})
 	.post(isAuth, authController.ThayDoiTT);
 
 router.get('/profile', isAuth, async (req, res) => {
 		console.log(req.user);
-		let html = pug.renderFile('public/user/profile.pug', {             
+		let html = pug.renderFile('public/user/Profile.pug', {             
 			user: req.user.result,        
 			image: req.image,
+			role: req.user.role
 		});
 		res.send(html);
 	});
@@ -47,5 +48,6 @@ router.route('/NhapDiem/:MaLop/')
 	.post(isAuthGiaoVien, userController.DanhSachDiem)
 	.put(isAuthGiaoVien, userController.NhapDiem);
 
+router.get('/XemThongBao', isAuth, userController.DanhSachBaiDang);
 
 module.exports = router;

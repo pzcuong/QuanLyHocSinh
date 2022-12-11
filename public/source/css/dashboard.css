@@ -1,0 +1,382 @@
+body {
+  background-color: #f7f7fa;
+  font-family: "Roboto", sans-serif;
+  font-size: 15px;
+  height: 100%;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+* {
+  box-sizing: border-box;
+}
+.page-wrapper {
+  padding-top: 60px;
+  margin-left: 259px;
+}
+.page-wrapper main {
+  padding: 30px;
+}
+.page-wrapper.margin {
+  margin-left: 78px;
+}
+.page-title {
+  font-size: 22px;
+  padding-left: 12px;
+  font-weight: 600;
+  margin-bottom: 50px;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+:root {
+  --bs-gutter-x: 1.5rem;
+}
+.row > * {
+  --bs-gutter-x: 1.5rem;
+  max-width: 100%;
+  padding-right: calc(var(--bs-gutter-x) * 0.5);
+  /* padding-left: calc(var(--bs-gutter-x) * 0.5); */
+  margin-top: var(--bs-gutter-y);
+}
+li {
+  display: inline-block;
+}
+.padding-card {
+  padding: 0 12px 0 12px;
+  /* margin-bottom: 30px; */
+}
+.card {
+  position: relative;
+  background-color: #ffff;
+  display: flex;
+  min-width: 0;
+  word-wrap: break-word;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 10px;
+  flex-direction: column;
+  margin-bottom: 30px;
+}
+.card-body {
+  position: relative;
+  padding: 25px;
+}
+.card-db {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.card-icon {
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+}
+.d-flex {
+  display: flex;
+}
+
+.w-100 {
+  width: 100%;
+}
+.col-12 {
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+@media (min-width: 576px) {
+  .col-sm-6 {
+    flex: 0 0 auto;
+    width: 50%;
+  }
+}
+@media (min-width: 1200px) {
+  .col-xl-3 {
+    flex: 0 0 auto;
+    width: 25%;
+  }
+}
+@media (min-width: 992px) {
+  .col-lg-12 {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+}
+
+@media (min-width: 992px) {
+  .col-lg-8 {
+    flex: 0 0 auto;
+    width: 70%;
+  }
+}
+@media (min-width: 1200px) {
+  .col-xl-8 {
+    flex: 0 0 auto;
+    width: 67%;
+  }
+}
+@media (min-width: 1200px) {
+  .col-xl-4 {
+    flex: 0 0 auto;
+    width: 33%;
+  }
+}
+.card-info {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.card-db h3 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 0;
+}
+.card-db h6 {
+  margin: 0px;
+  font-weight: 500;
+  font-size: 15px;
+  color: #86819d;
+  margin-bottom: 5px;
+}
+.card-icon {
+  width: 60px;
+  height: 60px;
+  background-color: rgb(222, 236, 255);
+  border-radius: 8px;
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  border-radius: 15px 15px 0 0;
+  border-bottom: 0;
+  padding: 15px;
+  padding-bottom: 10px;
+}
+
+.card-lesson {
+  display: flex;
+  flex-direction: column;
+  border-radius: 15px 15px 0 0;
+  border-bottom: 0;
+  padding-bottom: 10px;
+  background-color: rgb(232, 211, 255);
+}
+
+.card-header-item {
+  flex: 0 0 auto;
+  width: 50%;
+}
+
+.flex-fill {
+  flex: 1 1 auto;
+}
+
+a {
+  color: #3d5ee1;
+  text-decoration: none;
+}
+.card-title {
+  font-size: 22px;
+  margin: 0;
+}
+.card-title {
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+.card-header-view a {
+  font-size: 1rem;
+  float: right;
+  font-weight: 550;
+}
+
+.table-lesson {
+  color: #333;
+  max-width: 100%;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  width: 100%;
+  padding-left: 1rem;
+}
+
+.lesson-confirm {
+  margin-bottom: 15px;
+}
+.lesson .lesson-confirm a {
+  color: #3d5ee1;
+  font-size: 15px;
+}
+
+.lesson .date b {
+  font-size: 15px;
+  font-weight: 500;
+  color: #000;
+}
+.lesson .date p {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: #86819d;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+.table > :not(caption) > * > * {
+  box-shadow: unset;
+  padding: 0.75rem;
+}
+
+.lesson .table td:last-child {
+  padding-right: 20px;
+  text-align: right;
+}
+.lesson .table td {
+  border-top: transparent;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-top: 0;
+}
+
+.lesson .table td:first-child {
+  /* padding-bottom: 20px; */
+}
+.lesson .table .date {
+  text-align: left;
+}
+.btn {
+  background: #3d5ee1;
+  border: 1px solid #3d5ee1;
+  font-size: 1rem;
+  font-weight: 550;
+  color: #fff;
+  line-height: 2.5;
+  border-radius: 3px;
+  text-align: center;
+  text-decoration: none;
+  padding: 0 15px 0 15px;
+}
+.btn:hover {
+  background-color: #18aefa;
+  cursor: pointer;
+  border-color: #18aefa;
+}
+.teacher-date-list {
+  display: flex;
+  margin: 0;
+}
+.teacher-date-list li {
+  color: #86819d;
+  font-size: 1.3rem;
+}
+ul,
+ol {
+  list-style: none;
+}
+.teacher-date-list li:first-child {
+  margin-right: 12px;
+}
+
+.teacher-date-list li:last-child {
+  margin-left: 12px;
+}
+.teacher-date-list li {
+  color: #a098ae;
+  font-size: 14px;
+}
+.lesson-confirm {
+  margin-bottom: 15px;
+}
+a {
+  text-decoration: none;
+}
+
+.table {
+  max-width: 100%;
+  margin-bottom: 0;
+  width: 100%;
+}
+.table tr {
+  margin: 10px 0px;
+}
+.up-come-header {
+  margin-top: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.upcome-header h2 {
+  margin: 0;
+}
+.event-date h3 {
+  margin: 12px;
+}
+.calendar-details {
+  display: flex;
+  align-items: center;
+  padding-top: 20px;
+}
+
+.calendar-box {
+  display: flex;
+  position: relative;
+  width: 100%;
+  align-items: center;
+}
+.calendar-info p {
+  font-size: 12px;
+  font-weight: 500;
+  color: #777777;
+  margin-bottom: 0;
+  margin-right: 10px;
+  flex: none;
+}
+.calendar-event-name h4 {
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+  margin: 0;
+}
+.calendar-event-name h5 {
+  font-size: 12px;
+  font-weight: 400;
+  color: #747474;
+  margin-bottom: 0;
+}
+.calendar-box span {
+  color: #888888;
+  font-size: 12px;
+  font-weight: 400;
+  margin-left: auto;
+}
+.progress {
+  margin: 12px 0 12px 0;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.donut {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: conic-gradient(#3d5ee1 0deg 260deg, #d2ccef 260deg 360deg);
+}
+.hole {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: #fff;
+  text-align: center;
+}
+.progress-less {
+  text-align: center;
+  position: relative;
+  left: 0;
+  right: 0;
+  top: 35%;
+}
+.progress-less b {
+  font-size: 2rem;
+  padding: 0;
+}

@@ -14,7 +14,7 @@ router.route('/login')
 
 router.route('/forgot-password')
     .get((req,res) => {
-        let html = pug.renderFile('public/auth/forgotPassword.pug');
+        let html = pug.renderFile('public/auth/ForgotPassword.pug');
         res.send(html);
     })
     .post(authController.QuenMatKhau);
