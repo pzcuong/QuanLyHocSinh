@@ -1,20 +1,18 @@
 doctype html
-html(lang='vi')
+html(lang='en')
   head
-    // Required meta tags
-    meta(charset='utf-8')
-    meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
-    link(href='https://fonts.googleapis.com/css?family=Roboto:400,700,900&display=swap' rel='stylesheet')
-    // Style
-    link(rel='stylesheet' href='/public/source/css/ThemBaiDang.css')
+    meta(charset='UTF-8')
+    meta(http-equiv='X-UA-Compatible' content='IE=edge')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    link(rel='stylesheet' href='/public/source/css/students.css  ')
+    link(rel='stylesheet' href='/public/source/css/edit-student.css ')
+    link(rel='stylesheet' href='/public/source/fonts/fontawesome-free-6.2.0-web/css/all.css')
     link(rel='icon' type='image/x-icon' href='/public/source/img/favicon.png')
     link(rel='stylesheet' href='/public/source/css/style.css')
     script(src='/public/source/js/script.js')
-    
     script(src='https://kit.fontawesome.com/7b85820244.js' crossorigin='anonymous')
     title CoCoEdu
-
-  body
+  body#body-wrapper
     - var role = role
     - var role_encode;
       if (role == 'Admin')
@@ -155,34 +153,71 @@ html(lang='vi')
                 .nbar-sub
                   a(href='/admin/ThemBaiDang') Tạo Thông báo
         // Mới sửa
+        
 
     section.home-section
       .home-content
         i.fa-solid.fa-bars
     .page-wrapper
-      .content-new
-        .content-input
-          .header-input
-            h3 Tạo Thông Báo
-          form#formElem.mb-5
-            label.col-form-label(for='') Tiêu đề *
-            .form
-              input#name.form-control.form-control-title(type='text' name='TieuDe' placeholder='Tiêu đề bài đăng thông báo')
-            label.col-form-label(for='') Nội dung *
-            textarea#message.form-control(name='NoiDung' cols='30' rows='4' placeholder='Write your message')
-            input.btn.btn-primary.rounded-0.py-2.px-4#btn(value='ĐĂNG THÔNG BÁO' type='button' onclick='ThemBaiDang();return false;')
-    link(href='https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css' rel='stylesheet')
-    script(src='https://code.jquery.com/jquery-3.5.1.min.js')
-    script(src='https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js')
-    // include summernote css/js
-    link(href='https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css' rel='stylesheet')
-    script(src='https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js')
-    script.
-      $("#message").summernote({
-      placeholder: "Nội dung bài đăng",
-      tabsize: 2,
-      height: 500,
-      });
+      .content
+        .page-header
+          .page-header-title
+            .page-header-student-title
+              h3.page-title Danh sách Học Sinh
+        // Start: Search Bar
+        .student-form
+          .card
+            .card-table
+              .card-body
+
+                .card-body_body
+                  .Data-Table
+                    .Data-Table-body
+                      .Table-body 
+                        if (ClassDataList.length == 0)
+                            h2 Không có dữ liệu
+                        else
+                            table.Table
+                              thead.student-thead
+                                tr.thead(role='row')
+                                th.sorting(tabindex='0' rowspan='1' colspan='1' aria-label='MaSo')
+                                    | Mã Số
+                                th.sorting(tabindex='0' rowspan='1' colspan='1' aria-label='HoTen')
+                                    | Họ Tên
+                                th.sorting(tabindex='0' rowspan='1' colspan='1' aria-label='Lop')
+                                    | Lớp
+                                th.sorting(tabindex='0' rowspan='1' colspan='1' aria-label='GioiTinh')
+                                    | Giới Tính
+                                th.sorting(tabindex='0' rowspan='1' colspan='1' aria-label='NgaySinh')
+                                    | Ngày Sinh
+                                th.sorting(tabindex='0' rowspan='1' colspan='1' aria-label='SoDienThoai')
+                                    | Số Điện Thoại
+                                th.sorting(tabindex='0' rowspan='1' colspan='1' aria-label='Email')
+                                    | Email
+                                th.sorting.address(tabindex='0' rowspan='1' colspan='1' aria-label='DiaChi')
+                                    | Địa Chỉ
+
+                              tbody.student-tbody
+                                if (Object.keys(ClassDataList).length == 0)
+                                    h2 Không có dữ liệu
+                                else
+                                    each user in ClassDataList
+                                        - var date = new Date(user.NgSinh).toLocaleDateString();
+                                        
+                                        tr.odd.table-normal(role='row', id=user.MaHS)
+                                            td #{user.MaHS[0]}
+                                            td
+                                                a(href='./view-student.html') #{user.HoTen}
+                                            td #{user.MaLop}
+                                            td #{user.GioiTinh}
+                                            td #{date}
+                                            td +84756126896
+                                            td #{user.Email}
+                                            td #{user.DiaChi}
+
+
+                    .Data-Table-footer
+
     script(src='/public/source/js/main.js')
-    script(src='/public/source/js/script.js')
-  // include libraries(jQuery, bootstrap)
+    script(src='/public/source/js/edit-student.js ')
+    script(src='/public/source/js/students.js ')

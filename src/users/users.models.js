@@ -323,6 +323,22 @@ async function DanhSachBaiDang() {
     }
 }
 
+async function NoiDungBaiDang(MaBaiDang) {
+    try {
+        let SQLQuery = `SELECT * FROM BAIDANG WHERE MaBaiDang = N'${MaBaiDang}'`;
+        let result = await TruyVan("Admin", SQLQuery);
+        console.log("Bài đăng", result);
+        return result;
+    } catch (err) {
+        console.log(err);
+        return ({
+            statusCode: 400,
+            message: 'Lỗi truy vấn SQL!',
+            alert: 'Kiểm tra lại câu lệnh SQL!'
+        });
+    }
+}
+
 async function DanhSachNamHoc(HocKy) {
     try {
         let SQLQuery = `SELECT * FROM NAMHOC`;
@@ -490,7 +506,51 @@ async function DanhSachMHDoGVDay(MaGV, HocKy, Nam2) {
     }
 }
 
+async function XemThongTinLop(MaLop) {
+    try {
+        let SQLQuery = `SELECT * FROM LOP WHERE MaLop = '${MaLop}'`;
+        let result = await TruyVan("Admin", SQLQuery);
+        console.log("Thông tin lớp", result);
+        return ({
+            statusCode: 200,
+            message: 'Lấy thông tin lớp thành công!',
+            result: result.result.recordset
+        });
+    } catch (err) {
+        console.log(err);
+        return ({
+            statusCode: 400,
+            message: 'Lỗi truy vấn SQL!',
+            alert: 'Kiểm tra lại câu lệnh SQL!'
+        });
+    }
+}
 
+async function DanhSachHocSinhTheoMaHS(MaHS) {
+    try {
+        let SQLQuery = `select * from hocsinh hs inner join hocsinh_lop hs_l on hs.mahs = hs_l.mahs
+            where hs_l.malop in (
+                select malop from hocsinh_lop hs_l
+                where mahs = '${MaHS}'
+            )`;
+        let result = await TruyVan("Admin", SQLQuery);
+        console.log("Thông tin học sinh", result);
+        return ({
+            statusCode: 200,
+            message: 'Lấy thông tin học sinh thành công!',
+            result: result.result.recordset
+        });
+    } catch (err) {
+        console.log(err);
+        return ({
+            statusCode: 400,
+            message: 'Lỗi truy vấn SQL!',
+            alert: 'Kiểm tra lại câu lệnh SQL!'
+        });
+    }
+}
+
+exports.DanhSachHocSinhTheoMaHS = DanhSachHocSinhTheoMaHS;
 exports.DanhSachDiem = DanhSachDiem;
 exports.DanhSachMHDoGVDay = DanhSachMHDoGVDay;
 exports.getMonHoc = getMonHoc;
@@ -507,4 +567,5 @@ exports.DanhSachHocSinhTrongLop = DanhSachHocSinhTrongLop;
 exports.DanhSachNamHoc = DanhSachNamHoc;    
 exports.NhapDiem = NhapDiem;
 exports.DanhSachBaiDang = DanhSachBaiDang;
-
+exports.NoiDungBaiDang = NoiDungBaiDang;
+exports.XemThongTinLop = XemThongTinLop;

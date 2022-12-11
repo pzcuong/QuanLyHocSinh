@@ -10,6 +10,9 @@ main {
 .page-wrapper.margin {
   margin-left: 78px;
 }
+.Bd-content {
+  border: 1px solid rgba(0, 0, 0, 0.125);
+}
 
 main h1 {
   max-width: auto;

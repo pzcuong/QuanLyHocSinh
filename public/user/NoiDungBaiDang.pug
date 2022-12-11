@@ -1,19 +1,16 @@
 doctype html
-html(lang='vi')
+html(lang='en')
   head
-    // Required meta tags
-    meta(charset='utf-8')
-    meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
-    link(href='https://fonts.googleapis.com/css?family=Roboto:400,700,900&display=swap' rel='stylesheet')
-    // Style
-    link(rel='stylesheet' href='/public/source/css/ThemBaiDang.css')
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    title CoCoEdu
     link(rel='icon' type='image/x-icon' href='/public/source/img/favicon.png')
     link(rel='stylesheet' href='/public/source/css/style.css')
     script(src='/public/source/js/script.js')
-    
     script(src='https://kit.fontawesome.com/7b85820244.js' crossorigin='anonymous')
-    title CoCoEdu
-
+    // Mới sửa
+    link(rel='stylesheet' href='/public/source/css/notice.css')
+    // Mới sửa
   body
     - var role = role
     - var role_encode;
@@ -155,34 +152,34 @@ html(lang='vi')
                 .nbar-sub
                   a(href='/admin/ThemBaiDang') Tạo Thông báo
         // Mới sửa
-
+        
     section.home-section
       .home-content
         i.fa-solid.fa-bars
     .page-wrapper
-      .content-new
-        .content-input
-          .header-input
-            h3 Tạo Thông Báo
-          form#formElem.mb-5
-            label.col-form-label(for='') Tiêu đề *
-            .form
-              input#name.form-control.form-control-title(type='text' name='TieuDe' placeholder='Tiêu đề bài đăng thông báo')
-            label.col-form-label(for='') Nội dung *
-            textarea#message.form-control(name='NoiDung' cols='30' rows='4' placeholder='Write your message')
-            input.btn.btn-primary.rounded-0.py-2.px-4#btn(value='ĐĂNG THÔNG BÁO' type='button' onclick='ThemBaiDang();return false;')
-    link(href='https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css' rel='stylesheet')
-    script(src='https://code.jquery.com/jquery-3.5.1.min.js')
-    script(src='https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js')
-    // include summernote css/js
-    link(href='https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css' rel='stylesheet')
-    script(src='https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js')
-    script.
-      $("#message").summernote({
-      placeholder: "Nội dung bài đăng",
-      tabsize: 2,
-      height: 500,
-      });
+      .content
+        .page-header
+          .page-header-title
+            .page-header-student-title
+              h3.page-title Thông báo chung 
+        .student-form-view
+          .card
+            .card-table
+              .card-body
+                div
+                  .row
+                    // Mới sửa
+                    .card-body-content
+                      .view-content
+                        .content-head
+                            h1.content-title #{NoiDung[0].TieuDe}
+                        .content-body
+                          .content-body-main
+                            .content-date
+                              p.notice-up-date
+                                i #{"Ngày đăng: " + NoiDung[0].NgayDang}
+                            .content-main
+                              .content-main
+                                #{NoiDung[0].NoiDung}/
+                    // Mới sửa
     script(src='/public/source/js/main.js')
-    script(src='/public/source/js/script.js')
-  // include libraries(jQuery, bootstrap)

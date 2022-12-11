@@ -5,6 +5,7 @@ const router = express.Router();
 const authMiddleware = require('../auth/auth.middlewares');
 const authController = require('../auth/auth.controller');
 const userController = require('./users.controller');
+const adminController = require('../admin/admin.controller');
 const isAuth = authMiddleware.isAuth;
 const isAuthAdmin = authMiddleware.isAuthAdmin;
 const isAuthGiaoVien = authMiddleware.isAuthGiaoVien;
@@ -42,12 +43,27 @@ router.route('/NhapDiem/:MaLop/')
 	.get(isAuthGiaoVien, async (req, res) => {
 		console.log(req.user);
 		req.MaLop = req.params.MaLop;
-		let html = pug.renderFile('public/giaovien/NhapDiem.pug');
+		let html = pug.renderFile('public/giaovien/NhapDiem.pug', {             
+			user: req.user.result,        
+			image: req.image,
+			role: req.user.role
+		});
 		res.send(html);
 	})
 	.post(isAuthGiaoVien, userController.DanhSachDiem)
 	.put(isAuthGiaoVien, userController.NhapDiem);
 
 router.get('/XemThongBao', isAuth, userController.DanhSachBaiDang);
+
+router.get('/XemThongBao/:MaBaiDang/', isAuth, userController.XemNoiDungBaiDang);
+
+router.route('/DanhSachHocSinh')
+	.get(isAuth, userController.DanhSachHocSinhTheoMaHS);
+
+router.route('/DanhSachHocSinh')
+	.get(isAuthGiaoVien, adminController.DanhSachHocSinh);
+
+router.route('/DanhSachGiaoVien')
+	.get(authMiddleware.isAuthGiaoVien, adminController.DanhSachGiaoVien);
 
 module.exports = router;

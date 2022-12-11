@@ -140,7 +140,7 @@ async function DanhSachHocSinh(req, res) {
     let result = await adminModel.DanhSachHocSinh();
     if(result.statusCode === 200) {
         let html = pug.renderFile('public/admin/DanhSachHocSinh.pug',{
-            ClassDataList:  result.result.recordset,
+            ClassDataList:  result.result.recordsets[0],
             user: {
                 HoTen: req.user.result.HoTen,
             }, role: req.user.role
@@ -463,7 +463,65 @@ async function DanhSachLopHoc(req, res) {
             });
 }
 
+async function XemDanhSachLop(req, res) { 
+    let result = await adminModel.DanhSachLopHoc();
+    if(result.statusCode === 200) {
+        let html = pug.renderFile('public/admin/DanhSachLopHoc.pug',{
+            ClassDataList:  result.result.recordset,
+            user: {
+                HoTen: req.user.result.HoTen,
+            }, role: req.user.role
+        });
+        res.send(html);
+    } else {
+        let html = pug.renderFile('public/404.pug', { 
+            message: result.message,
+            redirect: 'public/Home.pug'
+        });
+        res.send(html);
+    }
+}
 
+async function XemThongTinLop(req, res) {
+    let result = await userModel.XemThongTinLop(req.body.MaLop);
+    if(result.statusCode === 200) {
+        return res
+            .status(200)
+            .send({
+                statusCode: 200,
+                message: 'Lấy thông tin lớp học thành công',
+                data: result.result
+            });
+    } else {
+        return res
+            .status(400)
+            .send({
+                statusCode: 400,
+                message: 'Lấy thông tin lớp học không thành công',
+            });
+    }       
+}
+
+async function XoaBaiDang(req, res) {
+    const result = await adminModel.XoaBaiDang(req.body.MaBaiDang);
+    if(result.statusCode === 200)
+        return res
+            .status(200)
+            .send({
+                statusCode: 200,
+                message: 'Xóa bài đăng thành công',
+                data: result.result
+            });
+    else
+        return res
+            .status(400)
+            .send({
+                statusCode: 400,
+                message: 'Xóa bài đăng không thành công',
+            });
+}
+
+exports.XemThongTinLop = XemThongTinLop;
 exports.ThemGiaoVienVaoLop = ThemGiaoVienVaoLop;
 exports.ThemHocSinhVaoLop = ThemHocSinhVaoLop;
 exports.DanhSachHocSinh = DanhSachHocSinh;
@@ -475,3 +533,5 @@ exports.ThayDoiThongTin = ThayDoiThongTin;
 exports.DanhSachLopHoc = DanhSachLopHoc;
 exports.DanhSachGiaoVien = DanhSachGiaoVien;
 exports.DanhSachBaiDang = DanhSachBaiDang;
+exports.XemDanhSachLop = XemDanhSachLop;
+exports.XoaBaiDang = XoaBaiDang;

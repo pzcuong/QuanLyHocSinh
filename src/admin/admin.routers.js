@@ -38,7 +38,6 @@ router.route('/DanhSachGiaoVien')
 router.route('/DanhSachBaiDang')
 	.get(authMiddleware.isAuthAdmin, adminController.DanhSachBaiDang);
 
-
 router.route('/ThemHocSinh')
 	.get(isAuthAdmin, (req, res) => {
 		let html = pug.renderFile('public/admin/ThemHocSinhVaoLop.pug');
@@ -54,11 +53,18 @@ router.route('/ThemGiaoVien')
 	.post(isAuthAdmin, adminController.ThemGiaoVienVaoLop);
 
 router.route('/ThemBaiDang')
-.get(isAuthAdmin, (req, res) => {
-    let html = pug.renderFile('public/admin/ThemBaiDang.pug');
-    res.send(html);
-})
-.post(isAuthAdmin,adminController.ThemBaiDang)
+	.get(isAuthAdmin, (req, res) => {
+		let html = pug.renderFile('public/admin/ThemBaiDang.pug', {
+			user: req.user.result,
+			image: req.image,
+			role: req.user.role
+		});
+		res.send(html);
+	})
+	.post(isAuthAdmin,adminController.ThemBaiDang)
+
+router.route('/XoaBaiDang')
+	.post(isAuthAdmin,adminController.XoaBaiDang)
 
 router.post('/ThongTinNguoiDung', isAuthAdmin, adminController.ThongTinNguoiDung);
 
@@ -73,12 +79,8 @@ router.get('/Dashboard', isAuthAdmin, (req, res) => {
 	res.send(html);
 });
 
-router.get('/DanhSachLopHoc', isAuthAdmin => {
-	// console.log()
-	// let html = pug.renderFile('public/admin/DanhSachLopHoc.pug', {
-
-	// });
-	// res.send(html);
-});
+router.route('/DanhSachLopHoc')
+	.get(isAuthAdmin, adminController.XemDanhSachLop)
+	.post(isAuthAdmin, adminController.XemThongTinLop);
 
 module.exports = router;

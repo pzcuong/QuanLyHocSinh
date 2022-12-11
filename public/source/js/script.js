@@ -62,6 +62,11 @@ function eraseCookie(name) {
   document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
 
+async function DangXuat() {
+  eraseCookie("x_authorization");
+  window.location.href = "/";
+}
+
 async function checkToken() {
   console.log("Hello");
 
@@ -269,4 +274,32 @@ async function ThemBaiDang() {
 
   document.getElementById("btn").style.opacity = "1";
   document.getElementById("btn").value = "ĐĂNG THÔNG BÁO";
+}
+
+async function XemThongTinLop(MaLop) {
+  var form = document.querySelector("#formElem");
+  form.querySelector("input[id=MaLop]").value = "Loading...";
+  form.querySelector("input[id=TenLop]").value = "Loading...";
+
+  data = {
+    MaLop: MaLop,
+  }
+
+  let response = await fetch('/admin/DanhSachLopHoc', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+          json: true
+  })
+
+  let text = await response.json(); 
+  console.log(text)
+  // alert(text.message);
+  if(text.redirect)
+    window.location.href = text.redirect;
+  
+  form.querySelector("input[id=MaLop]").value = text.data[0].MaLop;
+  form.querySelector("input[id=TenLop]").value = text.data[0].TenLop;
 }

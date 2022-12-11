@@ -107,9 +107,13 @@ body {
   margin-top: 30px;
   border-radius: 8px;
   height: max-content;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+}
+.edit-form-teacher {
+  width: 50%;
 }
 .edit-form {
-  width: 100%;
+  /* width: 50%; */
 }
 .card-table {
   display: flex;

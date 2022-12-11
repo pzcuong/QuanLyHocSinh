@@ -9,6 +9,15 @@
   box-sizing: border-box;
   line-height: 1.4;
 }
+.h1,
+.h2,
+.h3,
+h1,
+h2,
+h3 {
+  margin-top: 0;
+}
+
 body {
   background-color: #f7f7fa;
   font-family: "Roboto", sans-serif;
@@ -37,7 +46,6 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin-top: 30px;
 }
 .form-group {
 }
@@ -48,7 +56,6 @@ body {
   height: 45px;
   padding: 6px 12px;
   border-radius: 4px;
-  width: 300px;
 }
 .form-control-not-width {
   border: 1px solid #ddd;
@@ -91,6 +98,7 @@ body {
   margin-top: 30px;
   border-radius: 8px;
   height: max-content;
+  border: 1px solid rgba(0, 0, 0, 0.125);
 }
 
 .page-header-student-title h5 {
@@ -215,7 +223,7 @@ body {
 }
 .Table .sorting {
   padding: 16px 30px 16px 12px;
-  min-width: 400px;
+  min-width: 200px;
 }
 .Table .sorting:first-child {
   padding: 16px 30px 16px 12px;
@@ -263,4 +271,8 @@ body {
 }
 .text-end i {
   color: white;
+}
+.content .page-header {
+  border: none;
+  margin: 0;
 }
