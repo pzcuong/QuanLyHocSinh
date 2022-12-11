@@ -46,7 +46,7 @@ html(lang='en')
     .sidebar
       .logo-details
         img(src='/public/source/img/preskool.png' alt='logo')
-        a(href='/public/auth/index.html')
+        a(href='/user/profile/')
           span.logo_name CoCoEdu
       // Mới sửa
       .nav_links
@@ -64,12 +64,12 @@ html(lang='en')
                   a(href='/admin/Dashboard/') Administrator
               if (role == 'GiaoVien')
                 .nbar-sub
-                  a(href='/admin/DashboardGiaoVien/') Giáo Viên
+                  a(href='/user/DashboardGiaoVien/') Giáo Viên
               if (role == 'HocSinh')
                 .nbar-sub
-                  a(href='/admin/DashboardHocSinh/') Học Sinh
+                  a(href='/user/DashboardHocSinh/') Học Sinh
           // SInh viên
-          if(role == 'Admin' || role == 'GiaoVien' || role == 'HocSinh')
+          if(role == 'Admin' || role == 'HocSinh')
             div
               button.dropdown-btn
                 i#icon_sn.fa-solid.fa-graduation-cap
@@ -77,7 +77,7 @@ html(lang='en')
                 i#drop.fas.fa-angle-right
               .dropdown-container
                 a.link_name(href='#') Học Sinh
-                  if (role == "GiaoVien")
+                  if (role == "HocSinh")
                     .nbar-sub
                       a(href='/user/DanhSachHocSinh') Danh Sách Học Sinh
                   if (role == "Admin")
@@ -85,8 +85,8 @@ html(lang='en')
                       a(href='/admin/DanhSachHocSinh') Danh Sách Học Sinh
                   if (role == "Admin")
                     .nbar-sub
-                      a(href='/admin/ThemTaiKhoan') Thêm Học Sinh
-          if( role == 'Admin')
+                      a(href='/admin/ThemHocSinh') Thêm Học Sinh
+          if(role == 'Admin' || role == 'GiaoVien')
             div
               button.dropdown-btn
                 i#icon_sn.fa-solid.fa-book-open
@@ -94,11 +94,15 @@ html(lang='en')
                 i#drop.fas.fa-angle-right
               .dropdown-container
                 a.link_name(href='#') Lớp
-                .nbar-sub
-                  a(href='/admin/DanhSachLopHoc') Danh Sách Lớp
-                .nbar-sub
-                  a(href='/admin/ThemLopHoc') Thêm Lớp
-          
+                
+                if(role == 'GiaoVien')
+                  .nbar-sub
+                    a(href='/user/DanhSachLopHoc') Danh Sách Lớp
+                if( role == 'Admin')
+                  .nbar-sub
+                    a(href='/admin/DanhSachLopHoc') Danh Sách Lớp
+                  .nbar-sub
+                    a(href='/admin/ThemLopHoc') Thêm Lớp
           // Giáo Viên
           if(role == 'Admin' || role == 'GiaoVien')
             div
@@ -108,12 +112,16 @@ html(lang='en')
                 i#drop.fas.fa-angle-right
               .dropdown-container
                 a.link_name(href='#') Giáo Viên
-                .nbar-sub
-                  a(href='/user/DanhSachGiaoVien') Danh Sách Giáo Viên
+                if (role =="GiaoVien")
+                  .nbar-sub
+                    a(href='/user/DanhSachGiaoVien') Danh Sách Giáo Viên
                 if (role == "Admin")
                   .nbar-sub
-                    a(href='/admin/ThemTaiKhoan') Thêm Giáo Viên
+                    a(href='/admin/DanhSachGiaoVien') Danh Sách Giáo Viên
+                  .nbar-sub
+                    a(href='/admin/ThemGiaoVien') Thêm Giáo Viên
             // Bảng điểm
+            
             if( role == "GiaoVien")
               div
                 button.dropdown-btn
@@ -126,7 +134,7 @@ html(lang='en')
                     a(href='#') Xem bảng điểm
                     // Mới sửa
                   .nbar-sub
-                    a(href='/user/DanhSachLopHoc') Nhập bảng điểm
+                    a(href='/user/NhapDiem/TN101/') Nhập bảng điểm
                   // Mới sửa
                 // Mới sửa
             
@@ -146,7 +154,6 @@ html(lang='en')
                 .nbar-sub
                   a(href='/admin/ThemBaiDang') Tạo Thông báo
         // Mới sửa
-
         
     section.home-section
       .home-content

@@ -45,7 +45,7 @@ html(lang='en')
     .sidebar
       .logo-details
         img(src='/public/source/img/preskool.png' alt='logo')
-        a(href='/public/auth/index.html')
+        a(href='/user/profile/')
           span.logo_name CoCoEdu
       // Mới sửa
       .nav_links
@@ -63,10 +63,10 @@ html(lang='en')
                   a(href='/admin/Dashboard/') Administrator
               if (role == 'GiaoVien')
                 .nbar-sub
-                  a(href='/admin/DashboardGiaoVien/') Giáo Viên
+                  a(href='/user/DashboardGiaoVien/') Giáo Viên
               if (role == 'HocSinh')
                 .nbar-sub
-                  a(href='/admin/DashboardHocSinh/') Học Sinh
+                  a(href='/user/DashboardHocSinh/') Học Sinh
           // SInh viên
           if(role == 'Admin' || role == 'HocSinh')
             div
@@ -85,18 +85,23 @@ html(lang='en')
                   if (role == "Admin")
                     .nbar-sub
                       a(href='/admin/ThemHocSinh') Thêm Học Sinh
-          div
-            button.dropdown-btn
-              i#icon_sn.fa-solid.fa-graduation-cap
-              span.link_name Lớp
-              i#drop.fas.fa-angle-right
-            .dropdown-container
-              a.link_name(href='#') Lớp
-              .nbar-sub
-                a(href='/user/DanhSachLopHoc') Danh Sách Lớp
-              if( role == 'Admin')
-                .nbar-sub
-                  a(href='/admin/ThemLopHoc') Thêm Lớp
+          if(role == 'Admin' || role == 'GiaoVien')
+            div
+              button.dropdown-btn
+                i#icon_sn.fa-solid.fa-book-open
+                span.link_name Lớp
+                i#drop.fas.fa-angle-right
+              .dropdown-container
+                a.link_name(href='#') Lớp
+                
+                if(role == 'GiaoVien')
+                  .nbar-sub
+                    a(href='/user/DanhSachLopHoc') Danh Sách Lớp
+                if( role == 'Admin')
+                  .nbar-sub
+                    a(href='/admin/DanhSachLopHoc') Danh Sách Lớp
+                  .nbar-sub
+                    a(href='/admin/ThemLopHoc') Thêm Lớp
           // Giáo Viên
           if(role == 'Admin' || role == 'GiaoVien')
             div
@@ -106,12 +111,16 @@ html(lang='en')
                 i#drop.fas.fa-angle-right
               .dropdown-container
                 a.link_name(href='#') Giáo Viên
-                .nbar-sub
-                  a(href='/admin/DanhSachGiaoVien') Danh Sách Giáo Viên
+                if (role =="GiaoVien")
+                  .nbar-sub
+                    a(href='/user/DanhSachGiaoVien') Danh Sách Giáo Viên
                 if (role == "Admin")
+                  .nbar-sub
+                    a(href='/admin/DanhSachGiaoVien') Danh Sách Giáo Viên
                   .nbar-sub
                     a(href='/admin/ThemGiaoVien') Thêm Giáo Viên
             // Bảng điểm
+            
             if( role == "GiaoVien")
               div
                 button.dropdown-btn
@@ -121,10 +130,10 @@ html(lang='en')
                 .dropdown-container
                   a.link_name(href='#') Bảng điểm
                   .nbar-sub
-                    a(href='/public/auth/NhapDiem.html') Xem bảng điểm
+                    a(href='#') Xem bảng điểm
                     // Mới sửa
                   .nbar-sub
-                    a(href='/public/auth/NhapDiem.html') Nhập bảng điểm
+                    a(href='/user/NhapDiem/TN101/') Nhập bảng điểm
                   // Mới sửa
                 // Mới sửa
             
@@ -136,12 +145,13 @@ html(lang='en')
             .dropdown-container
               a.link_name(href='#') Thông báo
               .nbar-sub
-                a(href='/public/auth/index.html') Xem Thông báo
-              .nbar-sub
-                a(href='/public/auth/notice-list.html') Danh Sách Thông báo
+                a(href='/user/XemThongBao') Xem Thông báo
+              
               if (role == "Admin")
                 .nbar-sub
-                  a(href='/public/auth/ThemBaiDang.html') Tạo Thông báo
+                  a(href='/admin/DanhSachBaiDang') Danh Sách Thông báo
+                .nbar-sub
+                  a(href='/admin/ThemBaiDang') Tạo Thông báo
         // Mới sửa
         
 
