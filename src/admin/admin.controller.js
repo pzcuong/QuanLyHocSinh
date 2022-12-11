@@ -11,10 +11,10 @@ const authMethod = require('../auth/auth.methods');
 const SALT_ROUNDS = 10;
 
 async function ThemTaiKhoan(req, res, next) {
-    const username = req.body.username;
-    const role = req.body.role;
+    const username = req.body.MaND;
+    const role = req.body.Role;
 
-    if(!req.body.username || !req.body.role) 
+    if(!username || !role || !req.body.HoTen || !req.body.Email) 
         return res
             .status(400)
             .send({
@@ -35,15 +35,9 @@ async function ThemTaiKhoan(req, res, next) {
             });
 
     else if(user.statusCode == 404) {
-        const data = {
-            username: username,
-            role:   role
-        };
-
-        const newUser = await userModel.createUser(data);
+        const newUser = await userModel.createUser(req.body, req.body.Role);
 
         if(newUser.statusCode === 200 ) 
-
             return res
                 .status(200)
                 .send({
@@ -145,8 +139,11 @@ async function ThemLopHoc(req, res, next) {
 async function DanhSachHocSinh(req, res) { 
     let result = await adminModel.DanhSachHocSinh();
     if(result.statusCode === 200) {
-        let html = pug.renderFile('public/admin/DanhSachHocSinhtest.pug',{
-            ClassDataList:  result.result.recordset 
+        let html = pug.renderFile('public/admin/DanhSachHocSinh.pug',{
+            ClassDataList:  result.result.recordset,
+            user: {
+                HoTen: req.user.result.HoTen,
+            }, role: req.user.role
         });
         res.send(html);
     } else {
@@ -158,6 +155,44 @@ async function DanhSachHocSinh(req, res) {
     }
 }
 
+async function DanhSachGiaoVien(req, res) { 
+    let result = await adminModel.DanhSachGiaoVien();
+    if(result.statusCode === 200) {
+        let html = pug.renderFile('public/admin/DanhSachGiaoVien.pug',{
+            ClassDataList:  result.result.recordset,
+            user: {
+                HoTen: req.user.result.HoTen,
+            }, role: req.user.role
+        });
+        res.send(html);
+    } else {
+        let html = pug.renderFile('public/404.pug', { 
+            message: result.message,
+            redirect: 'public/Home.pug'
+        });
+        res.send(html);
+    }
+}
+
+async function DanhSachBaiDang(req, res) { 
+    let result = await adminModel.DanhSachBaiDang();
+    console.log(result.result.recordset)
+    if(result.statusCode === 200) {
+        let html = pug.renderFile('public/admin/DanhSachBaiDang.pug',{
+            ThongTin:  result.result.recordset,
+            user: {
+                HoTen: req.user.result.HoTen,
+            }, role: req.user.role
+        });
+        res.send(html);
+    } else {
+        let html = pug.renderFile('public/404.pug', { 
+            message: result.message,
+            redirect: 'public/Home.pug'
+        });
+        res.send(html);
+    }
+}
 
 async function ThemHocSinhVaoLop(req, res) {
     try {
@@ -337,6 +372,97 @@ async function ThemBaiDang(req, res) {
             });
 }
 
+async function ThongTinNguoiDung(req, res) {
+    try {
+        const data = req.body;
+        //convert to string
+        let username = data.username.toString();
+        
+        const result = await userModel.getInfoUser(username);
+        if(result.statusCode === 200)
+            return res
+                .status(200)
+                .send({
+                    statusCode: 200,
+                    message: 'Lấy thông tin người dùng thành công',
+                    data: result.result
+                });
+        else
+            return res
+                .status(400)
+                .send({
+                    statusCode: 400,
+                    message: 'Lấy thông tin người dùng không thành công',
+                });
+    } catch (error) {
+        console.log(error);
+        return res.status(500)
+                .send({
+                    statusCode: 500,
+                    message: 'Lấy thông tin người dùng không thành công',
+                });
+    }
+
+}
+
+async function ThayDoiThongTin(req, res) {
+    const data = req.body;
+    console.log("data")
+    console.log(data)
+    //convert to string
+    if(!data.MaHS || !data.HoTen || !data.DiaChi || !data.Email || !data.NgSinh)
+        return res
+            .status(400)
+            .send({
+                statusCode: 400,
+                message: 'Vui lòng nhập đầy đủ thông tin.',
+                alert: 'Vui lòng nhập đầy đủ thông tin.',
+            });
+    
+    let Role = await userModel.getUser(data.MaHS);
+    Role = Role.result.Role;
+    const result = await adminModel.ThayDoiThongTin(
+        data,
+        Role
+    )
+    if(result.statusCode === 200)
+        return res
+            .status(200)
+            .send({
+                statusCode: 200,
+                message: 'Thay đổi thông tin thành công',
+                redirect: '/admin/ThongTinNguoiDung'
+            });
+    else
+        return res
+            .status(400)
+            .send({
+                statusCode: 400,
+                message: 'Thay đổi thông tin không thành công',
+                alert: 'Thay đổi thông tin không thành công',
+                redirect: '/admin/ThongTinNguoiDung'
+            });
+}
+
+async function DanhSachLopHoc(req, res) {
+    const result = await adminModel.DanhSachLopHoc();
+    if(result.statusCode === 200)
+        return res
+            .status(200)
+            .send({
+                statusCode: 200,
+                message: 'Lấy danh sách lớp học thành công',
+                data: result.result
+            });
+    else
+        return res
+            .status(400)
+            .send({
+                statusCode: 400,
+                message: 'Lấy danh sách lớp học không thành công',
+            });
+}
+
 
 exports.ThemGiaoVienVaoLop = ThemGiaoVienVaoLop;
 exports.ThemHocSinhVaoLop = ThemHocSinhVaoLop;
@@ -344,3 +470,8 @@ exports.DanhSachHocSinh = DanhSachHocSinh;
 exports.ThemLopHoc = ThemLopHoc;
 exports.ThemTaiKhoan = ThemTaiKhoan;
 exports.ThemBaiDang = ThemBaiDang;
+exports.ThongTinNguoiDung = ThongTinNguoiDung;
+exports.ThayDoiThongTin = ThayDoiThongTin;
+exports.DanhSachLopHoc = DanhSachLopHoc;
+exports.DanhSachGiaoVien = DanhSachGiaoVien;
+exports.DanhSachBaiDang = DanhSachBaiDang;

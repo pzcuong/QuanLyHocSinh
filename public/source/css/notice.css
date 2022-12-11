@@ -1,0 +1,315 @@
+:root {
+  --primary-color: #3d5ee1;
+  --foreign-color: #18aefa;
+  --same-white: #f7f7fa;
+}
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  line-height: 1.4;
+}
+body {
+  background-color: #f7f7fa;
+  font-family: "Roboto", sans-serif;
+  font-size: 15px;
+  height: 100%;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+.page-wrapper {
+  padding-top: 60px;
+  margin-left: 259px;
+}
+.page-wrapper.margin {
+  margin-left: 78px;
+}
+.content {
+  padding: 30px;
+}
+.page-title {
+  font-size: 22px;
+  margin-bottom: 50px;
+  font-weight: 600;
+}
+.search-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+.form-group {
+}
+.form-control {
+  border: 1px solid #ddd;
+  box-shadow: none;
+  font-size: 15px;
+  height: 45px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  width: 100%;
+}
+.form-control-not-width {
+  border: 1px solid #ddd;
+  box-shadow: none;
+  font-size: 15px;
+  height: 40px;
+  padding: 6px 12px;
+  border-radius: 4px;
+}
+.form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: none;
+  outline: 0 none;
+}
+.search-student-btn {
+  padding: 0px 0px 0px 12px;
+}
+.search-btn .btn {
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 6px 30px;
+  background-color: var(--primary-color);
+  height: 45px;
+  border: 1px solid var(--primary-color);
+  border-radius: 4px;
+  color: white;
+}
+.search-btn.btn {
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 6px 30px;
+  background-color: var(--primary-color);
+  height: 45px;
+  border: 1px solid var(--primary-color);
+  border-radius: 4px;
+  color: white;
+}
+.search-btn .btn:hover {
+  cursor: pointer;
+  background-color: var(--foreign-color);
+  border: 1px solid var(--foreign-color);
+}
+.search-btn.btn:hover {
+  cursor: pointer;
+  background-color: var(--foreign-color);
+  border: 1px solid var(--foreign-color);
+}
+/* Student-form */
+.student-form-view {
+  background-color: white;
+  margin-top: 30px;
+  border-radius: 8px;
+  height: max-content;
+}
+.card-table {
+  display: flex;
+  flex-direction: column;
+}
+.card-body {
+  padding: 25px;
+  position: relative;
+}
+.card-body_head {
+  margin-bottom: 30px;
+  display: flex;
+}
+.card-body_header {
+  display: flex;
+}
+.card-body_header-icon i {
+  color: white;
+  background-color: var(--primary-color);
+  padding: 10px 10px;
+  font-size: 30px;
+  border-radius: 4px;
+  position: absolute;
+  top: 17px;
+  right: 25px;
+}
+.card-body_header-icon i:hover {
+  background-color: var(--foreign-color);
+  cursor: pointer;
+}
+.Data-Table_length label {
+  color: black;
+}
+
+/* Edit form */
+.row-user {
+  display: flex;
+  flex-direction: row;
+}
+
+.submit-form {
+  margin: 10px 20px;
+}
+
+.submit-form label {
+  font-weight: 600;
+  font-size: 15px;
+}
+.submit-form span {
+  color: red;
+}
+.student-image .form-group {
+  margin-top: 40px;
+  font-weight: 600;
+  margin-left: 20px;
+}
+.student-image .upload {
+  margin-top: 20px;
+}
+.student-image input[type="file"] {
+  margin-left: 50px;
+  font-size: 15px;
+  padding: 10px;
+}
+.student-image-submit .image-submit {
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.profile-bg-img img {
+  width: 100%;
+  border-radius: 10px;
+  vertical-align: middle;
+}
+.profile-user-img {
+  display: flex;
+  align-items: center;
+}
+.profile-user-img img {
+  border-radius: 50%;
+  border: 8px solid #fff;
+  width: 150px;
+  margin-left: 30px;
+  margin-bottom: 18px;
+}
+
+.profile-user {
+  display: flex;
+  flex-direction: row;
+  height: 200px;
+}
+
+.student-profile-head {
+  background-color: var(--same-white);
+  border-radius: 10px;
+}
+.user-name {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 40px;
+}
+.user-name h4 {
+  font-size: 18px;
+  margin: 0px 0px 3px;
+}
+.user-name h5 {
+  font-size: 14px;
+  color: #9e9e9e;
+}
+
+.card-user {
+  border-radius: 10px;
+  border: 2px solid var(--same-white);
+  margin-top: 30px;
+}
+.card-body-user {
+  margin: 30px 20px 30px 20px;
+}
+.heading-detail h4 {
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+.personal-activity {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+.personal-icon {
+  color: var(--primary-color);
+  font-size: 15px;
+}
+.personal-icon i {
+  width: 10px;
+  margin-right: 15px;
+}
+.view-personal h4 {
+  font-size: 16px;
+}
+.view-personal h5 {
+  font-size: 14px;
+  color: #808080;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 0;
+}
+.user-about {
+  margin-left: 30px;
+}
+.user-paragraph h5 {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+.user-paragraph p {
+  font-size: 14px;
+  font-weight: 400;
+  color: #828282;
+  margin-bottom: 20px;
+}
+.educate-year h6 {
+  font-size: 13px;
+  font-weight: 400;
+  color: #000000;
+}
+
+/* Mới sửa */
+/* Thông báo chung */
+.item-list li {
+  list-style: none;
+}
+.item-list i {
+  color: red;
+}
+.item-list a {
+  margin-left: 10px;
+  padding: 5px 10px;
+  text-decoration: none;
+  color: #3d5ee1;
+}
+.item-list a:hover {
+  color: #18aefa;
+  cursor: pointer;
+}
+.item-list .view-row {
+  margin: 20px 10px;
+}
+
+/* Notice */
+.content-head h1 {
+  display: inline-block;
+  font-size: 22px;
+  color: #3d5ee1;
+  margin-left: 10px;
+}
+.content-head i {
+  color: red;
+}
+.content-date {
+  margin: 20px 0px;
+}
+.content-main p {
+  line-height: 2;
+}
+.content-main p:last-child {
+  border-top: 4px solid var(--primary-color);
+  width: max-content;
+  margin-top: 50px;
+  color: #3d5ee1;
+}

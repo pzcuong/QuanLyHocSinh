@@ -1,0 +1,272 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    title CoCoEdu
+    link(href='css/bootstrap.min.css' rel='stylesheet')
+    link(href='https://cdnjs.cloudflare.com/ajax/libs/handsontable/0.35.1/handsontable.min.css' rel='stylesheet')
+    link(rel='stylesheet' href='/public/source/css/style.css')
+    link(rel='stylesheet' href='/public/source/css/NhapDiem.css')
+    link(rel='icon' type='image/x-icon' href='/public/source/img/favicon.png')
+    script(src='js/jquery.min.js')
+    script(src='js/bootstrap.min.js')
+    script(type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/handsontable/0.35.1/handsontable.min.js')
+    script(src='https://kit.fontawesome.com/7b85820244.js' crossorigin='anonymous')
+  body
+    .header
+      .actions_user_hd
+        #profile.profile_hd(onclick='menuhdToggle()')
+          img(src='/public/source/img/user_none1.png' alt='image user')
+        .menu_user_hd
+          .profile_name
+            | Quốc Cường 
+            br
+            span Administator
+          ul
+            li
+              a(href='#') Hồ Sơ
+            li
+              a(href='#') Đăng Xuất
+      form.search-bar
+        input.searchTerm(type='text' placeholder='Tìm kiếm tại đây')
+        button.searchButton(type='submit')
+          i.fa-solid.fa-magnifying-glass
+    // Tên app,logo app+
+    // 
+    // Mới sửa
+    .sidebar
+      .logo-details
+        img(src='/public/source/img/preskool.png' alt='logo')
+        a(href='/public/auth/index.html')
+          span.logo_name CoCoEdu
+      // Mới sửa
+      .nav_links
+        .sidenav
+          // Bảng điều khiển
+          div
+            button.dropdown-btn
+              i#icon_sn.fa-solid.fa-border-all
+              span.link_name Bảng điều khiển
+              i#drop.fas.fa-angle-right
+            .dropdown-container
+              a.link_name(href='#') Bảng điều khiển
+              .nbar-sub
+                a(href='/public/auth/admin_dashboard.html') Administrator
+              .nbar-sub
+                a(href='/public/auth/teacher_dashboard.html') Giáo Viên
+              .nbar-sub
+                a(href='/public/auth/student_dashboard.html') Học Sinh
+          // SInh viên
+          div
+            button.dropdown-btn
+              i#icon_sn.fa-solid.fa-graduation-cap
+              span.link_name Học Sinh
+              i#drop.fas.fa-angle-right
+            .dropdown-container
+              a.link_name(href='#') Học Sinh
+              .nbar-sub
+                a(href='/public/auth/students.html') Danh Sách Học Sinh
+              .nbar-sub
+                a(href='/public/auth/edit-student.html') Thêm Học Sinh
+          div
+            button.dropdown-btn
+              i#icon_sn.fa-solid.fa-graduation-cap
+              span.link_name Lớp
+              i#drop.fas.fa-angle-right
+            .dropdown-container
+              a.link_name(href='#') Lớp
+              .nbar-sub
+                a(href='/public/auth/classroom.html') Danh Sách Lớp
+              .nbar-sub
+                a(href='/public/auth/edit-classroom.html') Thêm Lớp
+          // Giáo Viên
+          div
+            button.dropdown-btn
+              i#icon_sn.fa-solid.fa-chalkboard-user
+              span.link_name Giáo Viên
+              i#drop.fas.fa-angle-right
+            .dropdown-container
+              a.link_name(href='#') Giáo Viên
+              .nbar-sub
+                a(href='/public/auth/teachers.html') Danh Sách Giáo Viên
+              .nbar-sub
+                a(href='/public/auth/edit-teacher.html') Thêm Giáo Viên
+          // Bảng điểm
+          div
+            button.dropdown-btn
+              i#icon_sn.fa-regular.fa-calendar
+              span.link_name Bảng điểm
+              i#drop.fas.fa-angle-right
+            .dropdown-container
+              a.link_name(href='#') Bảng điểm
+              .nbar-sub
+                a(href='/public/auth/NhapDiem.html') Xem bảng điểm
+                // Mới sửa
+              .nbar-sub
+                a(href='/public/auth/NhapDiem.html') Nhập bảng điểm
+              // Mới sửa
+              // Mới sửa
+              div
+                button.dropdown-btn
+                  i#icon_sn.fa-solid.fa-pen
+                  span.link_name Thông báo
+                  i#drop.fas.fa-angle-right
+                .dropdown-container
+                  a.link_name(href='#') Thông báo
+                  .nbar-sub
+                    a(href='/public/auth/index.html') Xem Thông báo
+                  .nbar-sub
+                    a(href='/public/auth/notice-list.html') Danh Sách Thông báo
+                  .nbar-sub
+                    a(href='/public/auth/ThemBaiDang.html') Tạo Thông báo
+              // Mới sửa
+    section.home-section
+      .home-content
+        i.fa-solid.fa-bars
+    .page-wrapper
+      main.container(role='main')
+        div
+          h1 Điểm
+        .Bd-content
+          span
+            strong Học kỳ: 
+            select#HocKy(onchange='LayThongTin()')
+              option(value='') Chọn học kỳ
+              option(value='1') Học kỳ 1
+              option(value='2') Học kỳ 2
+          span
+            strong Năm học: 
+            select#NamHoc(onchange='LayThongTin()')
+              option(value='') Chọn năm học
+          span
+            strong Môn học: 
+            select#MonHoc(onchange='LayThongTin()')
+              option(value='') Chọn môn học
+          //- div
+          //-   button#GetData(onclick='LayThongTin()') Lấy thông tin
+          .container.welcome-div
+            #employee
+
+          //- Hide button in style 
+          button#btnSave(hidden onclick="LuuDiem()") Lưu điểm
+
+    script(src='/public/source/js/main.js')
+   
+    // button onclick
+    script.
+      async function LuuDiem () {
+        document.getElementById("btnSave").disabled = true;
+        document.getElementById("btnSave").innerHTML = "Đang lưu điểm";
+        document.getElementById("btnSave").style.opacity = "0.5";
+
+        let ThongTinDiem = {
+          HocKy: document.getElementById("HocKy").value,
+          NamHoc: document.getElementById("NamHoc").value,
+          MaMH: document.getElementById("MonHoc").value,
+          Diem: data
+        }
+        console.log("Save")
+
+        console.log(data);
+        
+        let url = window.location.href;
+        let response = await fetch(url, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(ThongTinDiem),
+          json: true
+        })
+
+        let result = await response.json();
+        console.log(result)
+        alert(result.message)
+        document.getElementById("btnSave").disabled = false;
+        document.getElementById("btnSave").innerHTML = "Lưu điểm";
+        document.getElementById("btnSave").style.opacity = "1";
+      }
+
+    script.
+      async function LayThongTin() {
+        //Disable button
+        //- document.getElementById("GetData").disabled = true;
+        //- document.getElementById("GetData").innerHTML = "Đang tải...";
+
+        data = {
+          HocKy: document.getElementById("HocKy").value,
+          NamHoc: document.getElementById("NamHoc").value,
+          MaMH: document.getElementById("MonHoc").value
+        }
+        
+        let url = window.location.href;
+
+        let response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+          json: true
+        })
+
+        let result = await response.json();
+
+        console.log(result)
+
+        //Enable button
+        //- document.getElementById("GetData").disabled = false;
+        //- document.getElementById("GetData").innerHTML = "Lấy thông tin";
+
+        if(data.NamHoc == null || data.NamHoc == "") {
+          let SelectNamHoc = document.getElementById("NamHoc");
+          for (let i = 0; i < result.result.length; i++) {
+            let option = document.createElement("option");
+            option.text = `${result.result[i].Nam1} - ${result.result[i].Nam2}` ;
+            option.value = result.result[i].Nam2;
+            SelectNamHoc.add(option);
+          }
+          return false;
+        }
+
+        if(data.MaMH == null || data.MaMH == "") {
+          let SelectMonHoc = document.getElementById("MonHoc");
+          for (let i = 0; i < result.result.length; i++) {
+            let option = document.createElement("option");
+            option.text = result.result[i].TenMH;
+            option.value = result.result[i].MaMH;
+            SelectMonHoc.add(option);
+          }
+          return false;
+        }
+
+        let button = document.getElementById("btnSave");
+        button.hidden = false;
+
+        console.log(result.result)
+        data = []
+
+        for(let i = 0; i < result.result.length; i++) {
+          data.push({
+            "MSHS": result.result[i].MaHS, 
+            "HoTen": result.result[i].HoTen, 
+            "DM": result.result[i].DM, 
+            "KT15P": result.result[i].KT15P, 
+            "KT1T": result.result[i].KT1T, 
+            "KTGK": result.result[i].KTGK, 
+            "KTCK": result.result[i].KTCK,
+          })
+        }
+
+        console.log(data)
+        var container = document.getElementById('employee');
+        var hot = new Handsontable(container, {
+          data: data,
+          rowHeaders: true,
+          colHeaders: false,
+          colHeaders: ["MSHS", "Họ và tên", "Điểm miệng", "Điểm 15 phút", "Điểm 1 tiết", "Điểm GK", "Điểm CK"],
+          columnSorting: true,
+          sortIndicator: true
+        });
+      }
+    

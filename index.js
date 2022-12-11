@@ -27,15 +27,12 @@ app.use('/public', express.static('./public'));
 console.log(process.env.PORT);
 var port = process.env.PORT || 1433;
 
-
 app.use('/auth', authRoute);
 app.use('/user', userRoute);
 app.use('/admin', adminRoute);
  
-const userController = require('./src/users/users.controller');
-
 app.get('/', (req, res) => {
-    userController.DanhSachBaiDang(req, res);
+    res.redirect('/auth/login');
 });
 
 app.use((req, res, next) => {

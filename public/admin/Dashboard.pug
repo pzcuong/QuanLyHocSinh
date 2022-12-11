@@ -1,0 +1,327 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    link(rel='stylesheet' href='/public/source/css/dashboard.css')
+    link(rel='stylesheet' href='/public/source/css/calendar.css')
+    link(rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200')
+    link(rel='stylesheet' href='/public/source/fonts/fontawesome-free-6.2.0-web/css/all.css')
+    title CoCoEdu
+    link(rel='icon' type='image/x-icon' href='/public/source/img/favicon.png')
+    link(rel='stylesheet' href='/public/source/css/style.css')
+    script(src='https://kit.fontawesome.com/7b85820244.js' crossorigin='anonymous')
+  body
+    .header
+      .actions_user_hd
+        #profile.profile_hd(onclick='menuhdToggle()')
+          img(src='/public/source/img/user_none1.png' alt='image user')
+        .menu_user_hd
+          .profile_name
+            | Quốc Cường 
+            br
+            span Administator
+          ul
+            li
+              a(href='#') Hồ Sơ
+            li
+              a(href='#') Đăng Xuất
+      form.search-bar
+        input.searchTerm(type='text' placeholder='Tìm kiếm tại đây')
+        button.searchButton(type='submit')
+          i.fa-solid.fa-magnifying-glass
+    // Tên app,logo app+
+    // 
+    .sidebar
+      .logo-details
+        a(href='/public/auth/index.html')
+          img(src='/public/source/img/preskool.png' alt='logo')
+        span.logo_name CoCoEdu
+      .nav_links
+        .sidenav
+          // Bảng điều khiển
+          div
+            button.dropdown-btn
+              i#icon_sn.fa-solid.fa-border-all
+              span.link_name Bảng điều khiển
+              i#drop.fas.fa-angle-right
+            .dropdown-container
+              a.link_name(href='#') Bảng điều khiển
+              .nbar-sub
+                a(href='/public/auth/admin_dashboard.html') Administrator
+              .nbar-sub
+                a(href='/public/auth/teacher_dashboard.html') Giáo Viên
+              .nbar-sub
+                a(href='/public/auth/student_dashboard.html') Học Sinh
+          // SInh viên
+          div
+            button.dropdown-btn
+              i#icon_sn.fa-solid.fa-graduation-cap
+              span.link_name Học Sinh
+              i#drop.fas.fa-angle-right
+            .dropdown-container
+              a.link_name(href='#') Học Sinh
+              .nbar-sub
+                a(href='/public/auth/students.html') Quản Lý Học Sinh
+              .nbar-sub
+                a(href='/public/auth/view-student.html') Xem Học Sinh
+              .nbar-sub
+                a(href='/public/auth/edit-student.html') Thêm Học Sinh
+          // Giáo Viên
+          div
+            button.dropdown-btn
+              i#icon_sn.fa-solid.fa-chalkboard-user
+              span.link_name Giáo Viên
+              i#drop.fas.fa-angle-right
+            .dropdown-container
+              a.link_name(href='#') Giáo Viên
+              .nbar-sub
+                a(href='/public/auth/teachers.html') Quản Lý Giáo Viên
+              .nbar-sub
+                a(href='/public/auth/view-teacher.html') Xem Giáo Viên
+              .nbar-sub
+                a(href='/public/auth/edit-teacher.html') Thêm Giáo Viên
+          // Bảng điểm
+          div
+            button.dropdown-btn
+              i#icon_sn.fa-regular.fa-calendar
+              span.link_name Bảng điểm
+              i#drop.fas.fa-angle-right
+            .dropdown-container
+              a.link_name(href='#') Bảng điểm
+              .nbar-sub
+                a(href='#') Nhập bảng điểm
+    section.home-section
+      .home-content
+        i.fa-solid.fa-bars
+    .page-wrapper
+      main
+        .page-header
+          .page-title
+            h3 Administrator
+        .row
+          .col-xl-3.col-sm-6.col-12.d-flex
+            .card.w-100
+              .card-body
+                .card-db
+                  .card-info
+                    h6 Tổng số lớp học
+                    h3 30
+                  .card-icon
+                    img(src='/public/source/img/teacher-icon-01.svg' alt='icon-dashboard')
+          .col-xl-3.col-sm-6.col-12.d-flex
+            .card.w-100
+              .card-body
+                .card-db
+                  .card-info
+                    h6 Tổng số học sinh
+                    h3 1200
+                  .card-icon
+                    img(src='/public/source/img/dash-icon-01.svg' alt='icon-dashboard')
+          .col-xl-3.col-sm-6.col-12.d-flex
+            .card.w-100
+              .card-body
+                .card-db
+                  .card-info
+                    h6 Tổng số giáo viên
+                    h3 50
+                  .card-icon
+                    img(src='/public/source/img/icons8-teacher-64 (2).png' alt='icon-dashboard')
+          .col-xl-3.col-sm-6.col-12.d-flex
+            .card.w-100
+              .card-body
+                .card-db
+                  .card-info
+                    h6 Tổng số môn học
+                    h3 12
+                  .card-icon
+                    img(src='/public/source/img/teacher-icon-02.svg' alt='icon-dashboard')
+        .row
+          .col-12.col-lg-12.col-xl-8
+            .row
+              .col-12.col-lg-12.col-xl-8.d-flex
+                .card.flex-fill
+                  .card-header
+                    .card-header-item
+                      h5.card-title Tiết dạy sắp tới
+                    .card-header-item
+                      span.card-header-view
+                        a(href='#') Xem tất cả 
+                  .table-lesson.lesson
+                    table.table
+                      tbody
+                        tr
+                          td
+                            .date
+                              b Ngữ Văn
+                              p 10A1
+                              ul.teacher-date-list
+                                li
+                                  i.fa-regular.fa-calendar
+                                  |                                   Thứ 5
+                                li |
+                                li
+                                  i.fa-solid.fa-clock
+                                  |                                   7:00 - 8:30 am
+                          td
+                            .lesson-confirm
+                              a(href='#') Xác nhận
+                            button.btn(type='submit') Thay đổi
+                        tr
+                          td
+                            .date
+                              b Ngữ Văn
+                              p 12A3
+                              ul.teacher-date-list
+                                li
+                                  i.fa-regular.fa-calendar
+                                  |                                   Thứ 4
+                                li |
+                                li
+                                  i.fa-solid.fa-clock
+                                  |                                   8:45 - 10:15 am
+                          td
+                            .lesson-confirm
+                              a(href='#') Xác nhận
+                            button.btn(type='submit') Thay đổi
+                        tr
+                          td
+                            .date
+                              b Ngữ Văn
+                              p 12A4
+                              ul.teacher-date-list
+                                li
+                                  i.fa-regular.fa-calendar
+                                  |                                   Thứ 6
+                                li |
+                                li
+                                  i.fa-solid.fa-clock
+                                  |                                   7:00 - 8:30 am
+                          td
+                            .lesson-confirm
+                              a(href='#') Xác nhận
+                            button.btn(type='submit') Thay đổi
+              .col-12.col-lg-4.col-xl-4.d-flex
+                .card.flex-fill
+                  .card-header
+                    h5.card-title Tiến độ học kỳ
+                  .progress
+                    .donut
+                      .hole
+                        .progress-less
+                          b 50/60
+              .col-12.col-lg-12.col-xl-12.d-flex
+                .card.flex-fill
+                  .card-header
+                    .card-header-item
+                      h5.card-title Lịch sử tiết dạy
+                    .card-header-item
+                      span.card-header-view
+                        a(href='#') Xem tất cả 
+                  .table-lesson.lesson
+                    table.table
+                      tbody
+                        tr
+                          td
+                            .date
+                              b Ngữ Văn
+                              p 11A1
+                              ul.teacher-date-list
+                                li
+                                  i.fa-regular.fa-calendar
+                                  |                                   Thứ 4
+                                li |
+                                li
+                                  i.fa-solid.fa-clock
+                                  |                                   1:00 - 2:15 pm
+                          td
+                            button.btn(type='submit')
+                              | Hoàn thành
+                        tr
+                          td
+                            .date
+                              b Ngữ văn
+                              p 11A2
+                              ul.teacher-date-list
+                                li
+                                  i.fa-regular.fa-calendar
+                                  |                                   Thứ 4
+                                li |
+                                li
+                                  i.fa-solid.fa-clock
+                                  |                                   2:30 - 4:15 pm
+                          td
+                            button.btn(type='submit')
+                              | Hoàn thành
+                        tr
+                          td
+                            .date
+                              b Ngữ Văn
+                              p 12A2
+                              ul.teacher-date-list
+                                li
+                                  i.fa-regular.fa-calendar
+                                  |                                   Thứ 5
+                                li |
+                                li
+                                  i.fa-solid.fa-clock
+                                  |                                   7:00 - 10:15 am
+                          td
+                            button.btn(type='submit')
+                              | Hoàn thành
+          .col-12.col-lg-12.col-xl-4.d-flex
+            .card.calendar-container.flex-fill
+              .card-body
+                .wrapper
+                  header
+                    p.current-date
+                    .icons
+                      span#prev.material-symbols-rounded chevron_left
+                      span#next.material-symbols-rounded chevron_right
+                  .calendar
+                    ul.weeks
+                      li CN
+                      li T2
+                      li T3
+                      li T4
+                      li T5
+                      li T6
+                      li T7
+                    ul.days
+                .calendar-info
+                  .upcome-header
+                    h2 Sự kiện sắp tới
+                  .event-date
+                    h3 Tháng 12
+                  .table-lesson.lesson
+                    table.table
+                      tbody
+                        tr
+                          td
+                            .date
+                              b Ngữ Văn
+                              p 10A1
+                              ul.teacher-date-list
+                                li
+                                  i.fa-regular.fa-calendar
+                                  |                                   Thứ 5
+                                li |
+                                li
+                                  i.fa-solid.fa-clock
+                                  |                                   7:00 - 10:15 am
+                        tr
+                          td
+                            .date
+                              b Ngữ Văn
+                              p 10A1
+                              ul.teacher-date-list
+                                li
+                                  i.fa-regular.fa-calendar
+                                  |                                   Thứ 4
+                                li |
+                                li
+                                  i.fa-solid.fa-clock
+                                  |                                   7:00 - 10:15 am
+                        tr
+        div
+    script(src='/public/source/js/main.js')
+    script(src='/public/source/js/calendar.js')

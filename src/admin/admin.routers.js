@@ -11,7 +11,12 @@ const adminController = require('../admin/admin.controller');
 
 router.route('/ThemTaiKhoan' )
 .get(isAuthAdmin, (req, res) => {
-    let html = pug.renderFile('public/admin/ThemTaiKhoan.pug');
+	// console.log(req.user);
+    let html = pug.renderFile('public/admin/ThemTaiKhoan.pug', {
+		user: req.user.result,
+		image: req.image,
+		role: req.user.role
+	});
     res.send(html);
 })
 .post(isAuthAdmin,adminController.ThemTaiKhoan)
@@ -25,7 +30,14 @@ router.route('/ThemLopHoc')
 
 
 router.route('/DanhSachHocSinh')
-	.get(isAuth, adminController.DanhSachHocSinh);
+	.get(isAuthAdmin, adminController.DanhSachHocSinh);
+
+router.route('/DanhSachGiaoVien')
+	.get(authMiddleware.isAuthAdmin, adminController.DanhSachGiaoVien);
+
+router.route('/DanhSachBaiDang')
+	.get(authMiddleware.isAuthAdmin, adminController.DanhSachBaiDang);
+
 
 router.route('/ThemHocSinh')
 	.get(isAuthAdmin, (req, res) => {
@@ -48,5 +60,25 @@ router.route('/ThemBaiDang')
 })
 .post(isAuthAdmin,adminController.ThemBaiDang)
 
+router.post('/ThongTinNguoiDung', isAuthAdmin, adminController.ThongTinNguoiDung);
+
+router.post('/ThayDoiThongTin', isAuthAdmin, adminController.ThayDoiThongTin);
+
+router.get('/Dashboard', isAuthAdmin, (req, res) => {
+	let html = pug.renderFile('public/admin/Dashboard.pug', {
+		user: req.user.result,
+		image: req.image,
+		role: req.user.role
+	});
+	res.send(html);
+});
+
+router.get('/DanhSachLopHoc', isAuthAdmin => {
+	// console.log()
+	// let html = pug.renderFile('public/admin/DanhSachLopHoc.pug', {
+
+	// });
+	// res.send(html);
+});
 
 module.exports = router;

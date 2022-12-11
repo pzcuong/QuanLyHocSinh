@@ -1,0 +1,240 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(http-equiv='X-UA-Compatible' content='IE=edge')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    link(rel='stylesheet' href='/public/source/css/notice-list.css  ')
+    link(rel='stylesheet' href='/public/source/fonts/fontawesome-free-6.2.0-web/css/all.css')
+    link(rel='icon' type='image/x-icon' href='/public/source/img/favicon.png')
+    link(rel='stylesheet' href='/public/source/css/style.css')
+    script(src='https://kit.fontawesome.com/7b85820244.js' crossorigin='anonymous')
+    title CoCoEdu
+  body
+    .header
+      .actions_user_hd
+        #profile.profile_hd(onclick='menuhdToggle()')
+          img(src='/public/source/img/user_none1.png' alt='image user')
+        .menu_user_hd
+          .profile_name
+            | Quốc Cường 
+            br
+            span Administator
+          ul
+            li
+              a(href='#') Hồ Sơ
+            li
+              a(href='#') Đăng Xuất
+      form.search-bar
+        input.searchTerm(type='text' placeholder='Tìm kiếm tại đây')
+        button.searchButton(type='submit')
+          i.fa-solid.fa-magnifying-glass
+    // Tên app,logo app+
+    // 
+    // Mới sửa
+    .sidebar
+      .logo-details
+        img(src='/public/source/img/preskool.png' alt='logo')
+        a(href='/public/auth/index.html')
+          span.logo_name CoCoEdu
+      // Mới sửa
+      .nav_links
+        .sidenav
+          // Bảng điều khiển
+          div
+            button.dropdown-btn
+              i#icon_sn.fa-solid.fa-border-all
+              span.link_name Bảng điều khiển
+              i#drop.fas.fa-angle-right
+            .dropdown-container
+              a.link_name(href='#') Bảng điều khiển
+              .nbar-sub
+                a(href='/public/auth/admin_dashboard.html') Administrator
+              .nbar-sub
+                a(href='/public/auth/teacher_dashboard.html') Giáo Viên
+              .nbar-sub
+                a(href='/public/auth/student_dashboard.html') Học Sinh
+          // SInh viên
+          div
+            button.dropdown-btn
+              i#icon_sn.fa-solid.fa-graduation-cap
+              span.link_name Học Sinh
+              i#drop.fas.fa-angle-right
+            .dropdown-container
+              a.link_name(href='#') Học Sinh
+              .nbar-sub
+                a(href='/public/auth/students.html') Danh Sách Học Sinh
+              .nbar-sub
+                a(href='/public/auth/edit-student.html') Thêm Học Sinh
+          div
+            button.dropdown-btn
+              i#icon_sn.fa-solid.fa-graduation-cap
+              span.link_name Lớp
+              i#drop.fas.fa-angle-right
+            .dropdown-container
+              a.link_name(href='#') Lớp
+              .nbar-sub
+                a(href='/public/auth/classroom.html') Danh Sách Lớp
+              .nbar-sub
+                a(href='/public/auth/edit-classroom.html') Thêm Lớp
+          // Giáo Viên
+          div
+            button.dropdown-btn
+              i#icon_sn.fa-solid.fa-chalkboard-user
+              span.link_name Giáo Viên
+              i#drop.fas.fa-angle-right
+            .dropdown-container
+              a.link_name(href='#') Giáo Viên
+              .nbar-sub
+                a(href='/public/auth/teachers.html') Danh Sách Giáo Viên
+              .nbar-sub
+                a(href='/public/auth/edit-teacher.html') Thêm Giáo Viên
+          // Bảng điểm
+          div
+            button.dropdown-btn
+              i#icon_sn.fa-regular.fa-calendar
+              span.link_name Bảng điểm
+              i#drop.fas.fa-angle-right
+            .dropdown-container
+              a.link_name(href='#') Bảng điểm
+              .nbar-sub
+                a(href='/public/auth/NhapDiem.html') Xem bảng điểm
+                // Mới sửa
+              .nbar-sub
+                a(href='/public/auth/NhapDiem.html') Nhập bảng điểm
+              // Mới sửa
+              // Mới sửa
+              div
+                button.dropdown-btn
+                  i#icon_sn.fa-solid.fa-pen
+                  span.link_name Thông báo
+                  i#drop.fas.fa-angle-right
+                .dropdown-container
+                  a.link_name(href='#') Thông báo
+                  .nbar-sub
+                    a(href='/public/auth/index.html') Xem Thông báo
+                  .nbar-sub
+                    a(href='/public/auth/notice-list.html') Danh Sách Thông báo
+                  .nbar-sub
+                    a(href='/public/auth/ThemBaiDang.html') Tạo Thông báo
+              // Mới sửa
+    section.home-section
+      .home-content
+        i.fa-solid.fa-bars
+    .page-wrapper
+      .content
+        .page-header
+          .page-header-title
+            .page-header-student-title
+              h3.page-title Danh Sách Thông Báo
+        // Start: Search Bar
+        .student-group-form
+          .search-group
+            .search-bar
+              .form-group
+                input.form-control(type='text' placeholder='Tìm kiếm ...')
+            .search-student-btn
+              .search-btn
+                button.btn(type='button') Tìm Kiếm
+        // End: Search Bar
+        .student-form
+          .card
+            .card-table
+              .card-body
+                .card-body_head
+                  .card-body_header
+                    .page-header-student-title
+                      h3.page-title Thông Báo
+                    .card-body_header-icon
+                      a.btn(href='/public/auth/ThemBaiDang.html')
+                        i.fa-solid.fa-plus
+                .card-body_body
+                  .Data-Table
+                    .Data-Table-body
+                      .Table-body
+                        table.Table
+                          thead.student-thead
+                            tr.thead(role='row')
+                              th.sorting(tabindex='0' rowspan='1' colspan='1' aria-label='MaBaiDang')
+                                | Tên Thông Báo
+                              th.sorting(tabindex='0' rowspan='1' colspan='1' aria-label='NgayDang')
+                                | Ngày đăng
+                              th.text-end.sorting(tabindex='0' rowspan='1' colspan='1' aria-label='ChinhSua')
+                                | Chỉnh sửa
+                          tbody.student-tbody
+                            each BaiDang in ThongTin
+                                - var NgayDang = new Date(BaiDang.NgayDang).toLocaleDateString()
+
+                                tr.odd.table-normal(role='row')
+                                    td #{BaiDang.TieuDe}
+                                    td #{NgayDang}
+                                    td.text-end
+                                        .action
+                                            a.delete-btn(href='#')
+                                                i.fa-solid.fa-trash
+                                            a.edit-btn(href='/public/auth/ThemBaiDang.html')
+                                                i.fa-solid.fa-pen-to-square
+                    .Data-Table-footer
+    // Modal
+    .modal.js-modal
+      .student-form-edit.js-modal-content
+        .card
+          .card-table
+            .card-body-edit
+              .modal-close.js-modal-close
+                i.fa-solid.fa-xmark
+              form
+                .page-header-student-title
+                  h5.page-title Thông tin lớp
+                .row
+                  .edit-form
+                    .submit-form
+                      .form-group.local-form
+                        label
+                          | Mã số lớp học
+                          span.login-danger *
+                        input.form-control-edit(required='' type='text' placeholder='Nhập mã số lớp học...')
+                    .submit-form
+                      .form-group.local-form
+                        label
+                          | Tên lớp
+                          span.login-danger *
+                        input.form-control-edit(required='' type='text' placeholder='Nhập họ và tên đệm...')
+                    .submit-form
+                      .form-group.local-form
+                        label
+                          | Khối
+                          span.login-danger *
+                        select.form-control-edit(required='')
+                          option Khối 10
+                          option Khối 11
+                          option Khối 12
+                    .submit-form
+                      .form-group.local-form
+                        label
+                          | Lớp
+                          span.login-danger *
+                        select.form-control-edit(required='')
+                          option Tự Nhiên
+                          option Xã Hội
+                    .submit-form
+                      .form-group.local-form
+                        label
+                          | Học Kỳ
+                          span.login-danger *
+                        select.form-control-edit(required='')
+                          option 1
+                          option 2
+                    .submit-form
+                      .form-group.local-form
+                        label
+                          | Năm Học
+                          span.login-danger *
+                        input.form-control-edit(required='' type='text')
+                .student-image-submit
+                  .image-submit
+                    button.search-btn.btn(type='submit')
+                      | Xác nhận
+    script(src='/public/source/js/main.js')
+    script(src='/public/source/js/edit-student.js ')
+    script(src='/public/source/js/students.js ')

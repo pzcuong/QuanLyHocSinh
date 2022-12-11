@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="/public/source/fonts/fontawesome-free-6.2.0-web/css/all.css" />
+
+    <link rel="stylesheet" href="/public/source/css/view-student.css" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="/public/source/img/favicon.png" />
+    <link rel="stylesheet" href="/public/source/css/style.css" />
+    <script
+      src="https://kit.fontawesome.com/7b85820244.js"
+      crossorigin="anonymous"></script>
+    <title>CoCoEdu</title>
+  </head>
+  <body>
+    <div class="header">
+      <div class="actions_user_hd">
+        <div class="profile_hd" id="profile" onclick="menuhdToggle()">
+          <img src="/public/source/img/user_none1.png" alt="image user" />
+        </div>
+        <div class="menu_user_hd">
+          <div class="profile_name">
+            Quốc Cường <br /><span>Administator</span>
+          </div>
+          <ul>
+            <li><a href="#">Hồ Sơ</a></li>
+            <li><a href="#">Đăng Xuất</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <form class="search-bar">
+        <input type="text" class="searchTerm" placeholder="Tìm kiếm tại đây" />
+        <button type="submit" class="searchButton">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>
+    </div>
+    <!-- Tên app,logo app+  -->
+    <!--  -->
+    <div class="sidebar">
+      <div class="logo-details">
+        <a href="/public/auth/index.html">
+          <img src="/public/source/img/preskool.png" alt="logo" />
+        </a>
+        <span class="logo_name">CoCoEdu</span>
+      </div>
+      <div class="nav_links">
+        <div class="sidenav">
+          <!-- Bảng điều khiển -->
+          <div>
+            <button class="dropdown-btn">
+              <i class="fa-solid fa-border-all" id="icon_sn"></i>
+              <span class="link_name">Bảng điều khiển</span>
+              <i class="fas fa-angle-right" id="drop"></i>
+            </button>
+            <div class="dropdown-container">
+              <a class="link_name" href="#">Bảng điều khiển</a>
+
+              <div class="nbar-sub">
+                <a href="/public/auth/admin_dashboard.html">Administrator</a>
+              </div>
+              <div class="nbar-sub">
+                <a href="/public/auth/teacher_dashboard.html">Giáo Viên</a>
+              </div>
+              <div class="nbar-sub">
+                <a href="/public/auth/student_dashboard.html">Học Sinh</a>
+              </div>
+            </div>
+          </div>
+          <!-- SInh viên -->
+          <div>
+            <button class="dropdown-btn">
+              <i class="fa-solid fa-graduation-cap" id="icon_sn"></i>
+              <span class="link_name">Học Sinh</span>
+              <i class="fas fa-angle-right" id="drop"></i>
+            </button>
+            <div class="dropdown-container">
+              <a class="link_name" href="#">Học Sinh</a>
+              <div class="nbar-sub">
+                <a href="/public/auth/students.html">Quản Lý Học Sinh</a>
+              </div>
+              <div class="nbar-sub">
+                <a href="/public/auth/view-student.html">Xem Học Sinh</a>
+              </div>
+              <div class="nbar-sub">
+                <a href="/public/auth/edit-student.html">Thêm Học Sinh</a>
+              </div>
+            </div>
+          </div>
+          <!-- Giáo Viên -->
+          <div>
+            <button class="dropdown-btn">
+              <i class="fa-solid fa-chalkboard-user" id="icon_sn"></i>
+              <span class="link_name">Giáo Viên</span>
+              <i class="fas fa-angle-right" id="drop"></i>
+            </button>
+            <div class="dropdown-container">
+              <a class="link_name" href="#">Giáo Viên</a>
+              <div class="nbar-sub">
+                <a href="/public/auth/teachers.html">Quản Lý Giáo Viên</a>
+              </div>
+              <div class="nbar-sub">
+                <a href="/public/auth/view-teacher.html">Xem Giáo Viên</a>
+              </div>
+              <div class="nbar-sub">
+                <a href="/public/auth/edit-teacher.html">Thêm Giáo Viên</a>
+              </div>
+            </div>
+          </div>
+          <!-- Bảng điểm-->
+          <div>
+            <button class="dropdown-btn">
+              <i class="fa-regular fa-calendar" id="icon_sn"></i>
+              <span class="link_name">Bảng điểm</span>
+              <i class="fas fa-angle-right" id="drop"></i>
+            </button>
+            <div class="dropdown-container">
+              <a class="link_name" href="#">Bảng điểm</a>
+
+              <div class="nbar-sub">
+                <a href="#">Nhập bảng điểm</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="home-section">
+      <div class="home-content">
+        <i class="fa-solid fa-bars"></i>
+      </div>
+    </section>
+
+    <div class="page-wrapper">
+      <div class="content">
+        <div class="page-header">
+          <div class="page-header-title">
+            <div class="page-header-student-title">
+              <h3 class="page-title">Chi tiết giáo viên</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="student-form-view">
+          <div class="card">
+            <div class="card-table">
+              <div class="card-body">
+                <div>
+                  <div class="row">
+                    <div class="page-header-student-title">
+                      <h5 class="page-title">Hồ Sơ</h5>
+                    </div>
+
+                    <div class="student-profile-head">
+                      <div class="profile-bg-img">
+                        <img
+                          src="/public/source/img/profile-bg.jpg"
+                          alt="profile" />
+                      </div>
+
+                      <div class="row">
+                        <div class="profile-name">
+                          <div class="profile-user">
+                            <div class="profile-user-img">
+                              <img
+                                src="/public/source/img/profile-user.jpg"
+                                alt="profile user" />
+                            </div>
+                            <div class="user-name">
+                              <h4>Chung Thị Hà</h4>
+                              <h5>Giáo Viên</h5>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row-user">
+                      <div class="student-detail">
+                        <div class="student-detail-personal">
+                          <div class="card-user">
+                            <div class="card-body-user">
+                              <div class="heading-detail">
+                                <h4>Chi tiết cá nhân</h4>
+                              </div>
+
+                              <div class="personal-activity">
+                                <div class="personal-icon">
+                                  <i class="fa-solid fa-user"></i>
+                                </div>
+                                <div class="view-personal">
+                                  <h4>Họ Tên</h4>
+                                  <h5>Chung Thị Hà</h5>
+                                </div>
+                              </div>
+
+                              <div class="personal-activity">
+                                <div class="personal-icon">
+                                  <i class="fa-solid fa-building"></i>
+                                </div>
+                                <div class="view-personal">
+                                  <h4>Chức Vụ</h4>
+                                  <h5>Giáo Viên</h5>
+                                </div>
+                              </div>
+
+                              <div class="personal-activity">
+                                <div class="personal-icon">
+                                  <i class="fa-solid fa-user"></i>
+                                </div>
+                                <div class="view-personal">
+                                  <h4>Giới Tính</h4>
+                                  <h5>Nữ</h5>
+                                </div>
+                              </div>
+
+                              <div class="personal-activity">
+                                <div class="personal-icon">
+                                  <i class="fa-solid fa-calendar-days"></i>
+                                </div>
+                                <div class="view-personal">
+                                  <h4>Ngày Sinh</h4>
+                                  <h5>08/06/1970</h5>
+                                </div>
+                              </div>
+
+                              <div class="personal-activity">
+                                <div class="personal-icon">
+                                  <i class="fa-solid fa-phone"></i>
+                                </div>
+                                <div class="view-personal">
+                                  <h4>Số Điện Thoại</h4>
+                                  <h5>+84478125396</h5>
+                                </div>
+                              </div>
+
+                              <div class="personal-activity">
+                                <div class="personal-icon">
+                                  <i class="fa-solid fa-envelope"></i>
+                                </div>
+                                <div class="view-personal">
+                                  <h4>Email</h4>
+                                  <h5>chungthiha@gmail.com</h5>
+                                </div>
+                              </div>
+
+                              <div class="personal-activity">
+                                <div class="personal-icon">
+                                  <i
+                                    class="fa-sharp fa-solid fa-location-dot"></i>
+                                </div>
+                                <div class="view-personal">
+                                  <h4>Địa Chỉ</h4>
+                                  <h5>Ninh Bình, Việt Nam</h5>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="user-about">
+                        <div class="user-about-personal">
+                          <div class="card-user">
+                            <div class="card-body-user">
+                              <div class="heading-detail">
+                                <h4>Về tôi</h4>
+                              </div>
+                              <div class="user-paragraph">
+                                <h5>Xin chào, tôi là Chung Thị Hà</h5>
+                                <p>
+                                  Xin chào, mình là Chung Thị Hà, giáo viên
+                                  trường THPT ABC. Gia đình tôi có ba người. Bố
+                                  tôi là Chung Huy Hoàng, bố tôi làm kỹ sư xây
+                                  dựng. Mẹ tôi là Nguyễn Thị Nhật là một giáo
+                                  viên tiểu học. Môn học mà tôi dạy là môn Ngữ
+                                  Văn. Bởi môn học này đem đến những câu chuyện
+                                  hay, những bài học lý thú, những con người, số
+                                  phận tôi chưa được gặp và muốn sẻ chia.
+                                </p>
+                              </div>
+                              <div class="user-paragraph">
+                                <h5>Lịch sử dạy</h5>
+                                <div class="educate-year">
+                                  <h6>2009 - 2012</h6>
+                                  <p>
+                                    Dạy Ngữ Văn ở Trường Mầm Non Thành Phố IJK
+                                  </p>
+                                  <h6>2012 - 2021</h6>
+                                  <p>
+                                    Dạy Ngữ Văn ở Trường Tiểu Học và Trung Học
+                                    Cơ Sở XYZ
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="/public/source/js/main.js"></script>
+  </body>
+</html>

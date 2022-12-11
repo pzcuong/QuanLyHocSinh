@@ -38,10 +38,11 @@ async function isAuthAdmin(req, res, next) {
 				.end();
 		}
 
-		const user = await userModle.getUser(verified.data.payload.username);
+		const user = await userModle.getInfoUser(verified.data.payload.username);
+		console.log(user)
 
 		console.log(user.result.Role);
-		if (user.result.Role !== 'Admin') 
+		if (user.role !== 'Admin') 
 			return res
 				.writeHead(302, {'Location': '/auth/login'})
 				.end();
@@ -73,11 +74,11 @@ async function isAuthGiaoVien(req, res, next) {
 				.end();
 		}
 
-		const user = await userModle.getUser(verified.data.payload.username);
+		const user = await userModle.getInfoUser(verified.data.payload.username);
 		console.log(user.result.Role);
 
 		console.log(user.result.Role);
-		if (user.result.Role !== 'GiaoVien' && user.result.Role !== 'Admin') 
+		if (user.role !== 'GiaoVien' && user.role !== 'Admin') 
 			return res
 				.writeHead(302, {'Location': '/auth/login'})
 				.end();
