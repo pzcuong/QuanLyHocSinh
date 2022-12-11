@@ -119,7 +119,7 @@ async function changePassword() {
 }
 
 
-async function ThemTaiKhoan() {
+async function ThemTaiKhoanMoi() {
   var form = document.querySelector("#formElem");
 
   data = {
