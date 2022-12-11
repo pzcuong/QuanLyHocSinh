@@ -43,7 +43,11 @@ router.route('/NhapDiem/:MaLop/')
 	.get(isAuthGiaoVien, async (req, res) => {
 		console.log(req.user);
 		req.MaLop = req.params.MaLop;
-		let html = pug.renderFile('public/giaovien/NhapDiem.pug');
+		let html = pug.renderFile('public/giaovien/NhapDiem.pug', {             
+			user: req.user.result,        
+			image: req.image,
+			role: req.user.role
+		});
 		res.send(html);
 	})
 	.post(isAuthGiaoVien, userController.DanhSachDiem)
