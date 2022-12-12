@@ -5,7 +5,7 @@ var jwt = require('jsonwebtoken');
 var pug = require('pug');
 var cookieParser = require('cookie-parser');
 var compression = require('compression');
-const sql = require('mssql/msnodesqlv8');
+// const sql = require('mssql/msnodesqlv8');
 
 const { config } = require('dotenv');
 require('dotenv').config();

@@ -84,7 +84,7 @@ html(lang='en')
                       a(href='/admin/DanhSachHocSinh') Danh Sách Học Sinh
                   if (role == "Admin")
                     .nbar-sub
-                      a(href='/admin/ThemHocSinh') Thêm Học Sinh
+                      a(href='/admin/ThemTaiKhoan') Thêm Học Sinh
           if(role == 'Admin' || role == 'GiaoVien')
             div
               button.dropdown-btn
@@ -118,7 +118,7 @@ html(lang='en')
                   .nbar-sub
                     a(href='/admin/DanhSachGiaoVien') Danh Sách Giáo Viên
                   .nbar-sub
-                    a(href='/admin/ThemGiaoVien') Thêm Giáo Viên
+                    a(href='/admin/ThemTaiKhoan') Thêm Giáo Viên
             // Bảng điểm
             
             if( role == "GiaoVien")
