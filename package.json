@@ -32,7 +32,6 @@
     "json2html": "^0.0.8",
     "jsonwebtoken": "^8.5.1",
     "lowdb": "^5.0.5",
-    "msnodesqlv8": "^2.7.0",
     "mssql": "^9.0.1",
     "node-cache": "^5.1.2",
     "node-json2html": "^2.2.2",
